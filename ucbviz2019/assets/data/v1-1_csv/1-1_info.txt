@@ -8,3 +8,6 @@ Change Log 1.1
 Updated cell type to currency for all sheets
 Defined NRST and PDST in appropriate sheets
 Added note re Registration / Student Services fee to appropriate sheet
+
+# alex edit
+Data is here https://docs.google.com/spreadsheets/d/1WXmJSdX_lerzmHkZN3vW9eounG1jhDAWq1FbtMKsXPo/edit#gid=609875613
