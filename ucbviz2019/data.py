@@ -10,9 +10,7 @@ def load_df_and_info(
         drop_nan_ix=True
 ):
     """
-    Load a dataframe of ucb data from the refactored filename.
-
-    The name of the dataframe describes what the data is.
+    Load a dataframe and info of ucb data from the refactored filename.
 
     Args:
         fname (str): The name of the file in the directory.
