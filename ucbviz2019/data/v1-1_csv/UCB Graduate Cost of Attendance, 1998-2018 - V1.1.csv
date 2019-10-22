@@ -1,0 +1,10 @@
+Version Notes:,v. 1.1,"September 21, 2019"
+"Created by the Graduate Assembly, U.C. Berkeley's Graduate Student Government",,
+"Disclaimer: this data was compiled by graduate student volunteers in their spare time. If you find an error, please email president-ga@berkeley.edu",,
+Data source: https://registrar.berkeley.edu/tuition-fees-residency/tuition-fees/fee-schedule-archive,,
+CC BY-NC ,,
+,,
+Change Log 1.1,,
+Updated cell type to currency for all sheets,,
+Defined NRST and PDST in appropriate sheets,,
+Added note re Registration / Student Services fee to appropriate sheet,,
