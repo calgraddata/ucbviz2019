@@ -20,7 +20,7 @@ def get_all_data(data_dir=csvs_raw_dir):
                 key "info": value (str): The dataset's info.
                 key "df": value (pd.DataFrame): The dataset as a dataframe.
     """
-    fnames = get_all_filenames(csvs_raw_dir, include_cpi=True)
+    fnames = get_all_filenames(data_dir, include_cpi=True)
     fnames_no_dotcsv = [f.replace(".csv", "") for f in fnames]
     data = {k: None for k in fnames_no_dotcsv}
     for i, f in enumerate(fnames):

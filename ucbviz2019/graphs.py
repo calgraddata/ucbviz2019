@@ -26,9 +26,13 @@ def get_generic_line_graph_html(df):
 
 
 def get_generic_heatmap_html(df):
-    data = go.heatmap(
-        z=df.values
-    )
+    data = [
+        go.Heatmap(
+            x=df.columns,
+            y=df.index,
+            z=df.values
+        )
+    ]
 
     layout = {
         "hovermode": "z"
