@@ -60,7 +60,7 @@ def get_all_filenames(data_dir=csvs_raw_dir, include_cpi=True):
 
 def load_df_and_info(
         fname, data_dir=csvs_raw_dir, remove_blank=True, drop_nan_years=True,
-        drop_nan_ix=True
+        drop_nan_ix=True,
 ):
     """
     Load a dataframe and info of ucb data from the refactored filename.
@@ -100,6 +100,13 @@ def load_df_and_info(
 
     if drop_nan_ix:
         df = df.loc[df.index.dropna()]
+
+    for c in df.columns:
+        df[c] = df[c].astype(str)
+        df[c] = df[c].str.replace("$", "")
+        df[c] = df[c].str.replace(",", "")
+        df[c] = df[c].str.replace("%", "")
+        df[c] = df[c].astype(float)
 
     return df, info
 
