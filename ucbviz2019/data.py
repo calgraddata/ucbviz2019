@@ -5,6 +5,34 @@ import pandas as pd
 from ucbviz2019.constants import csvs_raw_dir
 
 
+def get_all_filenames(data_dir=csvs_raw_dir, include_cpi=False):
+    """
+    Get all the filenames for the data.
+
+    Most of the files are of the form Programs (rows) x Years (columns) for
+    various financial metrics.
+
+    Args:
+        data_dir (str): The fully specified path of the data dir containing
+            the file.
+        include_cpi (bool): Include the pdst_cpi.csv file, which is different
+            in format from the rest of the files.
+
+    Returns:
+        ([str]): A list of the string filenames.
+    """
+    fnames = os.listdir(data_dir)
+    valid_fnames = []
+    for f in fnames:
+        if ".csv" in f:
+            if include_cpi:
+                valid_fnames.append(f)
+            else:
+                if f != "pdst_cpi.csv":
+                    valid_fnames.append(f)
+    return valid_fnames
+
+
 def load_df_and_info(
         fname, data_dir=csvs_raw_dir, remove_blank=True, drop_nan_years=True,
         drop_nan_ix=True
@@ -52,12 +80,18 @@ def load_df_and_info(
 
 
 if __name__ == "__main__":
-    for fname in os.listdir(csvs_raw_dir):
-        if ".csv" in fname:
-            df, info = load_df_and_info(fname, csvs_raw_dir)
-            print(fname)
-            # print(df.shape)
-            # print("\n")
-            print(info)
-            print(df)
-            print("\n\n\n")
+    # for fname in os.listdir(csvs_raw_dir):
+    #     if ".csv" in fname:
+    #         df, info = load_df_and_info(fname, csvs_raw_dir)
+    #         print(fname)
+    #         # print(df.shape)
+    #         # print("\n")
+    #         print(info)
+    #         print(df)
+    #         print("\n\n\n")
+
+    yes_cpi = get_all_filenames(include_cpi=True)
+    no_cpi = get_all_filenames(include_cpi=False)
+
+    print(f"Including cpi: {yes_cpi}")
+    print(f"No cpi {no_cpi}")
