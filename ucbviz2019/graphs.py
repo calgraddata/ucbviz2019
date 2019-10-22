@@ -1,4 +1,5 @@
 import dash_core_components as dcc
+import plotly.graph_objects as go
 
 
 def get_generic_line_graph_html(df):
@@ -18,10 +19,23 @@ def get_generic_line_graph_html(df):
     }
 
     plot = dcc.Graph(
-        # id=id,
         figure={"data": data, "layout": layout}
     )
 
+    return plot
+
+
+def get_generic_heatmap_html(df):
+    data = go.heatmap(
+        z=df.values
+    )
+
+    layout = {
+        "hovermode": "z"
+    }
+    plot = dcc.Graph(
+        figure={"data": data, "layout": layout}
+    )
     return plot
 
 

@@ -4,24 +4,36 @@ from dash.dependencies import Input, Output, State
 
 from ucbviz2019.app import app
 from ucbviz2019.constants import all_ucb_data
-
-test_div = html.Div("Test layout text")
+from ucbviz2019.bulk import select_bulk_graphs_html
 
 bulk_graph_dropdown = dcc.Dropdown(
     id="bulk_graph_dropdown",
     options=[
-        {"label": "Line graphs"},
-        {"label": "Heatmaps"}
-    ]
+        {"label": "Line graphs", "value": "lines"},
+        {"label": "Heatmaps", "value": "heatmaps"}
+    ],
+    value="lines",
 )
 
 bulk_graph_display = html.Div(id="bulk_graph_display")
 
 
-app.layout = html.Div([test_div] + line_graphs, className="section")
+logo = html.Img(src="/assets/graduate_division_logo.png", width=500, className="column")
+logo_centered = html.Div(logo, className="columns is-centered ucbvc-fade-in")
+
+
+app.layout = html.Div(
+    [
+        logo_centered,
+        bulk_graph_dropdown,
+        bulk_graph_display
+    ],
+)
 
 
 @app.callback(
-    Output
-
+    Output("bulk_graph_display", "children"),
+    [Input("bulk_graph_dropdown", "value")]
 )
+def update_bulk_graph_display(dropdown_value):
+    return select_bulk_graphs_html(dropdown_value)
