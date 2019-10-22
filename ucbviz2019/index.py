@@ -19,6 +19,16 @@ bulk_graph_dropdown = dcc.Dropdown(
 )
 
 bulk_graph_display = html.Div(id="bulk_graph_display")
+bulk_graph_display_loader = dcc.Loading(
+# 'graph', 'cube', 'circle', 'dot', 'default'
+    type="circle",
+    children=bulk_graph_display,
+    className="ucbvc-fade-in"
+)
+bulk_graph_display_container = html.Div(
+    bulk_graph_display_loader,
+    className="ucbvc-fade-in"
+)
 
 
 title = html.Div("UC Berkeley Graduate Division Visualization", className="is-size-2-desktop has-text-centered column")
@@ -29,7 +39,7 @@ app.layout = html.Div(
     [
         title_centered,
         bulk_graph_dropdown,
-        bulk_graph_display
+        bulk_graph_display_loader
     ],
     className="container"
 )
