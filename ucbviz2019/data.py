@@ -52,10 +52,6 @@ def load_df_and_info(
 
 
 if __name__ == "__main__":
-    pd.set_option("display.max_rows", 500)
-    pd.set_option("display.max_columns", 500)
-    pd.set_option("display.width", 1000)
-
     for fname in os.listdir(csvs_raw_dir):
         if ".csv" in fname:
             df, info = load_df_and_info(fname, csvs_raw_dir)
