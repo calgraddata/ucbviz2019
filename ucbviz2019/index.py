@@ -1,9 +1,9 @@
 import dash_html_components as html
 import dash_core_components as dcc
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 
 from ucbviz2019.app import app
-from ucbviz2019.bulk import select_bulk_graphs_html
+from ucbviz2019.graphs.bulk import select_bulk_graphs_html
 from ucbviz2019.data import get_all_data
 
 # don't load csvs more than once
@@ -21,16 +21,17 @@ bulk_graph_dropdown = dcc.Dropdown(
 bulk_graph_display = html.Div(id="bulk_graph_display")
 
 
-logo = html.Img(src="/assets/graduate_division_logo.png", className="column")
-logo_centered = html.Div(logo, className="columns is-centered ucbvc-fade-in")
+title = html.Div("UC Berkeley Graduate Division Visualization", className="is-size-2-desktop has-text-centered column")
+title_centered = html.Div(title, className="columns is-centered ucbvc-fade-in")
 
 
 app.layout = html.Div(
     [
-        logo_centered,
+        title_centered,
         bulk_graph_dropdown,
         bulk_graph_display
     ],
+    className="container"
 )
 
 

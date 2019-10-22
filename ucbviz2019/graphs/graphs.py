@@ -41,7 +41,3 @@ def get_generic_heatmap_html(df):
         figure={"data": data, "layout": layout}
     )
     return plot
-
-
-if __name__ == "__main__":
-    get_generic_line_graph_html()

@@ -3,7 +3,7 @@ Functions for generating bulk (multiple) graphs for prototyping etc.
 """
 import dash_html_components as html
 
-from ucbviz2019.graphs import get_generic_line_graph_html, get_generic_heatmap_html
+from ucbviz2019.graphs.graphs import get_generic_line_graph_html, get_generic_heatmap_html
 
 
 def select_bulk_graphs_html(data, graph_selector):
