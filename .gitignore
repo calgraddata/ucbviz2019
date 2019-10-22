@@ -110,3 +110,7 @@ venv.bak/
 .DS_Store
 matscholar_web/.DS_Store
 matscholar_web/static/.DS_Store
+
+
+# temporary excel files
+~$UCB*
