@@ -5,7 +5,7 @@ import pandas as pd
 from ucbviz2019.constants import csvs_raw_dir
 
 
-def load_df(
+def load_df_and_info(
         fname, data_dir=csvs_raw_dir, remove_blank=True, drop_nan_years=True,
         drop_nan_ix=True
 ):
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     for fname in os.listdir(csvs_raw_dir):
         if ".csv" in fname:
-            df, info = load_df(fname, csvs_raw_dir)
+            df, info = load_df_and_info(fname, csvs_raw_dir)
             print(fname)
             # print(df.shape)
             # print("\n")
