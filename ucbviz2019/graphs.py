@@ -13,6 +13,8 @@ def get_generic_line_graph_html(df):
     layout = {
         "clickmode": "event+select",
         "hovermode": "x+y",
+        "xaxis": {"title": "Year"},
+        "yaxis": {"title": "Dollars"}
     }
 
     plot = dcc.Graph(
