@@ -3,7 +3,7 @@ import dash_core_components as dcc
 from ucbviz2019.data import load_df_and_info
 
 
-def get_generic_line_graph_html(df, info):
+def get_generic_line_graph_html(df):
 
     marker = {"size": 15}
 
