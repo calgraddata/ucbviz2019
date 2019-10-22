@@ -1,30 +1,26 @@
 import dash_core_components as dcc
 
-from ucbviz2019.data import load_df_and_info
-
 
 def get_generic_line_graph_html(df):
-
-    marker = {"size": 15}
-
     data = []
     df = df.T
     for program in df.columns:
         program_data = df[program]
-        data.append({"x": program_data.index, "y": program_data.values, "name": program, "mode": "lines+markers", "marker": marker})
+        data.append(
+            {"x": program_data.index, "y": program_data.values, "name": program,
+             "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3})
 
     layout = {
         "clickmode": "event+select",
-        "hovermode": "x+y"
+        "hovermode": "x+y",
     }
 
     plot = dcc.Graph(
-        id="in_state_tuition_line",
+        # id=id,
         figure={"data": data, "layout": layout}
     )
 
     return plot
-
 
 
 if __name__ == "__main__":

@@ -24,7 +24,7 @@ def get_all_data(data_dir=csvs_raw_dir):
     fnames_no_dotcsv = [f.replace(".csv", "") for f in fnames]
     data = {k: None for k in fnames_no_dotcsv}
     for i, f in enumerate(fnames):
-        df, info = load_df_and_info()
+        df, info = load_df_and_info(f)
         fname_key = fnames_no_dotcsv[i]
         data[fname_key] = {"info": info, "df": df}
     return data
