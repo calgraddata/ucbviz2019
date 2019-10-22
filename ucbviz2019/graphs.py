@@ -3,12 +3,7 @@ import dash_core_components as dcc
 from ucbviz2019.data import load_df_and_info
 
 
-def get_generic_line_graph_html(fname):
-    df, info = load_df_and_info(fname)
-
-    # 'name': 'Trace 1',
-    # 'mode': 'markers',
-    # 'marker': {'size': 12}
+def get_generic_line_graph_html(df, info):
 
     marker = {"size": 15}
 

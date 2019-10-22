@@ -5,7 +5,32 @@ import pandas as pd
 from ucbviz2019.constants import csvs_raw_dir
 
 
-def get_all_filenames(data_dir=csvs_raw_dir, include_cpi=False):
+def get_all_data(data_dir=csvs_raw_dir):
+    """
+    Get all the data in one load function.
+
+    Args:
+        data_dir (str): The fully specified path of the data dir containing
+            the file.
+
+    Returns:
+        ({str: dict}): String keys are the names of the datasets without the
+            .csv ending. for example, "tuition", not "tuition.csv".
+            Values are dicts with the format:
+                key "info": value (str): The dataset's info.
+                key "df": value (pd.DataFrame): The dataset as a dataframe.
+    """
+    fnames = get_all_filenames(csvs_raw_dir, include_cpi=True)
+    fnames_no_dotcsv = [f.replace(".csv", "") for f in fnames]
+    data = {k: None for k in fnames_no_dotcsv}
+    for i, f in enumerate(fnames):
+        df, info = load_df_and_info()
+        fname_key = fnames_no_dotcsv[i]
+        data[fname_key] = {"info": info, "df": df}
+    return data
+
+
+def get_all_filenames(data_dir=csvs_raw_dir, include_cpi=True):
     """
     Get all the filenames for the data.
 
