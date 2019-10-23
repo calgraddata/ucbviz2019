@@ -13,7 +13,8 @@ bulk_graph_dropdown = dcc.Dropdown(
     id="bulk_graph_dropdown",
     options=[
         {"label": "Line graphs", "value": "lines"},
-        {"label": "Heatmaps", "value": "heatmaps"}
+        {"label": "Heatmaps", "value": "heatmaps"},
+        {"label": "Violin plots", "value": "violins"}
     ],
     value="lines",
 )

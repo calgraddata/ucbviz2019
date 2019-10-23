@@ -4,13 +4,14 @@ Functions for generating bulk (multiple) graphs for prototyping etc.
 import dash_html_components as html
 import dash_core_components as dcc
 
-from ucbviz2019.graphs.generic import get_generic_line_graph_html, get_generic_heatmap_html
+from ucbviz2019.graphs.generic import get_generic_line_graph_html, get_generic_heatmap_html, get_generic_violin_html
 
 
 def select_bulk_graphs_html(data, graph_selector):
     graph_selector_map = {
         "lines": get_generic_line_graph_html,
-        "heatmaps": get_generic_heatmap_html
+        "heatmaps": get_generic_heatmap_html,
+        "violins": get_generic_violin_html
     }
     graph_function = graph_selector_map[graph_selector]
     return generate_bulk_graphs_html(data, graph_function)
