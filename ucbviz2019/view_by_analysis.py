@@ -15,8 +15,8 @@ def app_view_html():
         min=1998,
         max=2018,
         value=2018,
-        step=None,
-        marks={k: str(k) for k in list(range(1998, 2019))},
+        step=1,
+        marks={k: str(k) for k in list(range(1998, 2019, 5))},
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )
@@ -53,27 +53,33 @@ def stats_html(slider_value):
     min_ost = ost[slider_value].min()
     min_ost_program = ost[slider_value].idxmin()
 
+
     max_html = tuition_stat_counters_html(
-        f"Highest Attendance Cost: {max_ist_program}",
+        dcc.Markdown(f"Highest Attendance Cost ({slider_value}): ***{max_ist_program}***", className="ucbvc-clicker-red"),
         "max",
         max_ist,
         max_ost,
+        "ucbvc-clicker-red"
     )
 
+    if min_ist_program=="Other Programs":
+        min_ist_program = "Non-professional Programs"
+
     min_html = tuition_stat_counters_html(
-        f"Lowest Attendance Cost: {min_ist_program}",
+        dcc.Markdown(f"Lowest Attendance Cost ({slider_value}): ***{min_ist_program}***", className="ucbvc-clicker-green"),
         "min",
         min_ist,
         min_ost,
+        "ucbvc-clicker-green"
     )
     return html.Div([max_html, min_html])
 
 
 def tuition_stat_counters_html(label, code, in_state_tuition,
-                               out_state_tuition):
+                               out_state_tuition, colorclass):
     """
     Args:
-        label: str
+        label: str or html
         in_state_tuition: float
         out_state_tuition: float
 
@@ -86,11 +92,6 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
         "out-state": "Out of state"
     }
 
-    colormap_classes = {
-        "in-state": "ucbvc-clicker-red",
-        "out-state": "ucbvc-clicker-green"
-    }
-
     stats_columns = []
     for k, tuition in {"in-state": int(in_state_tuition),
                        "out-state": int(out_state_tuition)}.items():
@@ -98,7 +99,7 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
         stat = html.Div(
             "${:,}".format(tuition),
             id=f"analysis-{k}-{code}-stat-cs",
-            className=f"is-size-4-desktop {common_stat_style}",
+            className=f"is-size-4-desktop {common_stat_style} {colorclass}",
         )
 
         stat_static_value = html.Div(
@@ -109,12 +110,12 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
 
         stat_descriptor = html.Div(
             f"{labelmap[k]}",
-            className=f"is-size-6-desktop has-text-centered has-margin-right-10 has-margin-left-10 {colormap_classes[k]}"
+            className=f"is-size-6-desktop has-text-centered has-margin-right-10 has-margin-left-10 {colorclass}"
         )
 
         stat_column = html.Div(
             [stat_descriptor, stat, stat_static_value],
-            className=f"flex-column is-half has-text-centered has-margin-top-10 {colormap_classes[k]}",
+            className=f"flex-column is-half has-text-centered has-margin-top-10 {colorclass}",
         )
         stats_columns.append(stat_column)
 
@@ -122,7 +123,7 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
                                   className="columns is-centered")
 
     stat_descriptor = html.Div(
-        f"{label}", className=f"is-size-4-desktop has-text-centered"
+        label, className=f"is-size-4-desktop has-text-centered"
     )
     container = html.Div([stat_descriptor, stats_columns_html],
                          className="has-margin-20")

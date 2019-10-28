@@ -15,6 +15,7 @@ function animatedCount(id, hiddenId, duration) {
     var countTo = parseInt(countTo, radix)
 
     var obj = document.getElementById(id);
+    obj.trigger('mouseenter')
 
     // assumes integer values for start and end
     var start = 0 * countTo;
@@ -33,7 +34,7 @@ function animatedCount(id, hiddenId, duration) {
     var startTime = new Date().getTime();
     var endTime = startTime + duration;
     var timer;
-
+1
     function run() {
         var now = new Date().getTime();
         var remaining = Math.max((endTime - now) / duration, 0);
