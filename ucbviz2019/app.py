@@ -69,7 +69,25 @@ app.clientside_callback(
 )
 
 
-
+################################################################################
+# By analysis page
+################################################################################
+# Counts up each stat
+app.clientside_callback(
+    ClientsideFunction(
+        namespace="clientside", function_name="countStatsClientsideFunction"
+    ),
+    Output("analysis-in-state-avg-stat-cs", "children"),
+    [
+        Input("core-url", "pathname"),
+        Input("analysis-in-state-avg-stat-cs", "id"),
+        # Input("about-count-abstracts-cs", "id"),
+        # Input("about-count-entities-cs", "id"),
+        Input("analysis-in-state-avg-stat-hidden-ref-cs", "id"),
+        # Input("about-count-abstracts-hidden-ref-cs", "id"),
+        # Input("about-count-entities-hidden-ref-cs", "id"),
+    ],
+)
 
 ################################################################################
 # By graph type view page

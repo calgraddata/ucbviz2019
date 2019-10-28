@@ -39,6 +39,7 @@ function animatedCount(id, hiddenId, duration) {
         var remaining = Math.max((endTime - now) / duration, 0);
         var value = Math.round(end - (remaining * range));
         var formattedValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        formattedValue = "$" + formattedValue;
         obj.innerHTML = formattedValue
         if (value == end) {
             clearInterval(timer);
