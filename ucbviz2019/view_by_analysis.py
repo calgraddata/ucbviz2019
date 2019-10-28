@@ -6,7 +6,7 @@ def app_view_html():
 
 
 
-def fee_increase_html():
+def stats_html():
     """
     Display the fee increase as a stacked bar chart.
     Returns:

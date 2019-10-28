@@ -5,7 +5,7 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output, State, ClientsideFunction
 
 from ucbviz2019.graphs.bulk import select_bulk_graphs_html
-from ucbviz2019.data import get_all_data
+from ucbviz2019 import all_provided_data
 import ucbviz2019.view_common as vc
 import ucbviz2019.view_by_degree as vbd
 import ucbviz2019.view_by_analysis as vba
@@ -21,9 +21,6 @@ app.title = "UC Berkeley Graduate Data Visualization Contest"
 
 app_container = html.Div(id="core-app-container", className="container has-margin-top-70")
 location = dcc.Location(id="core-url", refresh=False)
-
-# don't load csvs more than once
-all_ucb_data = get_all_data()
 
 
 app.layout = html.Div(
@@ -82,5 +79,5 @@ app.clientside_callback(
     [Input("bulk-graph-dropdown", "value")]
 )
 def update_bulk_graph_display(dropdown_value):
-    return select_bulk_graphs_html(all_ucb_data, dropdown_value)
+    return select_bulk_graphs_html(all_provided_data, dropdown_value)
 
