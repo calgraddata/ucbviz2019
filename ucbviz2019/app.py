@@ -2,7 +2,7 @@ import dash
 
 import dash_html_components as html
 import dash_core_components as dcc
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State, ClientsideFunction
 
 from ucbviz2019.graphs.bulk import select_bulk_graphs_html
 from ucbviz2019.data import get_all_data
@@ -58,6 +58,21 @@ def display_app_html(path):
         return vc.common_404_html()
 
 
+# Animates the burger menu expansion on contraction of page
+app.clientside_callback(
+    ClientsideFunction(
+        namespace="clientside",
+        function_name="animateBurgerOnClickClientsideFunction",
+    ),
+    Output("core-burger-trigger-cs", "value"),
+    [
+        Input("core-navbar-menu", "id"),
+        Input("core-burger-trigger-cs", "n_clicks"),
+    ],
+)
+
+
+
 
 ################################################################################
 # By graph type view page
@@ -68,3 +83,4 @@ def display_app_html(path):
 )
 def update_bulk_graph_display(dropdown_value):
     return select_bulk_graphs_html(all_ucb_data, dropdown_value)
+
