@@ -2,10 +2,10 @@ import dash
 
 import dash_html_components as html
 import dash_core_components as dcc
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State, ClientsideFunction
 
 from ucbviz2019.graphs.bulk import select_bulk_graphs_html
-from ucbviz2019.data import get_all_data
+from ucbviz2019 import all_provided_data
 import ucbviz2019.view_common as vc
 import ucbviz2019.view_by_degree as vbd
 import ucbviz2019.view_by_analysis as vba
@@ -23,9 +23,6 @@ app.title = "UC Berkeley Graduate Data Visualization Contest"
 
 app_container = html.Div(id="core-app-container", className="container has-margin-top-70")
 location = dcc.Location(id="core-url", refresh=False)
-
-# don't load csvs more than once
-all_ucb_data = get_all_data()
 
 
 app.layout = html.Div(
@@ -60,6 +57,39 @@ def display_app_html(path):
         return vc.common_404_html()
 
 
+# Animates the burger menu expansion on contraction of page
+app.clientside_callback(
+    ClientsideFunction(
+        namespace="clientside",
+        function_name="animateBurgerOnClickClientsideFunction",
+    ),
+    Output("core-burger-trigger-cs", "value"),
+    [
+        Input("core-navbar-menu", "id"),
+        Input("core-burger-trigger-cs", "n_clicks"),
+    ],
+)
+
+
+################################################################################
+# By analysis page
+################################################################################
+# Counts up each stat
+app.clientside_callback(
+    ClientsideFunction(
+        namespace="clientside", function_name="countStatsClientsideFunction"
+    ),
+    Output("analysis-in-state-avg-stat-cs", "children"),
+    [
+        Input("core-url", "pathname"),
+        Input("analysis-in-state-avg-stat-cs", "id"),
+        # Input("about-count-abstracts-cs", "id"),
+        # Input("about-count-entities-cs", "id"),
+        Input("analysis-in-state-avg-stat-hidden-ref-cs", "id"),
+        # Input("about-count-abstracts-hidden-ref-cs", "id"),
+        # Input("about-count-entities-hidden-ref-cs", "id"),
+    ],
+)
 
 ################################################################################
 # By graph type view page
@@ -69,7 +99,7 @@ def display_app_html(path):
     [Input("bulk-graph-dropdown", "value")]
 )
 def update_bulk_graph_display(dropdown_value):
-    return select_bulk_graphs_html(all_ucb_data, dropdown_value)
+    return select_bulk_graphs_html(all_provided_data, dropdown_value)
 
 
 @app.callback(

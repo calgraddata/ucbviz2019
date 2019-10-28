@@ -6,15 +6,18 @@ def nav_html():
     by_degree = dcc.Link(
         "Explore by Degree Program", href="/by_degree", className="navbar-item"
     )
-    extract = dcc.Link(
+    by_analysis = dcc.Link(
         "Explore Analyses", href="/by_analysis", className="navbar-item"
     )
+    about = dcc.Link(
+        "About", href="/by_about", className="navbar-item"
+    )
     navbar_start = html.Div(
-        [by_degree, extract], className="navbar-start"
+        [by_degree, by_analysis, about], className="navbar-start"
     )
 
     log_in = html.A(
-        "Official Support Forum",
+        "",
         className="button is-dark is-small is-hidden",
     )
     buttons = html.Div(log_in, className="buttons")
