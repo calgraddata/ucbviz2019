@@ -19,7 +19,7 @@ app.config.suppress_callback_exceptions = True
 app.title = "UC Berkeley Graduate Data Visualization Contest"
 
 
-app_container = html.Div(id="core-app-container", className="container")
+app_container = html.Div(id="core-app-container", className="container has-margin-top-50")
 location = dcc.Location(id="core-url", refresh=False)
 
 # don't load csvs more than once

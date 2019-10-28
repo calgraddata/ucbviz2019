@@ -27,11 +27,10 @@ def nav_html():
         [navbar_start, navbar_end], id=navbar_menu_id, className="navbar-menu"
     )
 
-    nav_image = html.Img(src="/assets/logo_inverted.png", height=200)
+    nav_image = html.Img(src="/assets/logo.png", height=300)
     nav_image_container = html.A(
         nav_image,
         className="navbar-item",
-        href="https://github.com/materialsintelligence",
     )
 
     burger = html.Span(**{"aria-hidden": True})
@@ -61,4 +60,4 @@ def nav_html():
 
 
 def common_404_html():
-    return html.Div("404", className="has-text-centered")
+    return html.Div("404", className="is-size-3 has-text-centered")
