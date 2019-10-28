@@ -26,7 +26,7 @@ app.title = "UC Berkeley Graduate Data Visualization Contest"
 
 
 app_container = html.Div(id="core-app-container", className="container has-margin-top-70")
-location = dcc.Location(id="core-url", refresh=False)
+location = dcc.Location(id="core-url", refresh=True)
 
 
 app.layout = html.Div(
