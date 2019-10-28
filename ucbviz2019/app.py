@@ -11,6 +11,8 @@ import ucbviz2019.view_by_degree as vbd
 import ucbviz2019.view_by_analysis as vba
 import ucbviz2019.view_by_about as vbabout
 import ucbviz2019.view_by_graph_type as vbt
+from ucbviz2019.graphs.fees_stacked_bar import generate_fee_stack_plot
+
 
 app = dash.Dash(__name__)
 app.css.config.serve_locally = True
@@ -103,3 +105,12 @@ app.clientside_callback(
 def update_bulk_graph_display(dropdown_value):
     return select_bulk_graphs_html(all_provided_data, dropdown_value)
 
+
+@app.callback(
+    Output("degree_fees_plot", "children"),
+    [Input("degree_program_dropdown", "value")]
+)
+def make_fees_plot(program):
+    if program is None:
+        return None
+    return dcc.Graph(figure=generate_fee_stack_plot(program))
