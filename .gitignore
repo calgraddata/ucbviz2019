@@ -114,4 +114,5 @@ matscholar_web/static/.DS_Store
 
 # temporary excel files
 ~$UCB*
-ucbviz2019/assets/data/UCB Programs.xlsx
+ucbviz2019/assets/other_data/UCB Programs.xlsx
+*.ipynb

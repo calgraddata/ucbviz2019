@@ -1,6 +1,6 @@
 from ucbviz2019.data import load_df_and_info
 import plotly.graph_objects as go
-from ucbviz2019.constants import program_category_mappings, program_categories
+from ucbviz2019.constants import program_category_mappings
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -25,7 +25,7 @@ def generate_fee_stack_plot(program="Other Programs"):
         plotly graph object.
 
     """
-
+    program_label = program
     if program in program_category_mappings:
         program = program_category_mappings[program]
     data = []
@@ -36,7 +36,7 @@ def generate_fee_stack_plot(program="Other Programs"):
     fig = go.Figure(data=data)
     fig.update_layout(
         title=go.layout.Title(
-            text="Fees for {}".format(program),
+            text="Fees for {}".format(program_label),
             x=0.4,
             y=0.87),
         xaxis=dict(
@@ -52,5 +52,6 @@ def generate_fee_stack_plot(program="Other Programs"):
 
 
 if __name__ == '__main__':
+    fig = generate_fee_stack_plot('Other Programs')
     fig = generate_fee_stack_plot('Other Programs')
     fig.show()
