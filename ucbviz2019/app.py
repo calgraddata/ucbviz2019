@@ -12,9 +12,13 @@ import ucbviz2019.view_by_analysis as vba
 import ucbviz2019.view_by_about as vbabout
 import ucbviz2019.view_by_graph_type as vbt
 from ucbviz2019.graphs.fees_stacked_bar import generate_fee_stack_plot, generate_tuition_stack_plot
+from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, total_cost_of_attendance_violin
 
+external_scripts = [
+    "https://code.jquery.com/jquery-3.4.1.min.js"
+]
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_scripts=external_scripts)
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 app.config.suppress_callback_exceptions = True
@@ -79,17 +83,44 @@ app.clientside_callback(
     ClientsideFunction(
         namespace="clientside", function_name="countStatsClientsideFunction"
     ),
-    Output("analysis-in-state-avg-stat-cs", "children"),
+    Output("analysis-in-state-min-stat-cs", "value"),
     [
         Input("core-url", "pathname"),
-        Input("analysis-in-state-avg-stat-cs", "id"),
-        # Input("about-count-abstracts-cs", "id"),
-        # Input("about-count-entities-cs", "id"),
-        Input("analysis-in-state-avg-stat-hidden-ref-cs", "id"),
-        # Input("about-count-abstracts-hidden-ref-cs", "id"),
-        # Input("about-count-entities-hidden-ref-cs", "id"),
+        Input("analysis-stats-year-slider", "id"),
+        Input("analysis-in-state-max-stat-cs", "id"),
+        Input("analysis-out-state-max-stat-cs", "id"),
+        Input("analysis-in-state-min-stat-cs", "id"),
+        Input("analysis-out-state-min-stat-cs", "id"),
+        Input("analysis-in-state-max-stat-hidden-ref-cs", "id"),
+        Input("analysis-out-state-max-stat-hidden-ref-cs", "id"),
+        Input("analysis-in-state-min-stat-hidden-ref-cs", "id"),
+        Input("analysis-out-state-min-stat-hidden-ref-cs", "id"),
     ],
 )
+
+@app.callback(
+    Output("analysis-stats-container", "children"),
+    [
+        Input("analysis-stats-year-slider", "value"),
+    ]
+)
+def update_stats_by_year_dropdown(slider_value):
+    return vba.stats_html(slider_value)
+
+@app.callback(
+    Output("analysis-ucb-finances-container", "children"),
+    [Input("analysis-ucb-finances-dropdown", "value")]
+)
+def update_ucb_finances_vs_tuitions_plot(value):
+    return ucb_finances_vs_tuitions_html(value)
+
+@app.callback(
+    Output("analysis-tacv-container", "children"),
+    [Input("analysis-tacv-dropdown", "value")]
+)
+def update_tacv_plot(value):
+    return total_cost_of_attendance_violin(value)
+
 
 ################################################################################
 # By graph type view page
@@ -101,6 +132,10 @@ app.clientside_callback(
 def update_bulk_graph_display(dropdown_value):
     return select_bulk_graphs_html(all_provided_data, dropdown_value)
 
+
+################################################################################
+# By degree
+################################################################################
 
 @app.callback(
     Output("degree_fees_plot", "children"),

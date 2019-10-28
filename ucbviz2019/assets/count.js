@@ -33,7 +33,7 @@ function animatedCount(id, hiddenId, duration) {
     var startTime = new Date().getTime();
     var endTime = startTime + duration;
     var timer;
-
+1
     function run() {
         var now = new Date().getTime();
         var remaining = Math.max((endTime - now) / duration, 0);

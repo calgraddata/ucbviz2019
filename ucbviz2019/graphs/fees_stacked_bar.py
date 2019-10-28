@@ -1,6 +1,6 @@
 from ucbviz2019.data import load_df_and_info
 import plotly.graph_objects as go
-from ucbviz2019.constants import program_category_mappings
+from ucbviz2019.data import get_program_categories
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -21,6 +21,8 @@ tuition_labels = {'tuition.csv': 'Base Tuition',
                   'nrst.csv': 'Non-Resident Supplemental Tuition',
                   'pdst.csv': 'Professional Degree Supplemental Tuition',
                   }
+
+program_category_mappings = get_program_categories()
 
 
 def generate_fee_stack_plot(program="Other Programs"):

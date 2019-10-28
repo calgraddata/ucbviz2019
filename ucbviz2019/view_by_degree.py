@@ -1,20 +1,19 @@
 import dash_html_components as html
 import dash_core_components as dcc
-from ucbviz2019.constants import program_category_mappings
 import dash_table
 import pandas as pd
+from ucbviz2019.data import get_program_options
 
-program_options = [{"label": key, "value": key} for key in program_category_mappings.keys()]
+# df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
+df = pd.DataFrame({"a": [1,2,3], "b": [4,5,6]})
 
-#df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
-df = pd.DataFrame({"a": [1,2,3], "b": [3,4,5]})
 
 def app_view_html():
     return html.Div([
         html.P("Explore Cost of Attendance by Program",
                className="is-size-3"),
         html.Label("Select your degree program:"),
-        dcc.Dropdown(options=program_options,
+        dcc.Dropdown(options=get_program_options(),
                      id='degree_program_dropdown',
                      placeholder='Program Name or Degree type (e.g. Ph.D, M.Eng., ...)'),
         dash_table.DataTable(
@@ -32,3 +31,5 @@ def app_view_html():
         html.Div(id="degree_tuition_plot", children=[]),
         html.Div(id="degree_fees_plot", children=[])
     ])
+
+

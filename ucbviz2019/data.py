@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from ucbviz2019.constants import csvs_raw_dir
+from ucbviz2019.constants import csvs_raw_dir, auxiliary_data_dir
 
 
 def get_all_data(data_dir=csvs_raw_dir):
@@ -111,19 +111,89 @@ def load_df_and_info(
     return df, info
 
 
+def load_auxiliary_df(fname, data_dir=auxiliary_data_dir):
+    """
+    Load an auxiliary data file.
+
+    If the auxiliary data file is financial data from UCB, loads all numbers
+    as integers, in BILLIONS
+
+    Args:
+        fname (str): The filename
+        data_dir (str): The auxiliary data directory.
+
+    Returns:
+        pd.Dataframe
+
+    """
+    test_fname_full = os.path.join(data_dir, fname)
+    if fname != "ucb_programs.csv":
+        df = pd.read_csv(test_fname_full, header=1, index_col=0)
+        df.columns = [convert_janky_year_to_readable(c) for c in df.columns]
+        for c in df.columns:
+            df[c] = df[c].astype(str)
+            df[c] = df[c].str.replace("$", "")
+            df[c] = df[c].str.replace(",", "")
+            df[c] = df[c].str.replace("%", "")
+            df[c] = df[c].astype(float) * 1000/1e9
+    else:
+        df = pd.read_csv(test_fname_full)
+    return df
+
+
+def convert_janky_year_to_readable(janky_fiscal_year):
+    """
+    Convert the janky csv formatitng caused by Excel to readable dataframe
+    formats by fiscal year. Only applicable to some auxiliary data files.
+
+    Args:
+        janky_fiscal_year (str): The column name in the form "3-4" meaning
+            2003-2004.
+
+    Returns:
+        (str): the corrected column name, e.g., "3-4" --> "2003-2004"
+
+    """
+    years = janky_fiscal_year.split("-")
+    year1 = years[0]
+    year2 = years[1]
+    first_year = "200" + year1 if int(year1) < 10 else "20" + year1
+    second_year = "200" + year2 if int(year2) < 10 else "20" + year2
+    label = f"{first_year}-{second_year}"
+    return label
+
+
+def get_program_categories():
+    """
+    Get the program categories
+
+    """
+    _df_by_program = load_auxiliary_df("ucb_programs.csv")
+    programs = list(_df_by_program['Graduate Programs'])
+    degrees = list(_df_by_program['Degrees'])
+    degrees = ['M.S., Ph.D.' if degree == 'Ph.D., M.S./Ph.D., M.S.' else degree
+               for degree in degrees]
+    categories = list(_df_by_program['Category Key'])
+
+    program_category_mappings = {}
+    for i in range(len(programs)):
+        program_category_mappings["{} ({})".format(programs[i], degrees[i])] = \
+        categories[i]
+    return program_category_mappings
+
+
+def get_program_options():
+    """
+    Get the program options
+
+    Returns:
+
+    """
+    program_category_mappings = get_program_categories()
+    program_options = [{"label": key, "value": key} for key in
+                       program_category_mappings.keys()]
+    return program_options
+
+
 if __name__ == "__main__":
-    # for fname in os.listdir(csvs_raw_dir):
-    #     if ".csv" in fname:
-    #         df, info = load_df_and_info(fname, csvs_raw_dir)
-    #         print(fname)
-    #         # print(df.shape)
-    #         # print("\n")
-    #         print(info)
-    #         print(df)
-    #         print("\n\n\n")
-
-    yes_cpi = get_all_filenames(include_cpi=True)
-    no_cpi = get_all_filenames(include_cpi=False)
-
-    print(f"Including cpi: {yes_cpi}")
-    print(f"No cpi {no_cpi}")
+    print(load_auxiliary_df("revenues_inflation_adjusted_dollars_in_thousands_by_fiscal_year.csv"))
