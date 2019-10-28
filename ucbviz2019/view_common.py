@@ -87,4 +87,5 @@ def common_info_box_html(elements, id=None):
         column, className="columns is-centered has-margin-top-50"
     )
     container = html.Div(columns, className="container", id=id)
-    return container
+    container_container = html.Div(container, className="has-margin-50")
+    return container_container

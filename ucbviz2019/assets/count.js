@@ -15,7 +15,6 @@ function animatedCount(id, hiddenId, duration) {
     var countTo = parseInt(countTo, radix)
 
     var obj = document.getElementById(id);
-    obj.trigger('mouseenter')
 
     // assumes integer values for start and end
     var start = 0 * countTo;

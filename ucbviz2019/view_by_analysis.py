@@ -14,20 +14,24 @@ def app_view_html():
         id="analysis-stats-year-slider",
         min=1998,
         max=2018,
-        value=2018,
+        value=2015,
         step=1,
         marks={k: str(k) for k in list(range(1998, 2019, 5))},
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )
     stats_container = html.Div(id="analysis-stats-container")
-    stats_box_container = html.Div([stats_header, stats_container, stats_year_dropdown], className="has-margin-50")
+    stats = common_info_box_html(elements=[stats_header, stats_container, stats_year_dropdown])
 
-    stats = common_info_box_html(elements=[stats_box_container])
+    ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses")
+    ucb_finances = ucb_finances_vs_tuitions_html()
+    ucbf = common_info_box_html(elements=[ucb_finances_header, ucb_finances])
+
 
     layout = html.Div(
         [
-            stats
+            stats,
+            ucbf
         ]
     )
 
@@ -133,4 +137,53 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
 common_stat_style = "has-margin-right-10 has-margin-left-10 has-text-centered has-text-weight-bold"
 
 
-# def generate_stats
+
+import plotly.graph_objects as go
+
+def ucb_finances_vs_tuitions_html():
+
+    years = list(range(1998, 2018))
+    min_ist = []
+    min_ist_program = []
+    max_ist = []
+    max_ist_program = []
+    min_ost = []
+    min_ost_program = []
+    max_ost = []
+    max_ost_program = []
+    for year in years:
+        y = str(year)
+        max_ist.append(ist[y].max())
+        max_ist_program.append(ist[y].idxmax())
+        min_ist.append(ist[y].min())
+        min_ist_program.append(ist[y].idxmin())
+        max_ost.append(ost[y].max())
+        max_ost_program.append(ost[y].idxmax())
+        min_ost.append(ost[y].min())
+        min_ost_program.append(ost[y].idxmin())
+
+    data = []
+    data.append(
+        {"x": years, "y": max_ist, "name": "Max In State Expenses", "hovertext": max_ist_program, "title": "TEST",
+         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3, "color": "blue"})
+    data.append(
+        {"x": years, "y": min_ist, "hovertext": min_ist_program, "name": "Min In State Expenses",
+         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3, "color": "turqouise"})
+    data.append(
+        {"x": years, "y": max_ost, "hovertext": max_ost_program, "name": "Max Out of State Expenses",
+         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3})
+    data.append(
+        {"x": years, "y": min_ost, "hovertext": min_ost_program, "name": "Min Out of State Expenses",
+         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3})
+
+    layout = {
+        "clickmode": "event+select",
+        "hovermode": "x+y",
+        "xaxis": {"title": "Year"},
+        "yaxis": {"title": "Dollars"}
+    }
+
+    plot = dcc.Graph(
+        figure={"data": data, "layout": layout}
+    )
+    return plot

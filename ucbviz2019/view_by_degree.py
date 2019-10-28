@@ -6,7 +6,8 @@ import pandas as pd
 
 program_options = [{"label": key, "value": key} for key in program_category_mappings.keys()]
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
+# df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/solar.csv')
+df = pd.DataFrame({"a": [1,2,3], "b": [4,5,6]})
 
 
 def app_view_html():

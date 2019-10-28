@@ -13,8 +13,11 @@ import ucbviz2019.view_by_about as vbabout
 import ucbviz2019.view_by_graph_type as vbt
 from ucbviz2019.graphs.fees_stacked_bar import generate_fee_stack_plot, generate_tuition_stack_plot
 
+external_scripts = [
+    "https://code.jquery.com/jquery-3.4.1.min.js"
+]
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_scripts=external_scripts)
 app.css.config.serve_locally = True
 app.scripts.config.serve_locally = True
 app.config.suppress_callback_exceptions = True
