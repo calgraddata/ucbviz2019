@@ -134,4 +134,6 @@ if __name__ == "__main__":
     # print(f"Including cpi: {yes_cpi}")
     # print(f"No cpi {no_cpi}")
 
-    print(load_auxiliary_df())
+    print(load_auxiliary_df("revenues_dollars_in_thousands.csv"))
+
+ucbviz2019/assets/data/aux/ucb_programs.csv

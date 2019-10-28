@@ -1,5 +1,5 @@
 import os
-from pandas import read_csv
+from ucbviz2019.data import load_auxiliary_df
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 assets_data_dir = os.path.join(root_dir, "assets/data")
@@ -17,12 +17,8 @@ program_categories = ['Other Programs', 'Optometry (OD)', 'Law (JD)', 'Business 
 
 this_year = "2019"
 
-df = read_csv("ucbviz2019/assets/data/aux/ucb_programs.csv")
-programs = list(df['Graduate Programs'])
-degrees = list(df['Degrees'])
+_df_by_program = load_auxiliary_df("ucb_programs.csv")
+programs = list(_df_by_program['Graduate Programs'])
+degrees = list(_df_by_program['Degrees'])
 degrees = ['M.S., Ph.D.' if degree == 'Ph.D., M.S./Ph.D., M.S.' else degree for degree in degrees]
-categories = list(df['Category Key'])
-
-program_category_mappings = {}
-for i in range(len(programs)):
-    program_category_mappings["{} ({})".format(programs[i], degrees[i])] = categories[i]
+categories = list(_df_by_program['Category Key'])
