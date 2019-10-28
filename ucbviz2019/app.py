@@ -79,18 +79,14 @@ app.clientside_callback(
     ClientsideFunction(
         namespace="clientside", function_name="countStatsClientsideFunction"
     ),
-    Output("analysis-in-state-avg-stat-cs", "children"),
+    Output("analysis-in-state-max-stat-cs", "children"),
     [
         Input("core-url", "pathname"),
         Input("analysis-stats-year-slider", "id"),
-        Input("analysis-in-state-avg-stat-cs", "id"),
-        Input("analysis-out-state-avg-stat-cs", "id"),
         Input("analysis-in-state-max-stat-cs", "id"),
         Input("analysis-out-state-max-stat-cs", "id"),
         Input("analysis-in-state-min-stat-cs", "id"),
         Input("analysis-out-state-min-stat-cs", "id"),
-        Input("analysis-in-state-avg-stat-hidden-ref-cs", "id"),
-        Input("analysis-out-state-avg-stat-hidden-ref-cs", "id"),
         Input("analysis-in-state-max-stat-hidden-ref-cs", "id"),
         Input("analysis-out-state-max-stat-hidden-ref-cs", "id"),
         Input("analysis-in-state-min-stat-hidden-ref-cs", "id"),
