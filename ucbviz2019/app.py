@@ -82,18 +82,30 @@ app.clientside_callback(
     Output("analysis-in-state-avg-stat-cs", "children"),
     [
         Input("core-url", "pathname"),
+        Input("analysis-stats-year-slider", "id"),
         Input("analysis-in-state-avg-stat-cs", "id"),
         Input("analysis-out-state-avg-stat-cs", "id"),
-
-        # Input("about-count-abstracts-cs", "id"),
-        # Input("about-count-entities-cs", "id"),
+        Input("analysis-in-state-max-stat-cs", "id"),
+        Input("analysis-out-state-max-stat-cs", "id"),
+        Input("analysis-in-state-min-stat-cs", "id"),
+        Input("analysis-out-state-min-stat-cs", "id"),
         Input("analysis-in-state-avg-stat-hidden-ref-cs", "id"),
         Input("analysis-out-state-avg-stat-hidden-ref-cs", "id"),
-
-        # Input("about-count-abstracts-hidden-ref-cs", "id"),
-        # Input("about-count-entities-hidden-ref-cs", "id"),
+        Input("analysis-in-state-max-stat-hidden-ref-cs", "id"),
+        Input("analysis-out-state-max-stat-hidden-ref-cs", "id"),
+        Input("analysis-in-state-min-stat-hidden-ref-cs", "id"),
+        Input("analysis-out-state-min-stat-hidden-ref-cs", "id"),
     ],
 )
+
+@app.callback(
+    Output("analysis-stats-container", "children"),
+    [
+        Input("analysis-stats-year-slider", "value"),
+    ]
+)
+def update_stats_by_year_dropdown(slider_value):
+    return vba.stats_html(slider_value)
 
 ################################################################################
 # By graph type view page
