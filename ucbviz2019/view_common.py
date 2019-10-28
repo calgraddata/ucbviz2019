@@ -3,13 +3,6 @@ import dash_core_components as dcc
 
 
 def nav_html():
-    """
-    Get the plotly html block for the nav bar.
-
-    Returns:
-        (dash_html_components.Div): The nav bar.
-
-    """
     by_degree = dcc.Link(
         "Explore by Degree Program", href="/by_degree", className="navbar-item"
     )
@@ -65,3 +58,7 @@ def nav_html():
     )
     nav_with_padding = html.Div(nav_menu, className="has-navbar-fixed-top")
     return nav_with_padding
+
+
+def common_404_html():
+    return html.Div("404", className="has-text-centered")

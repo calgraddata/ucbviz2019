@@ -1,6 +1,6 @@
 import dash_html_components as html
 
 
-def core_view():
+def app_view_html():
 
-    return
+    return html.Div("Hi there, this is the by degree page")
