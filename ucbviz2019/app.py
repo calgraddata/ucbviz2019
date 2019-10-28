@@ -81,9 +81,13 @@ app.clientside_callback(
     [
         Input("core-url", "pathname"),
         Input("analysis-in-state-avg-stat-cs", "id"),
+        Input("analysis-out-state-avg-stat-cs", "id"),
+
         # Input("about-count-abstracts-cs", "id"),
         # Input("about-count-entities-cs", "id"),
         Input("analysis-in-state-avg-stat-hidden-ref-cs", "id"),
+        Input("analysis-out-state-avg-stat-hidden-ref-cs", "id"),
+
         # Input("about-count-abstracts-hidden-ref-cs", "id"),
         # Input("about-count-entities-hidden-ref-cs", "id"),
     ],

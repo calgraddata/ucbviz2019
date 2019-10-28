@@ -48,7 +48,7 @@ def tuition_stat_counters(label, code, in_state_tuition, out_state_tuition):
         stat = html.Div(
             "${:,}".format(in_state_tuition),
             id=f"analysis-{k}-{code}-stat-cs",
-            className=f"is-size-4-desktop",
+            className=f"is-size-4-desktop {common_stat_style}",
         )
 
         stat_static_value = html.Div(
@@ -63,7 +63,7 @@ def tuition_stat_counters(label, code, in_state_tuition, out_state_tuition):
 
         stat_column = html.Div(
             [stat_descriptor, stat, stat_static_value],
-            className="flex-column is-half has-text-centered",
+            className="flex-column is-half has-text-centered has-margin-top-10",
         )
         stats_columns.append(stat_column)
 
@@ -73,5 +73,9 @@ def tuition_stat_counters(label, code, in_state_tuition, out_state_tuition):
     stat_descriptor = html.Div(
         f"{label}", className=f"is-size-4-desktop has-text-centered"
     )
-    container = html.Div([stat_descriptor, stats_columns_html])
+    container = html.Div([stat_descriptor, stats_columns_html], className="has-margin-20")
     return container
+
+
+
+common_stat_style = "has-margin-right-10 has-margin-left-10 has-text-centered has-text-weight-bold"

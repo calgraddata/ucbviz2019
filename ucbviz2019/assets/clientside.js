@@ -9,10 +9,10 @@ if(!window.dash_clientside) {window.dash_clientside = {};}
 window.dash_clientside.clientside = {
     // Animate the about page stats
     // See count.js for more details
-    countStatsClientsideFunction: function (pathname, id1, hiddenId1) {
+    countStatsClientsideFunction: function (pathname, id1, id2, hiddenId1, hiddenId2) {
         if (pathname == "/by_analysis"){
             animatedCount(id1, hiddenId1, countTime)
-//            animatedCount(id2, hiddenId2, countTime)
+            animatedCount(id2, hiddenId2, countTime)
 //            animatedCount(id3, hiddenId3, countTime)
         }
     },
