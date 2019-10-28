@@ -22,3 +22,7 @@ programs = list(_df_by_program['Graduate Programs'])
 degrees = list(_df_by_program['Degrees'])
 degrees = ['M.S., Ph.D.' if degree == 'Ph.D., M.S./Ph.D., M.S.' else degree for degree in degrees]
 categories = list(_df_by_program['Category Key'])
+
+program_category_mappings = {}
+for i in range(len(programs)):
+    program_category_mappings["{} ({})".format(programs[i], degrees[i])] = categories[i]
