@@ -15,8 +15,7 @@ def nav_html():
 
     log_in = html.A(
         "Official Support Forum",
-        href="https://materialsintelligence.discourse.group",
-        className="button is-dark is-small",
+        className="button is-dark is-small is-hidden",
     )
     buttons = html.Div(log_in, className="buttons")
     buttons_item = html.Div(buttons, className="navbar-item")
