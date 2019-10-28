@@ -7,9 +7,10 @@ from ucbviz2019.view_common import common_info_box_html
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
 ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
 
-def app_view_html():
 
-    stats_header = html.Div("Attendance Cost Extremes by Year", className="is-size-3 has-text-weight-bold")
+def app_view_html():
+    stats_header = html.Div("Attendance Cost Extremes by Year",
+                            className="is-size-3 has-text-weight-bold")
     stats_year_dropdown = dcc.Slider(
         id="analysis-stats-year-slider",
         min=1998,
@@ -21,12 +22,12 @@ def app_view_html():
         className="has-margin-10"
     )
     stats_container = html.Div(id="analysis-stats-container")
-    stats = common_info_box_html(elements=[stats_header, stats_container, stats_year_dropdown])
+    stats = common_info_box_html(
+        elements=[stats_header, stats_container, stats_year_dropdown])
 
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses")
     ucb_finances = ucb_finances_vs_tuitions_html()
     ucbf = common_info_box_html(elements=[ucb_finances_header, ucb_finances])
-
 
     layout = html.Div(
         [
@@ -57,20 +58,23 @@ def stats_html(slider_value):
     min_ost = ost[slider_value].min()
     min_ost_program = ost[slider_value].idxmin()
 
-
     max_html = tuition_stat_counters_html(
-        dcc.Markdown(f"Highest Attendance Cost ({slider_value}): ***{max_ist_program}***", className="ucbvc-clicker-red"),
+        dcc.Markdown(
+            f"Highest Attendance Cost ({slider_value}): ***{max_ist_program}***",
+            className="ucbvc-clicker-red"),
         "max",
         max_ist,
         max_ost,
         "ucbvc-clicker-red"
     )
 
-    if min_ist_program=="Other Programs":
+    if min_ist_program == "Other Programs":
         min_ist_program = "Non-professional Programs"
 
     min_html = tuition_stat_counters_html(
-        dcc.Markdown(f"Lowest Attendance Cost ({slider_value}): ***{min_ist_program}***", className="ucbvc-clicker-green"),
+        dcc.Markdown(
+            f"Lowest Attendance Cost ({slider_value}): ***{min_ist_program}***",
+            className="ucbvc-clicker-green"),
         "min",
         min_ist,
         min_ost,
@@ -99,7 +103,6 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
     stats_columns = []
     for k, tuition in {"in-state": int(in_state_tuition),
                        "out-state": int(out_state_tuition)}.items():
-
         stat = html.Div(
             "${:,}".format(tuition),
             id=f"analysis-{k}-{code}-stat-cs",
@@ -136,12 +139,11 @@ def tuition_stat_counters_html(label, code, in_state_tuition,
 
 common_stat_style = "has-margin-right-10 has-margin-left-10 has-text-centered has-text-weight-bold"
 
-
-
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
 
 def ucb_finances_vs_tuitions_html():
-
     years = list(range(1998, 2018))
     min_ist = []
     min_ist_program = []
@@ -162,28 +164,80 @@ def ucb_finances_vs_tuitions_html():
         min_ost.append(ost[y].min())
         min_ost_program.append(ost[y].idxmin())
 
-    data = []
-    data.append(
-        {"x": years, "y": max_ist, "name": "Max In State Expenses", "hovertext": max_ist_program, "title": "TEST",
-         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3, "color": "blue"})
-    data.append(
-        {"x": years, "y": min_ist, "hovertext": min_ist_program, "name": "Min In State Expenses",
-         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3, "color": "turqouise"})
-    data.append(
-        {"x": years, "y": max_ost, "hovertext": max_ost_program, "name": "Max Out of State Expenses",
-         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3})
-    data.append(
-        {"x": years, "y": min_ost, "hovertext": min_ost_program, "name": "Min Out of State Expenses",
-         "mode": "lines+markers", "marker": {"size": 15}, "opacity": 0.3})
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-    layout = {
-        "clickmode": "event+select",
-        "hovermode": "x+y",
-        "xaxis": {"title": "Year"},
-        "yaxis": {"title": "Dollars"}
-    }
+    fig.add_trace(
+        go.Scatter(
+            x=years,
+            y=max_ist,
+            name="Max In State Expenses",
+            mode="lines+markers",
+            hovertext=max_ist_program,
+            marker_color="orange",
+        ),
+        secondary_y=False
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=years,
+            y=min_ist,
+            name="Min In State Expenses",
+            mode="lines+markers",
+            hovertext=max_ist_program,
+            fill="tonexty",
+            fillcolor='rgba(226, 151, 0, 0.15)'
+        ),
+        secondary_y=False
+    )
+
+    fig.add_trace(
+        go.Scatter(x=[2012, 2013, 2014], y=[4, 5, 6], name="yaxis2 data"),
+        secondary_y=True,
+    )
+
+    # Add figure title
+    fig.update_layout(
+        title_text="Double Y Axis Example"
+    )
+
+    # Set x-axis title
+    fig.update_xaxes(title_text="xaxis title")
+
+    # Set y-axes titles
+    fig.update_yaxes(title_text="<b>primary</b> yaxis title", secondary_y=False)
+    fig.update_yaxes(title_text="<b>secondary</b> yaxis title",
+                     secondary_y=True)
+
+    # fig.add_trace(
+    #     go.Scatter(
+    #         x=years,
+    #         y=max_ost,
+    #         name="Max Out of State Expenses",
+    #         mode="lines+markers",
+    #         hovertext=max_ist_program
+    #     ),
+    #     secondary_y=False
+    # )
+    # fig.add_trace(
+    #     go.Scatter(
+    #         x=years,
+    #         y=min_ost,
+    #         name="Min Out of State Expenses",
+    #         mode="lines+markers",
+    #         hovertext=max_ist_program
+    #     ),
+    #     secondary_y=False
+    # )
+
+    # layout = {
+    #     "clickmode": "event+select",
+    #     "hovermode": "x",
+    #     "xaxis": {"title": "Year"},
+    #     "yaxis": {"title": "Dollars"}
+    # }
+    # fig.update_layout(**layout)
 
     plot = dcc.Graph(
-        figure={"data": data, "layout": layout}
+        figure=fig
     )
     return plot

@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from ucbviz2019.constants import csvs_raw_dir
+from ucbviz2019.constants import csvs_raw_dir, auxiliary_data_dir
 
 
 def get_all_data(data_dir=csvs_raw_dir):
@@ -111,6 +111,12 @@ def load_df_and_info(
     return df, info
 
 
+def load_auxiliary_df(fname, data_dir=auxiliary_data_dir):
+    test_fname_full = os.path.join(data_dir, fname)
+    df = pd.read_csv(test_fname_full, header=0, index_col=0)
+    print(df)
+
+
 if __name__ == "__main__":
     # for fname in os.listdir(csvs_raw_dir):
     #     if ".csv" in fname:
@@ -121,9 +127,11 @@ if __name__ == "__main__":
     #         print(info)
     #         print(df)
     #         print("\n\n\n")
+    #
+    # yes_cpi = get_all_filenames(include_cpi=True)
+    # no_cpi = get_all_filenames(include_cpi=False)
+    #
+    # print(f"Including cpi: {yes_cpi}")
+    # print(f"No cpi {no_cpi}")
 
-    yes_cpi = get_all_filenames(include_cpi=True)
-    no_cpi = get_all_filenames(include_cpi=False)
-
-    print(f"Including cpi: {yes_cpi}")
-    print(f"No cpi {no_cpi}")
+    print(load_auxiliary_df())
