@@ -43,7 +43,7 @@ def total_cost_of_attendance_violin(mode):
                 hoverinfo="text+y+name"
             )
         )
-    fig.update_layout(showlegend=True)
+    fig.update_layout(showlegend=False)
     plot = dcc.Graph(figure=fig)
     return plot
 

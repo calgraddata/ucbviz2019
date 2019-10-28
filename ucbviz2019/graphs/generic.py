@@ -57,6 +57,16 @@ def get_generic_violin_html(df):
                 hoverinfo="text+y+name"
             )
         )
-    fig.update_layout(showlegend=True)
-    plot = dcc.Graph(figure=fig)
-    return plot
+    fig.update_layout(showlegend=False)
+    return fig
+    # plot = dcc.Graph(figure=fig)
+    # return plot
+
+
+
+if __name__=="__main__":
+    from ucbviz2019 import all_provided_data
+
+    ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
+    plot = get_generic_violin_html(ist)
+    plot.show()
