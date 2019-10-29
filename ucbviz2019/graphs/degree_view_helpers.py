@@ -1,6 +1,6 @@
 from ucbviz2019.data import load_df_and_info
 import plotly.graph_objects as go
-from ucbviz2019.view_common import common_info_box_html
+from ucbviz2019.view_common import common_info_box_html, common_info_box_wide_html
 from ucbviz2019.data import get_program_data_as_dict, get_program_categories
 import dash_core_components as dcc
 import dash_html_components as html
@@ -56,8 +56,8 @@ def generate_fee_stack_plot(program="Other Programs"):
         legend=dict(x=0, y=1.11),
         title=go.layout.Title(
             text="Fees for {}".format(program_label),
-            x=0.4,
-            y=0.87),
+            x=0.5,
+            y=0.9),
         xaxis=dict(
             title=go.layout.xaxis.Title(text="Academic Year (Starting In)"),
             tickmode='array',
@@ -100,8 +100,8 @@ def generate_tuition_stack_plot(program="Other Programs"):
         legend=dict(x=0, y=1.11),
         title=go.layout.Title(
             text="Tuition for {}".format(program_label),
-            x=0.4,
-            y=0.87),
+            x=0.5,
+            y=0.9),
         xaxis=dict(
             title=go.layout.xaxis.Title(text="Academic Year (Starting In)"),
             tickmode='array',
@@ -150,7 +150,7 @@ def make_degree_info_card(program):
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )
-    return common_info_box_html(elements=[card_title,
+    return common_info_box_wide_html(elements=[card_title,
                                           program_stats_for_year,
                                           program_year_slider])
 
