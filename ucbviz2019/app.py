@@ -148,10 +148,10 @@ def update_degree_card(program):
 
 @app.callback(
     Output("degree_card_stats", "children"),
-    [Input("degree_program_dropdown", "value"),
-     Input("degree_card_slider", "value")]
+    [Input("degree_card_slider", "value")],
+    [State("degree_program_dropdown", "value")]
 )
-def update_degree_card(program, year):
+def update_degree_card(year, program):
     return get_program_stats(program, year)
 
 @app.callback(
@@ -159,6 +159,7 @@ def update_degree_card(program, year):
     [Input("degree_program_dropdown", "value")]
 )
 def make_fees_plot(program):
+    print("program is", program)
     if program is None:
         return None
     return dcc.Graph(figure=generate_fee_stack_plot(program))

@@ -4,7 +4,8 @@ from ucbviz2019.view_common import common_info_box_html, common_info_box_wide_ht
 from ucbviz2019.data import get_program_data_as_dict, get_program_categories
 import dash_core_components as dcc
 import dash_html_components as html
-
+import dash_table
+import pandas as pd
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -116,16 +117,19 @@ def generate_tuition_stack_plot(program="Other Programs"):
 
 common_header_style = "is-size-3 has-text-weight-bold"
 
+
 def get_program_stats(program, year):
     program_label = program
     if program in program_category_mappings:
         program = program_category_mappings[program]
-    program_stats = get_program_data_as_dict()[program][year]
-    program_stats = {data_labels[key]: program_stats[key] for key in program_stats}
+    program_stats = get_program_data_as_dict()[program][str(year)]
+    program_stats = {data_labels[key+".csv"]: program_stats[key] for key in program_stats}
 
     ## CODE TO GENERATE CARD HERE
+    # return html.Div()
 
-    return html.Div()
+    # Placeholder Table
+    return html.Div([dcc.Markdown(f"{label}: ${value}") for label, value in program_stats.items()])
 
 
 def make_degree_info_card(program):
@@ -139,20 +143,20 @@ def make_degree_info_card(program):
 
     card_title = html.Div(f"Attendance Costs for {program_label}",
                           className=common_header_style)
-    program_stats_for_year = html.Div()
+    program_stats_for_year = html.Div(id='degree_card_stats')
     program_year_slider = dcc.Slider(
-        id="degree-stats-year-slider",
+        id="degree_card_slider",
         min=max(min(years), 1998),
         max=min(max(years), 2018),
         value=min(max(years), 2018),
         step=1,
-        marks={k: str(k) for k in range(max(min(years), 1998), min(max(years), 2018)+1)},
+        marks={k: str(k) for k in range(max(min(years), 1998), min(max(years), 2018) + 1)},
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )
     return common_info_box_wide_html(elements=[card_title,
-                                          program_stats_for_year,
-                                          program_year_slider])
+                                               program_stats_for_year,
+                                               program_year_slider])
 
 
 if __name__ == '__main__':
