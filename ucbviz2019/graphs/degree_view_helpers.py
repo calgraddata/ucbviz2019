@@ -142,9 +142,9 @@ def make_degree_info_card(program):
     program_stats_for_year = html.Div()
     program_year_slider = dcc.Slider(
         id="degree-stats-year-slider",
-        min=min(years),
-        max=max(years),
-        value=max(years),
+        min=min(min(years), 1998),
+        max=min(max(years), 2018),
+        value=min(max(years), 2018),
         step=1,
         marks={k: str(k) for k in years},
         # tooltip="Generate stats by year"
