@@ -11,8 +11,10 @@ import ucbviz2019.view_by_degree as vbd
 import ucbviz2019.view_by_analysis as vba
 import ucbviz2019.view_by_about as vbabout
 import ucbviz2019.view_by_graph_type as vbt
-from ucbviz2019.graphs.fees_stacked_bar import generate_fee_stack_plot, generate_tuition_stack_plot
+from ucbviz2019.graphs.degree_view_helpers import generate_fee_stack_plot, generate_tuition_stack_plot
 from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, total_cost_of_attendance_violin
+from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, get_program_stats
+
 
 external_scripts = [
     "https://code.jquery.com/jquery-3.4.1.min.js"
@@ -138,6 +140,21 @@ def update_bulk_graph_display(dropdown_value):
 ################################################################################
 
 @app.callback(
+    Output("degree_card_container", "children"),
+    [Input("degree_program_dropdown", "value")]
+)
+def update_degree_card(program):
+    return make_degree_info_card(program)
+
+@app.callback(
+    Output("degree_card_stats", "children"),
+    [Input("degree_program_dropdown", "value"),
+     Input("degree_card_slider", "value")]
+)
+def update_degree_card(program, year):
+    return get_program_stats(program, year)
+
+@app.callback(
     Output("degree_fees_plot", "children"),
     [Input("degree_program_dropdown", "value")]
 )
@@ -150,7 +167,8 @@ def make_fees_plot(program):
     Output("degree_tuition_plot", "children"),
     [Input("degree_program_dropdown", "value")]
 )
-def make_fees_plot(program):
+def make_tuition_plot(program):
     if program is None:
         return None
     return dcc.Graph(figure=generate_tuition_stack_plot(program))
+

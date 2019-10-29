@@ -1,7 +1,6 @@
 import os
-
 import pandas as pd
-
+import numpy as np
 from ucbviz2019.constants import csvs_raw_dir, auxiliary_data_dir
 
 
@@ -194,6 +193,26 @@ def get_program_options():
                        program_category_mappings.keys()]
     return program_options
 
+
+def get_program_data_as_dict():
+    data = get_all_data()
+    full_data = {}
+    for key in data:
+        df = data[key]['df']
+        for program in df.index:
+            for year in df.loc[program].index:
+                val = df.loc[program].loc[year]
+                if np.isnan(val):
+                    val = 0.0
+                if program not in full_data:
+                    full_data[program] = {year: {key: val}}
+                elif year not in full_data[program]:
+                    full_data[program].update({year: {key: val}})
+                elif key not in full_data[program][year]:
+                    full_data[program][year].update({key: val})
+                else:
+                    full_data[program][year][key] = val
+    return full_data
 
 if __name__ == "__main__":
     print(load_auxiliary_df("revenues_inflation_adjusted_dollars_in_thousands_by_fiscal_year.csv"))
