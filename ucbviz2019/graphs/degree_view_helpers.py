@@ -146,7 +146,7 @@ def make_degree_info_card(program):
         max=min(max(years), 2018),
         value=min(max(years), 2018),
         step=1,
-        marks={k: str(k) for k in years},
+        marks={k: str(k) for k in range(max(min(years), 1998), min(max(years), 2018)+1)},
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )
