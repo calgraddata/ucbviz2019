@@ -26,6 +26,7 @@ window.dash_clientside.clientside = {
     },
 
 
+    // counting stats on the by degree menu
     countPerDegreeStatsClientsideFunction: function (
         pathname,
         id1,
