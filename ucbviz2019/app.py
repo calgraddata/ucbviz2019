@@ -48,7 +48,7 @@ app.layout = html.Div(
         nav_container,
         app_container_margined
     ],
-    className="container"
+    className="section"
 )
 
 

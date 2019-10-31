@@ -423,7 +423,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
     plot = dcc.Graph(
         figure=fig
     )
-    return html.Div(plot)
+    return html.Div([plot])
 
 
 # The function for fitting
