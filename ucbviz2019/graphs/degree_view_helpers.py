@@ -139,7 +139,8 @@ def get_program_stats(program, year):
         "Base Tuition": "base-tuition",
         "Non-Resident Supplemental Tuition": "nrst",
         "Transit Fee": "transit-fee",
-        "Health Insurance Fee": "health-insurance-fee"
+        "Health Insurance Fee": "health-insurance-fee",
+        "Professional Degree Supplemental Tuition": "pdst"
     }
 
     common_classname = "is-size-6-desktop has-text-bold has-text-centered"
@@ -164,9 +165,9 @@ def get_program_stats(program, year):
         this_stat_div = html.Div([label, animated_container, hidden_ref])
         divs.append(this_stat_div)
 
-    column1 = html.Div(divs[0:3], className="column is-one-third box has-padding-10")
-    column2 = html.Div(divs[3:6], className="column is-one-third box")
-    column3 = html.Div(divs[6:9], className="column is-one-third box")
+    column1 = html.Div(divs[0:3], className="column is-one-third box has-margin-5")
+    column2 = html.Div(divs[3:7], className="column is-one-third box has-margin-5")
+    column3 = html.Div(divs[7:10], className="column is-one-third box has-margin-5")
 
     container = html.Div([column1, column2, column3], className="columns")
     return container

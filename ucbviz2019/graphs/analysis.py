@@ -45,7 +45,7 @@ def total_cost_of_attendance_violin(mode):
         )
     fig.update_layout(showlegend=False)
     plot = dcc.Graph(figure=fig)
-    return plot
+    return html.Div([plot])
 
 
 def ucb_finances_vs_tuitions_html(mode):
@@ -169,4 +169,4 @@ def ucb_finances_vs_tuitions_html(mode):
     plot = dcc.Graph(
         figure=fig
     )
-    return plot
+    return html.Div([plot])
