@@ -15,6 +15,9 @@ from ucbviz2019.graphs.degree_view_helpers import generate_fee_stack_plot, gener
 from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, total_cost_of_attendance_violin
 from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, get_program_stats
 
+from flask_caching import Cache
+
+cache = Cache()
 
 external_scripts = [
     "https://code.jquery.com/jquery-3.4.1.min.js"
