@@ -2,7 +2,7 @@ from ucbviz2019.data import load_df_and_info
 import plotly.graph_objects as go
 from ucbviz2019.view_common import common_info_box_html, \
     common_info_box_html, common_plotly_graph_font_style
-from ucbviz2019.data import get_program_data_as_dict, get_program_categories
+from ucbviz2019 import program_categories, program_data_as_dict
 from ucbviz2019.constants import this_year
 import dash_core_components as dcc
 import dash_html_components as html
@@ -31,8 +31,6 @@ data_labels = {'health_insurance_fee.csv': 'Health Insurance Fee',
                'total_in_state.csv': 'Total (In State)'
                }
 
-program_category_mappings = get_program_categories()
-
 
 def generate_fee_stack_plot(program="Other Programs"):
     """
@@ -46,8 +44,8 @@ def generate_fee_stack_plot(program="Other Programs"):
 
     """
     program_label = program
-    if program in program_category_mappings:
-        program = program_category_mappings[program]
+    if program in program_categories:
+        program = program_categories[program]
     all_data = {}
     bars = []
     for fee in fees:
@@ -116,8 +114,8 @@ def generate_tuition_stack_plot(program="Other Programs"):
 
     """
     program_label = program
-    if program in program_category_mappings:
-        program = program_category_mappings[program]
+    if program in program_categories:
+        program = program_categories[program]
 
     all_data = {}
     bars = []
@@ -185,9 +183,9 @@ common_header_style = "is-size-3 has-text-weight-bold"
 
 
 def get_program_stats(program, year):
-    if program in program_category_mappings:
-        program = program_category_mappings[program]
-    program_stats = get_program_data_as_dict()[program][str(year)]
+    if program in program_categories:
+        program = program_categories[program]
+    program_stats = program_data_as_dict[program][str(year)]
     program_stats = {data_labels[key + ".csv"]: program_stats[key] for key in
                      program_stats}
 
@@ -268,9 +266,9 @@ def make_degree_info_card(program):
     if program is None:
         return None
     program_label = program
-    if program in program_category_mappings:
-        program = program_category_mappings[program]
-    program_data = get_program_data_as_dict()[program]
+    if program in program_categories:
+        program = program_categories[program]
+    program_data = program_data_as_dict[program]
     years = [int(year) for year in program_data.keys()]
 
     card_title = html.Div(f"Overview of attendance costs",
@@ -321,10 +319,10 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                      "other_misc_fees"]
     out_state_fees = in_state_fees + ["nrst"]
 
-    if program in program_category_mappings:
-        program = program_category_mappings[program]
+    if program in program_categories:
+        program = program_categories[program]
 
-    program_data = get_program_data_as_dict()[program]
+    program_data = program_data_as_dict[program]
 
     df = pd.DataFrame(program_data)
     df = df.apply(pd.to_numeric, errors='coerce')

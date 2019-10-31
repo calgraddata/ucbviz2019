@@ -1,6 +1,6 @@
 import dash_html_components as html
 import dash_core_components as dcc
-from ucbviz2019.data import get_program_options
+from ucbviz2019 import program_options
 from ucbviz2019.view_common import wrap_in_loader_html, common_info_box_html, common_header_style, common_explanation_style
 
 
@@ -67,7 +67,7 @@ def app_view_html():
     ),
         # html.Div(style={'padding': 10}),
         find_your_degree_container,
-        dcc.Dropdown(options=get_program_options(),
+        dcc.Dropdown(options=program_options,
                      id='degree-program-dropdown',
                      value="Mechanical Engineering (M.S., Ph.D.)",
                      placeholder='Start typing program name or degree type (e.g. Ph.D, M.Eng., ...)'),

@@ -181,14 +181,13 @@ def get_program_categories():
     return program_category_mappings
 
 
-def get_program_options():
+def get_program_options(program_category_mappings):
     """
     Get the program options
 
     Returns:
 
     """
-    program_category_mappings = get_program_categories()
     program_options = [{"label": key, "value": key} for key in
                        program_category_mappings.keys()]
     return program_options
@@ -213,6 +212,7 @@ def get_program_data_as_dict():
                 else:
                     full_data[program][year][key] = val
     return full_data
+
 
 
 if __name__ == "__main__":
