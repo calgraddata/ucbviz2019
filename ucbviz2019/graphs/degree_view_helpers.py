@@ -143,13 +143,13 @@ def get_program_stats(program, year):
         "Professional Degree Supplemental Tuition": "pdst"
     }
 
-    common_classname = "is-size-6-desktop has-text-bold has-text-centered"
+    common_classname = "is-size-6-desktop has-text-bold has-text-centered ucbvc-clicker-blue"
 
     # Placeholder Table
 
     divs = []
     for stat, value in program_stats.items():
-        label = html.Div(stat, className="is-size-5 has-text-centered")
+        label = html.Div(stat, className="is-size-5 has-text-centered ucbvc-clicker-blue")
         animated_id = f"degree-{callback_container_mapping[stat]}-cs"
         animated_container = html.Div(
             children="${:,}".format(value),
