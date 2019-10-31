@@ -81,7 +81,7 @@ def common_404_html():
     return html.Div("404", className="is-size-3 has-text-centered")
 
 
-def common_info_box_html(elements, id=None):
+def common_info_box_html(elements):
     """
     Get an outlined box for displaying information, such as references, about
     page stuff, etc. Can be used in any app.
@@ -90,7 +90,6 @@ def common_info_box_html(elements, id=None):
         elements ([dash_html_components.Div], dash_html_components.Div): Either
             a single dash html component or multiple in a list. These will
             be encapsulated by the box.
-        id (str, None): The id you want to assign to the container of the box.
 
     Returns:
         container (dash_html_components.Div): an html block container for the
@@ -103,8 +102,9 @@ def common_info_box_html(elements, id=None):
     columns = html.Div(
         children=[column], className="columns is-centered has-margin-top-30"
     )
-    container = html.Div(children=[columns], className="container", id=id)
+    container = html.Div(children=[columns], className="container")
     return container
+
 
 
 def wrap_in_loader_html(element):
