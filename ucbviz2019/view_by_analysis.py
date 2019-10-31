@@ -76,7 +76,7 @@ def app_view_html():
         className="has-margin-10"
     )
     amayhm_container = html.Div(id="analysis-amayhm-container", children=dcc.Graph())
-    amayhm = common_info_box_html(elements=[amayhm_dropdown, amayhm_container])
+    amayhm = common_info_box_html(elements=[amayhm_header, amayhm_dropdown, amayhm_container])
 
 
     layout = html.Div(
