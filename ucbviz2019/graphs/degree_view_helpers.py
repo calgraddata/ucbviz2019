@@ -127,7 +127,7 @@ def get_program_stats(program, year):
     if program in program_category_mappings:
         program = program_category_mappings[program]
     program_stats = get_program_data_as_dict()[program][str(year)]
-    program_stats = {data_labels[key + ".csv"]: int(program_stats[key]) for key in
+    program_stats = {data_labels[key + ".csv"]: program_stats[key] for key in
                      program_stats}
 
     callback_container_mapping = {
@@ -143,33 +143,58 @@ def get_program_stats(program, year):
         "Professional Degree Supplemental Tuition": "pdst"
     }
 
-    common_classname = "is-size-6-desktop has-text-bold has-text-centered ucbvc-clicker-blue"
+    common_classname = "is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-blue"
 
     # Placeholder Table
 
-    divs = []
+    print(program_stats)
+
+    divs = {}
+    divs_is_empty = {}
     for stat, value in program_stats.items():
-        label = html.Div(stat, className="is-size-5 has-text-centered ucbvc-clicker-blue")
         animated_id = f"degree-{callback_container_mapping[stat]}-cs"
+        hidden_id = f"degree-{callback_container_mapping[stat]}-hidden-ref-cs"
+
+        try:
+            value = int(value)
+        except:
+            # make an invisible placeholder to make sure nothing breaks!
+            animated_container = html.Div(id=animated_id, children="99999", className="is-hidden")
+            hidden_ref = html.Div(id=hidden_id, children="99999", className="is-hidden")
+            divs[stat] = html.Div([hidden_ref, animated_container])
+            divs_is_empty[stat] = True
+            continue
+
+        label = html.Div(stat, className="is-size-5 has-text-centered ucbvc-clicker-blue")
         animated_container = html.Div(
             children="${:,}".format(value),
             id=animated_id,
             className=common_classname
         )
-        hidden_id = f"degree-{callback_container_mapping[stat]}-hidden-ref-cs"
         hidden_ref = html.Div(
             children=int(value),
             id=hidden_id,
             className="is-hidden"
         )
-        this_stat_div = html.Div([label, animated_container, hidden_ref])
-        divs.append(this_stat_div)
+        this_stat_div = html.Div([label, animated_container, hidden_ref], className="ucbvc-clicker-blue")
+        divs[stat] = this_stat_div
+        divs_is_empty[stat] = False
 
-    column1 = html.Div(divs[0:3], className="column is-one-third box has-margin-5")
-    column2 = html.Div(divs[3:7], className="column is-one-third box has-margin-5")
-    column3 = html.Div(divs[7:10], className="column is-one-third box has-margin-5")
+    first_column = ["Total (In State)", "Total (Out of State)", "Base Tuition"]
+    second_column = ["Non-Resident Supplemental Tuition", "Professional Degree Supplemental Tuition", "Student Services Fee", "Campus Fee"]
+    third_column = ["Health Insurance Fee", "Transit Fee", "Other Misc. Fees"]
 
-    container = html.Div([column1, column2, column3], className="columns")
+    columns = []
+    common_subcard_style = "column is-one-third box has-margin-5"
+    for column_set in [first_column, second_column, third_column]:
+        if all([divs_is_empty[k] for k in column_set]):
+            no_data_text = html.Div("No data available.", className="is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-red")
+            column = html.Div(no_data_text, className=common_subcard_style)
+        else:
+            column = html.Div([divs[k] for k in column_set], className=common_subcard_style)
+        columns.append(column)
+
+    container = html.Div(columns, className="columns")
     return container
 
 

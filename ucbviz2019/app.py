@@ -32,8 +32,15 @@ app_container = html.Div(id="core-app-container",
                          className="container has-margin-top-70")
 location = dcc.Location(id="core-url", refresh=True)
 
+external_stylesheets = html.Link(
+    href="https://fonts.googleapis.com/css?family=Cardo&display=swap",
+    rel="stylesheet",
+    className="is-hidden",
+)
+
 app.layout = html.Div(
     [
+        external_stylesheets,
         location,
         vc.nav_html(),
         app_container
@@ -195,6 +202,7 @@ app.clientside_callback(
         Input("degree-base-tuition-cs", "id"),
         Input("degree-nrst-cs", "id"),
         Input("degree-transit-fee-cs", "id"),
+        Input("degree-pdst-cs", "id"),
         Input("degree-health-insurance-fee-cs", "id"),
         Input("degree-total-in-state-hidden-ref-cs", "id"),
         Input("degree-other-misc-fees-hidden-ref-cs", "id"),
@@ -205,6 +213,7 @@ app.clientside_callback(
         Input("degree-nrst-hidden-ref-cs", "id"),
         Input("degree-transit-fee-hidden-ref-cs", "id"),
         Input("degree-health-insurance-fee-hidden-ref-cs", "id"),
+        Input("degree-pdst-hidden-ref-cs", "id"),
     ],
 )
 

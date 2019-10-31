@@ -1,5 +1,10 @@
 /* UC Berkeley Data Visualization Custom CSS */
 
+
+body {
+    font-family: Cardo !important;
+}
+
 .ucbvc-fade-in {
   animation: sweep 0.7s ease-in-out;
 }

@@ -38,6 +38,7 @@ window.dash_clientside.clientside = {
         id7,
         id8,
         id9,
+        id10,
         hiddenId1,
         hiddenId2,
         hiddenId3,
@@ -47,6 +48,8 @@ window.dash_clientside.clientside = {
         hiddenId7,
         hiddenId8,
         hiddenId9,
+        hiddenId10,
+
     ) {
         if (pathname == "/by_degree"){
             animatedCount(id1, hiddenId1, countTime)
