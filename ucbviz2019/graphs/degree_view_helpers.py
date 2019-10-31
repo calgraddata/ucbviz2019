@@ -207,7 +207,7 @@ def make_degree_info_card(program):
                           className=common_header_style)
     card_sublabel = html.Div(program_label, className="is-size-3")
     card_year = html.Div(children="", id="degree-info-card-year", className="is-size-4")
-    program_stats_for_year = html.Div(id='degree_card_stats')
+    program_stats_for_year = html.Div(id='degree-card-stats')
 
     minimum_year = max(min(years), 1998)
     maximum_year = min(max(years), 2018)

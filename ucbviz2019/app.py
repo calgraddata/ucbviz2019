@@ -30,6 +30,7 @@ app.title = "UC Berkeley Graduate Data Visualization Contest"
 
 app_container = html.Div(id="core-app-container",
                          className="container has-margin-top-70")
+app_container_margined = html.Div(app_container, className="has-margin-20")
 location = dcc.Location(id="core-url", refresh=True)
 
 external_stylesheets = html.Link(
@@ -43,7 +44,7 @@ app.layout = html.Div(
         external_stylesheets,
         location,
         vc.nav_html(),
-        app_container
+        app_container_margined
     ],
     className="container"
 )
@@ -150,25 +151,25 @@ def update_bulk_graph_display(dropdown_value):
 ################################################################################
 
 @app.callback(
-    Output("degree_card_container", "children"),
-    [Input("degree_program_dropdown", "value")]
+    Output("degree-card-container", "children"),
+    [Input("degree-program-dropdown", "value")]
 )
 def update_degree_card(program):
     return make_degree_info_card(program)
 
 
 @app.callback(
-    Output("degree_card_stats", "children"),
+    Output("degree-card-stats", "children"),
     [Input("degree_card_slider", "value")],
-    [State("degree_program_dropdown", "value")]
+    [State("degree-program-dropdown", "value")]
 )
 def update_degree_card(year, program):
     return get_program_stats(program, year)
 
 
 @app.callback(
-    Output("degree_fees_plot", "children"),
-    [Input("degree_program_dropdown", "value")]
+    Output("degree-fees-plot", "children"),
+    [Input("degree-program-dropdown", "value")]
 )
 def make_fees_plot(program):
     if program is None:
@@ -177,8 +178,8 @@ def make_fees_plot(program):
 
 
 @app.callback(
-    Output("degree_tuition_plot", "children"),
-    [Input("degree_program_dropdown", "value")]
+    Output("degree-tuition-plot", "children"),
+    [Input("degree-program-dropdown", "value")]
 )
 def make_tuition_plot(program):
     if program is None:
