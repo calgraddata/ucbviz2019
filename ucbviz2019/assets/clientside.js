@@ -26,9 +26,37 @@ window.dash_clientside.clientside = {
     },
 
 
-    countPerDegreeStatsClientsideFunction: function (pathname, id1, hiddenId1) {
+    countPerDegreeStatsClientsideFunction: function (
+        pathname,
+        id1,
+        id2,
+        id3,
+        id4,
+        id5,
+        id6,
+        id7,
+        id8,
+        id9,
+        hiddenId1,
+        hiddenId2,
+        hiddenId3,
+        hiddenId4,
+        hiddenId5,
+        hiddenId6,
+        hiddenId7,
+        hiddenId8,
+        hiddenId9,
+    ) {
         if (pathname == "/by_degree"){
             animatedCount(id1, hiddenId1, countTime)
+            animatedCount(id2, hiddenId2, countTime)
+            animatedCount(id3, hiddenId3, countTime)
+            animatedCount(id4, hiddenId4, countTime)
+            animatedCount(id5, hiddenId5, countTime)
+            animatedCount(id6, hiddenId6, countTime)
+            animatedCount(id7, hiddenId7, countTime)
+            animatedCount(id8, hiddenId8, countTime)
+            animatedCount(id9, hiddenId9, countTime)
         }
     },
 
