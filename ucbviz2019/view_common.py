@@ -18,8 +18,6 @@ def nav_html(page="/"):
     elif page == "/by_about":
         about_style += highlighted_style
 
-    print(f"page is {page}, styles are {by_degree_style}, {by_analysis_style}, {about_style}")
-
     by_degree = dcc.Link(
         "Explore by Degree Program", href="/by_degree", className=by_degree_style
     )
