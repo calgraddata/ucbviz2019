@@ -7,7 +7,7 @@ def nav_html():
         "Explore by Degree Program", href="/by_degree", className="navbar-item"
     )
     by_analysis = dcc.Link(
-        "Explore Analyses", href="/by_analysis", className="navbar-item"
+        "Explore Trends", href="/by_analysis", className="navbar-item"
     )
     about = dcc.Link(
         "About", href="/by_about", className="navbar-item"

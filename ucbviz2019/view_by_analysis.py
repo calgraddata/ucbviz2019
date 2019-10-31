@@ -3,9 +3,11 @@ import dash_core_components as dcc
 
 from ucbviz2019 import all_provided_data
 from ucbviz2019.view_common import common_info_box_html
+from ucbviz2019.graphs.analysis import all_programs_linegraph
 
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
 ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
+
 
 def app_view_html():
     common_header_style = "is-size-3 has-text-weight-bold"
@@ -56,11 +58,33 @@ def app_view_html():
     tacv = common_info_box_html(elements=[tacv_header, tacv_dropdown, tacv_container])
 
 
+    amayhm_header = html.Div("Comparing Costs with the Consumer Price Index", className=common_header_style)
+    amayhm_dropdown = dcc.Dropdown(
+        id="analysis-amayhm-dropdown",
+        options=[
+            {"value": "in-state", "label": "In state cost of attendance"},
+            {"value": "out-state", "label": "Out of state cost of attendance"},
+            {"value": "tuition", "label": "Base Tuition"},
+            {"value": "pdst", "label": 'Professional Degree Supplement'},
+            {"value": "nrst", "label": 'Non-residential Supplement'},
+            {"value": "registration-student-services-fee", "label": 'Registration Services Fee'},
+            {"value": "campus-fee", "label": "Campus Fee"},
+            {"value": "transit-fee", "label": 'Transit Fee'},
+            {"value": "health-insurance-fee", "label": "Health Insurance Fee"}
+        ],
+        value="out-state",
+        className="has-margin-10"
+    )
+    amayhm_container = html.Div(id="analysis-amayhm-container", children=dcc.Graph())
+    amayhm = common_info_box_html(elements=[amayhm_dropdown, amayhm_container])
+
+
     layout = html.Div(
         [
             stats,
             ucbf,
-            tacv
+            tacv,
+            amayhm
         ]
     )
 

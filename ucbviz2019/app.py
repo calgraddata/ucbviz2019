@@ -14,7 +14,7 @@ import ucbviz2019.view_by_graph_type as vbt
 from ucbviz2019.graphs.degree_view_helpers import generate_fee_stack_plot, \
     generate_tuition_stack_plot
 from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, \
-    total_cost_of_attendance_violin
+    total_cost_of_attendance_violin, all_programs_linegraph
 from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, \
     get_program_stats
 
@@ -133,6 +133,14 @@ def update_ucb_finances_vs_tuitions_plot(value):
 )
 def update_tacv_plot(value):
     return total_cost_of_attendance_violin(value)
+
+
+@app.callback(
+    Output("analysis-amayhm-container", "children"),
+    [Input("analysis-amayhm-dropdown", "value")]
+)
+def update_amahym_plot(value):
+    return all_programs_linegraph(value)
 
 
 ################################################################################

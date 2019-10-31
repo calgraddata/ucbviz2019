@@ -4,7 +4,6 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from ucbviz2019.data import load_auxiliary_df
 
-
 from ucbviz2019 import all_provided_data
 
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
@@ -27,13 +26,14 @@ def total_cost_of_attendance_violin(mode):
     elif mode == "out-state":
         df = ost
     else:
-        raise ValueError(f"Invalid mode: {mode} for total cost of attendance violin!")
+        raise ValueError(
+            f"Invalid mode: {mode} for total cost of attendance violin!")
 
     fig = go.Figure()
     for year in df.columns:
         fig.add_trace(
             go.Violin(
-                x=[year]*df.shape[0],
+                x=[year] * df.shape[0],
                 y=df[year],
                 box_visible=True,
                 meanline_visible=True,
@@ -156,17 +156,86 @@ def ucb_finances_vs_tuitions_html(mode):
     fig.update_yaxes(title_text="UC Expenses/Revenue <b>(billion $)</b>",
                      secondary_y=True)
 
-    # layout = {
-    #     "clickmode": "event+select",
-    #     "hovermode": "x",
-    #     "xaxis": {"title": "Year"},
-    #     "yaxis": {"title": "Dollars"}
-    # }
-    # fig.update_layout(**layout)
-
     fig.update_layout(legend=dict(x=-.1, y=1.5))
 
     plot = dcc.Graph(
         figure=fig
     )
+    return html.Div([plot])
+
+
+def all_programs_linegraph(mode):
+    mode_map = {
+        "in-state": "total_in_state",
+        "out-state": "total_out_state",
+        "registration-student-services-fee": 'registration_student_services_fee',
+        'pdst': 'pdst',
+        'campus-fee': 'campus_fee',
+        'tuition': 'tuition',
+        'nrst': 'nrst',
+        'transit-fee': 'transit_fee',
+        'health-insurance-fee': 'health_insurance_fee'
+    }
+
+    description_map = {
+        "in-state": "Cost of attendance (in state)",
+        "out-state": "Cost of attendance (out of state)",
+        "registration-student-services-fee": 'Registration Services Fee',
+        'pdst': 'Professional Degree Supplement',
+        'campus-fee': 'Campus Fee',
+        'tuition': 'Base Tuition',
+        'nrst': 'Non-residential Supplement',
+        'transit-fee': 'Transit Fee',
+        'health-insurance-fee': 'Health Insurance Fee'
+    }
+
+    df = all_provided_data[mode_map[mode]]["df"]
+    info = all_provided_data[mode_map[mode]]["df"]
+
+    cpi_df = all_provided_data["pdst_cpi"]["df"]
+
+    df = df.T
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    for program in df.columns:
+        program_data = df[program]
+        fig.add_trace(
+            go.Scatter(
+                x=program_data.index,
+                y=program_data.values,
+                name=program,
+                text=program,
+                mode="lines+markers",
+                opacity=0.2,
+                marker_color="grey",
+                showlegend=False,
+                hoverinfo="text"
+            ),
+            secondary_y=False
+        )
+
+    fig.add_trace(
+        go.Scatter(
+            x=cpi_df.columns,
+            y=cpi_df.loc["CPI"],
+            marker_color="red",
+            marker_size=10,
+            line_width=3
+        ),
+        secondary_y=True
+    )
+
+    # Set x-axis title
+    fig.update_xaxes(title_text="Year")
+
+    # Set y-axes titles
+    fig.update_yaxes(title_text=f"{description_map[mode]} <b>($)</b>",
+                     secondary_y=False)
+    fig.update_yaxes(title_text="<b>Consumer Price Index</b>",
+                     secondary_y=True)
+
+    plot = dcc.Graph(
+        figure=fig
+    )
+
     return html.Div([plot])
