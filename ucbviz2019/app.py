@@ -160,7 +160,7 @@ def update_degree_card(program):
 
 @app.callback(
     Output("degree-card-stats", "children"),
-    [Input("degree_card_slider", "value")],
+    [Input("degree-card-slider", "value")],
     [State("degree-program-dropdown", "value")]
 )
 def update_degree_card(year, program):
@@ -222,7 +222,7 @@ app.clientside_callback(
 @app.callback(
     Output("degree-info-card-year", "children"),
     [
-        Input("degree_card_slider", "value"),
+        Input("degree-card-slider", "value"),
     ]
 )
 def update_degree_card_year_from_slider(year):

@@ -155,13 +155,16 @@ def get_program_stats(program, year):
             value = int(program_stats[stat])
         except (ValueError, KeyError):
             # make an invisible placeholder to make sure nothing breaks!
-            animated_container = html.Div(id=animated_id, children="99999", className="is-hidden")
-            hidden_ref = html.Div(id=hidden_id, children="99999", className="is-hidden")
+            animated_container = html.Div(id=animated_id, children="99999",
+                                          className="is-hidden")
+            hidden_ref = html.Div(id=hidden_id, children="99999",
+                                  className="is-hidden")
             divs[stat] = html.Div([hidden_ref, animated_container])
             divs_is_empty[stat] = True
             continue
 
-        label = html.Div(stat, className="is-size-5 has-text-centered ucbvc-clicker-blue")
+        label = html.Div(stat,
+                         className="is-size-5 has-text-centered ucbvc-clicker-blue")
         animated_container = html.Div(
             children="${:,}".format(value),
             id=animated_id,
@@ -172,25 +175,31 @@ def get_program_stats(program, year):
             id=hidden_id,
             className="is-hidden"
         )
-        this_stat_div = html.Div([label, animated_container, hidden_ref], className="ucbvc-clicker-blue")
+        this_stat_div = html.Div([label, animated_container, hidden_ref],
+                                 className="ucbvc-clicker-blue")
         divs[stat] = this_stat_div
         divs_is_empty[stat] = False
 
     first_column = ["Total (In State)", "Total (Out of State)", "Base Tuition"]
-    second_column = ["Non-Resident Supplemental Tuition", "Professional Degree Supplemental Tuition", "Student Services Fee", "Campus Fee"]
+    second_column = ["Non-Resident Supplemental Tuition",
+                     "Professional Degree Supplemental Tuition",
+                     "Student Services Fee", "Campus Fee"]
     third_column = ["Health Insurance Fee", "Transit Fee", "Other Misc. Fees"]
 
     columns = []
     common_subcard_style = "column is-one-third box has-margin-5"
     for column_set in [first_column, second_column, third_column]:
         if all([divs_is_empty[k] for k in column_set]):
-            no_data_text = html.Div("No data available.", className="is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-red")
+            no_data_text = html.Div("No data available.",
+                                    className="is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-red")
             column = html.Div(no_data_text, className=common_subcard_style)
         else:
-            column = html.Div([divs[k] for k in column_set], className=common_subcard_style)
+            column = html.Div([divs[k] for k in column_set],
+                              className=common_subcard_style)
         columns.append(column)
 
-    container = html.Div(columns, className="columns")
+    columns = html.Div(columns, className="columns")
+    container = html.Div(columns, className="has-margin-10")
     return container
 
 
@@ -206,14 +215,15 @@ def make_degree_info_card(program):
     card_title = html.Div(f"Overview of attendance costs",
                           className=common_header_style)
     card_sublabel = html.Div(program_label, className="is-size-3")
-    card_year = html.Div(children="", id="degree-info-card-year", className="is-size-4")
+    card_year = html.Div(children="", id="degree-info-card-year",
+                         className="is-size-4")
     program_stats_for_year = html.Div(id='degree-card-stats')
 
     minimum_year = max(min(years), 1998)
     maximum_year = min(max(years), 2018)
     initial_value = min(max(years), 2018)
     program_year_slider = dcc.Slider(
-        id="degree_card_slider",
+        id="degree-card-slider",
         min=minimum_year,
         max=maximum_year,
         value=initial_value,
@@ -221,11 +231,16 @@ def make_degree_info_card(program):
         marks={k: str(k) for k in range(minimum_year, maximum_year + 1, 5)},
         className="has-margin-10"
     )
-    return common_info_box_wide_html(elements=[card_title,
-                                               card_sublabel,
-                                               card_year,
-                                               program_stats_for_year,
-                                               program_year_slider])
+    container = html.Div([
+        card_title,
+        card_sublabel,
+        card_year,
+        program_stats_for_year,
+        program_year_slider
+    ],
+        className="has-margin-right-20 has-margin-bottom-50"
+    )
+    return common_info_box_wide_html(elements=container)
 
 
 if __name__ == '__main__':

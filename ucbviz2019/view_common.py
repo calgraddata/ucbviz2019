@@ -115,3 +115,21 @@ def common_info_box_wide_html(elements, id=None):
     )
     container = html.Div(columns, className="container", id=id)
     return container
+
+
+def wrap_in_loader_html(element):
+    """
+    Wrap the elements in a common loading element.
+
+    Args:
+        elements: The element MUST be updated via callback DIRECTLY to work.
+
+    Returns:
+
+    """
+    return dcc.Loading(
+        # 'graph', 'cube', 'circle', 'dot', 'default'
+        # type="cube",
+        children=element,
+        className="ucbvc-fade-in has-margin-top-50 has-margin-bottom-50"
+    )
