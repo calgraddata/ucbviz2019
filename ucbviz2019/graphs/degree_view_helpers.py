@@ -124,25 +124,11 @@ common_header_style = "is-size-3 has-text-weight-bold"
 
 
 def get_program_stats(program, year):
-    program_label = program
     if program in program_category_mappings:
         program = program_category_mappings[program]
     program_stats = get_program_data_as_dict()[program][str(year)]
     program_stats = {data_labels[key + ".csv"]: int(program_stats[key]) for key in
                      program_stats}
-
-    ## CODE TO GENERATE CARD HERE
-    # return html.Div()
-
-    # Total (In State): $9530.5
-    # Other Misc. Fees: $92.0
-    # Total (Out of State): $17081.5
-    # Student Services Fee: $564.0
-    # Campus Fee: $700.5
-    # Base Tuition: $5721.0
-    # Non-Resident Supplemental Tuition: $7551.0
-    # Transit Fee: $80.0
-    # Health Insurance Fee: $2373.0
 
     callback_container_mapping = {
         "Total (In State)": "total-in-state",
@@ -156,7 +142,7 @@ def get_program_stats(program, year):
         "Health Insurance Fee": "health-insurance-fee"
     }
 
-    common_classname = "is-size-3-desktop has-text-bold has-text-centered"
+    common_classname = "is-size-6-desktop has-text-bold has-text-centered"
 
     divs = []
     for stat, value in program_stats.items():
@@ -173,11 +159,15 @@ def get_program_stats(program, year):
             id=hidden_id,
             className="is-hidden"
         )
-        print(f"ids are {animated_id}, {hidden_id}")
         this_stat_div = html.Div([label, animated_container, hidden_ref])
         divs.append(this_stat_div)
-    container = html.Div(divs)
-    return common_info_box_wide_html(container)
+
+    column1 = html.Div(divs[0:3], className="column is-one-third box has-padding-10")
+    column2 = html.Div(divs[3:6], className="column is-one-third box")
+    column3 = html.Div(divs[6:9], className="column is-one-third box")
+
+    container = html.Div([column1, column2, column3], className="columns")
+    return container
 
 
 def make_degree_info_card(program):
@@ -189,21 +179,27 @@ def make_degree_info_card(program):
     program_data = get_program_data_as_dict()[program]
     years = [int(year) for year in program_data.keys()]
 
-    card_title = html.Div(f"Attendance Costs for {program_label}",
+    card_title = html.Div(f"Overview of attendance costs",
                           className=common_header_style)
+    card_sublabel = html.Div(program_label, className="is-size-3")
+    card_year = html.Div(children="", id="degree-info-card-year", className="is-size-4")
     program_stats_for_year = html.Div(id='degree_card_stats')
+
+    minimum_year = max(min(years), 1998)
+    maximum_year = min(max(years), 2018)
+    initial_value = min(max(years), 2018)
     program_year_slider = dcc.Slider(
         id="degree_card_slider",
-        min=max(min(years), 1998),
-        max=min(max(years), 2018),
-        value=min(max(years), 2018),
+        min=minimum_year,
+        max=maximum_year,
+        value=initial_value,
         step=1,
-        marks={k: str(k) for k in
-               range(max(min(years), 1998), min(max(years), 2018) + 1)},
-        # tooltip="Generate stats by year"
+        marks={k: str(k) for k in range(minimum_year, maximum_year + 1, 5)},
         className="has-margin-10"
     )
     return common_info_box_wide_html(elements=[card_title,
+                                               card_sublabel,
+                                               card_year,
                                                program_stats_for_year,
                                                program_year_slider])
 

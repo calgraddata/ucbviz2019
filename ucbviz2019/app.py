@@ -11,10 +11,12 @@ import ucbviz2019.view_by_degree as vbd
 import ucbviz2019.view_by_analysis as vba
 import ucbviz2019.view_by_about as vbabout
 import ucbviz2019.view_by_graph_type as vbt
-from ucbviz2019.graphs.degree_view_helpers import generate_fee_stack_plot, generate_tuition_stack_plot
-from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, total_cost_of_attendance_violin
-from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, get_program_stats
-
+from ucbviz2019.graphs.degree_view_helpers import generate_fee_stack_plot, \
+    generate_tuition_stack_plot
+from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, \
+    total_cost_of_attendance_violin
+from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, \
+    get_program_stats
 
 external_scripts = [
     "https://code.jquery.com/jquery-3.4.1.min.js"
@@ -26,10 +28,9 @@ app.scripts.config.serve_locally = True
 app.config.suppress_callback_exceptions = True
 app.title = "UC Berkeley Graduate Data Visualization Contest"
 
-
-app_container = html.Div(id="core-app-container", className="container has-margin-top-70")
+app_container = html.Div(id="core-app-container",
+                         className="container has-margin-top-70")
 location = dcc.Location(id="core-url", refresh=True)
-
 
 app.layout = html.Div(
     [
@@ -76,7 +77,6 @@ app.clientside_callback(
     ],
 )
 
-
 ################################################################################
 # By analysis page
 ################################################################################
@@ -100,6 +100,7 @@ app.clientside_callback(
     ],
 )
 
+
 @app.callback(
     Output("analysis-stats-container", "children"),
     [
@@ -109,12 +110,14 @@ app.clientside_callback(
 def update_stats_by_year_dropdown(slider_value):
     return vba.stats_html(slider_value)
 
+
 @app.callback(
     Output("analysis-ucb-finances-container", "children"),
     [Input("analysis-ucb-finances-dropdown", "value")]
 )
 def update_ucb_finances_vs_tuitions_plot(value):
     return ucb_finances_vs_tuitions_html(value)
+
 
 @app.callback(
     Output("analysis-tacv-container", "children"),
@@ -146,6 +149,7 @@ def update_bulk_graph_display(dropdown_value):
 def update_degree_card(program):
     return make_degree_info_card(program)
 
+
 @app.callback(
     Output("degree_card_stats", "children"),
     [Input("degree_card_slider", "value")],
@@ -153,6 +157,7 @@ def update_degree_card(program):
 )
 def update_degree_card(year, program):
     return get_program_stats(program, year)
+
 
 @app.callback(
     Output("degree_fees_plot", "children"),
@@ -162,6 +167,7 @@ def make_fees_plot(program):
     if program is None:
         return None
     return dcc.Graph(figure=generate_fee_stack_plot(program))
+
 
 @app.callback(
     Output("degree_tuition_plot", "children"),
@@ -175,12 +181,12 @@ def make_tuition_plot(program):
 
 app.clientside_callback(
     ClientsideFunction(
-        namespace="clientside", function_name="countPerDegreeStatsClientsideFunction"
+        namespace="clientside",
+        function_name="countPerDegreeStatsClientsideFunction"
     ),
     Output("degree-total-out-state-cs", "value"),
     [
         Input("core-url", "pathname"),
-        # Input("degree_card_slider", "value"),
         Input("degree-total-in-state-cs", "id"),
         Input("degree-other-misc-fees-cs", "id"),
         Input("degree-total-out-state-cs", "id"),
@@ -202,13 +208,12 @@ app.clientside_callback(
     ],
 )
 
-# degree-{callback_container_mapping[program]}-hidden-ref-cs
-# "Total (In State)": "total-in-state",
-# "Other Misc. Fees": "other-misc-fees",
-# "Total (Out of State)": "total-out-state",
-# "Student Services Fee": "student-services-fee",
-# "Campus Fee": "campus-fee",
-# "Base Tuition": "base-tuition",
-# "Non-Resident Supplemental Tuition": "nrst",
-# "Transit Fee": "transit-fee",
-# "Health Insurance Fee": "health-insurance-fee"
+
+@app.callback(
+    Output("degree-info-card-year", "children"),
+    [
+        Input("degree_card_slider", "value"),
+    ]
+)
+def update_degree_card_year_from_slider(year):
+    return year
