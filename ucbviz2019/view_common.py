@@ -97,13 +97,13 @@ def common_info_box_html(elements, id=None):
             box encapsulating your elements.
 
     """
-    element_container = html.Div(elements, className="has-margin-20")
-    box = html.Div(element_container, className="box")
-    column = html.Div(box, className="column is-three-fourths")
+    element_container = html.Div(children=elements, className="has-margin-20")
+    box = html.Div(children=[element_container], className="box")
+    column = html.Div(children=[box], className="column is-three-fourths")
     columns = html.Div(
-        column, className="columns is-centered has-margin-top-30"
+        children=[column], className="columns is-centered has-margin-top-30"
     )
-    container = html.Div(columns, className="container", id=id)
+    container = html.Div(children=[columns], className="container", id=id)
     return container
 
 

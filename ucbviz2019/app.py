@@ -145,10 +145,10 @@ def update_tacv_plot(value):
 
 
 @app.callback(
-    Output("analysis-amayhm-container", "children"),
-    [Input("analysis-amayhm-dropdown", "value")]
+    Output("analysis-cpi-container", "children"),
+    [Input("analysis-cpi-dropdown", "value")]
 )
-def update_amahym_plot(value):
+def update_cpi_plot(value):
     return all_programs_linegraph(value)
 
 

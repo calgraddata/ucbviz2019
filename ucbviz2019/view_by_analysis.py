@@ -40,7 +40,7 @@ def app_view_html():
     # comparison of ucb finances with total cost of attendance
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses", className=common_header_style)
     ucb_finances_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
-    ucb_finances = html.Div(id="analysis-ucb-finances-container", children=dcc.Graph())
+    ucb_finances = html.Div(id="analysis-ucb-finances-container", children=[])
     ucb_finances_dropdown = dcc.Dropdown(
         id="analysis-ucb-finances-dropdown",
         options=[
@@ -50,46 +50,55 @@ def app_view_html():
         value="out-state",
         className="has-margin-10"
     )
-    ucbf = common_info_box_html(elements=[ucb_finances_header, ucb_finances_explanation, ucb_finances_dropdown, ucb_finances])
+    # ucbf = common_info_box_html(
+    #     elements=[
+    #         ucb_finances_header,
+    #         # ucb_finances_explanation,
+    #         # ucb_finances_dropdown,
+    #         # ucb_finances
+    #     ]
+    # )
 
-    # total attendance cost violin
-    tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
-    tacv_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+    ucbf = html.Div([ucb_finances_header, ucb_finances_explanation, ucb_finances_dropdown, ucb_finances])
 
-    tacv_container = html.Div(id="analysis-tacv-container", children=dcc.Graph())
-    tacv_dropdown = dcc.Dropdown(
-        id="analysis-tacv-dropdown",
-        options=[
-            {"value": "in-state", "label": "In state cost of attendance"},
-            {"value": "out-state", "label": "Out of state cost of attendance"}
-        ],
-        value="out-state",
-        className="has-margin-10"
-    )
-    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container])
-
-
-    amayhm_header = html.Div("Comparing Costs with the Consumer Price Index", className=common_header_style)
-    amayhm_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
-
-    amayhm_dropdown = dcc.Dropdown(
-        id="analysis-amayhm-dropdown",
-        options=[
-            {"value": "in-state", "label": "In state cost of attendance"},
-            {"value": "out-state", "label": "Out of state cost of attendance"},
-            {"value": "tuition", "label": "Base Tuition"},
-            {"value": "pdst", "label": 'Professional Degree Supplement'},
-            {"value": "nrst", "label": 'Non-residential Supplement'},
-            {"value": "registration-student-services-fee", "label": 'Registration Services Fee'},
-            {"value": "campus-fee", "label": "Campus Fee"},
-            {"value": "transit-fee", "label": 'Transit Fee'},
-            {"value": "health-insurance-fee", "label": "Health Insurance Fee"}
-        ],
-        value="out-state",
-        className="has-margin-10"
-    )
-    amayhm_container = html.Div(id="analysis-amayhm-container", children=dcc.Graph())
-    amayhm = common_info_box_html(elements=[amayhm_header, amayhm_explanation, amayhm_dropdown, amayhm_container])
+    # # total attendance cost violin
+    # tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
+    # tacv_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+    #
+    # tacv_container = html.Div(id="analysis-tacv-container", children=dcc.Graph())
+    # tacv_dropdown = dcc.Dropdown(
+    #     id="analysis-tacv-dropdown",
+    #     options=[
+    #         {"value": "in-state", "label": "In state cost of attendance"},
+    #         {"value": "out-state", "label": "Out of state cost of attendance"}
+    #     ],
+    #     value="out-state",
+    #     className="has-margin-10"
+    # )
+    # tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container])
+    #
+    #
+    # cpi_header = html.Div("Comparing Costs with the Consumer Price Index", className=common_header_style)
+    # cpi_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+    #
+    # cpi_dropdown = dcc.Dropdown(
+    #     id="analysis-cpi-dropdown",
+    #     options=[
+    #         {"value": "in-state", "label": "In state cost of attendance"},
+    #         {"value": "out-state", "label": "Out of state cost of attendance"},
+    #         {"value": "tuition", "label": "Base Tuition"},
+    #         {"value": "pdst", "label": 'Professional Degree Supplement'},
+    #         {"value": "nrst", "label": 'Non-residential Supplement'},
+    #         {"value": "registration-student-services-fee", "label": 'Registration Services Fee'},
+    #         {"value": "campus-fee", "label": "Campus Fee"},
+    #         {"value": "transit-fee", "label": 'Transit Fee'},
+    #         {"value": "health-insurance-fee", "label": "Health Insurance Fee"}
+    #     ],
+    #     value="out-state",
+    #     className="has-margin-10"
+    # )
+    # cpi_container = html.Div(id="analysis-cpi-container", children=dcc.Graph())
+    # cpi = common_info_box_html(elements=[cpi_header, cpi_explanation, cpi_dropdown, cpi_container])
 
 
     layout = html.Div(
@@ -98,8 +107,8 @@ def app_view_html():
             explanation,
             stats,
             ucbf,
-            tacv,
-            amayhm
+            # tacv,
+            # cpi
         ],
         className="ucbvc-fade-in"
     )
