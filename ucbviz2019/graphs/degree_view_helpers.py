@@ -4,8 +4,7 @@ from ucbviz2019.view_common import common_info_box_html, common_info_box_wide_ht
 from ucbviz2019.data import get_program_data_as_dict, get_program_categories
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_table
-import pandas as pd
+
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -129,7 +128,9 @@ def get_program_stats(program, year):
     # return html.Div()
 
     # Placeholder Table
-    return html.Div([dcc.Markdown(f"{label}: ${value}") for label, value in program_stats.items()])
+
+    return html.Div([dcc.Markdown(f"{label}: ${value}") if str(value).replace(".", "").isdigit()
+                     else dcc.Markdown(f"{label}: {value}") for label, value in program_stats.items()])
 
 
 def make_degree_info_card(program):

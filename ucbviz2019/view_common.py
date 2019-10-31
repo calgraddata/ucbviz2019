@@ -107,11 +107,11 @@ def common_info_box_wide_html(elements, id=None):
             box encapsulating your elements.
 
     """
-    element_container = html.Div(elements, className="has-margin-30")
+    element_container = html.Div(elements, className="has-margin-10")
     box = html.Div(element_container, className="box")
     column = html.Div(box, className="column is-three-fourths")
     columns = html.Div(
-        column, className="columns is-centered has-margin-top-50"
+        column, className="columns is-centered has-margin-top-30"
     )
     container = html.Div(columns, className="container", id=id)
     return container
