@@ -159,7 +159,6 @@ def update_degree_card(year, program):
     [Input("degree_program_dropdown", "value")]
 )
 def make_fees_plot(program):
-    print("program is", program)
     if program is None:
         return None
     return dcc.Graph(figure=generate_fee_stack_plot(program))
@@ -173,3 +172,37 @@ def make_tuition_plot(program):
         return None
     return dcc.Graph(figure=generate_tuition_stack_plot(program))
 
+
+app.clientside_callback(
+    ClientsideFunction(
+        namespace="clientside", function_name="countPerDegreeStatsClientsideFunction"
+    ),
+    Output("degree-total-out-state-cs", "value"),
+    [
+        Input("core-url", "pathname"),
+        # Input("degree_card_slider", "value"),
+        Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        # Input("degree-total-in-state-cs", "id"),
+        Input("degree-total-in-state-hidden-ref-cs", "id"),
+
+    ],
+)
+
+# degree-{callback_container_mapping[program]}-hidden-ref-cs
+# "Total (In State)": "total-in-state",
+# "Other Misc. Fees": "other-misc-fees",
+# "Total (Out of State)": "total-out-state",
+# "Student Services Fee": "student-services-fee",
+# "Campus Fee": "campus-fee",
+# "Base Tuition": "base-tuition",
+# "Non-Resident Supplemental Tuition": "nrst",
+# "Transit Fee": "transit-fee",
+# "Health Insurance Fee": "health-insurance-fee"

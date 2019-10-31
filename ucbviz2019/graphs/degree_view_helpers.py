@@ -1,6 +1,7 @@
 from ucbviz2019.data import load_df_and_info
 import plotly.graph_objects as go
-from ucbviz2019.view_common import common_info_box_html, common_info_box_wide_html
+from ucbviz2019.view_common import common_info_box_html, \
+    common_info_box_wide_html
 from ucbviz2019.data import get_program_data_as_dict, get_program_categories
 import dash_core_components as dcc
 import dash_html_components as html
@@ -48,8 +49,10 @@ def generate_fee_stack_plot(program="Other Programs"):
     data = []
     for fee in fees:
         df, dsc = load_df_and_info(fee)
-        df = df.loc[:, ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
-        data.append(go.Bar(name=data_labels[fee], x=df.loc[program].keys(), y=df.loc[program],
+        df = df.loc[:,
+             ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
+        data.append(go.Bar(name=data_labels[fee], x=df.loc[program].keys(),
+                           y=df.loc[program],
                            hovertemplate="%{x}: $%{y}/semester "))
     fig = go.Figure(data=data)
     fig.update_layout(
@@ -89,9 +92,11 @@ def generate_tuition_stack_plot(program="Other Programs"):
     data = []
     for fee in tuition:
         df, dsc = load_df_and_info(fee)
-        df = df.loc[:, ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
+        df = df.loc[:,
+             ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
         if program in df.index:
-            data.append(go.Bar(name=data_labels[fee], x=df.loc[program].keys(), y=df.loc[program],
+            data.append(go.Bar(name=data_labels[fee], x=df.loc[program].keys(),
+                               y=df.loc[program],
                                hovertemplate="%{x}: $%{y}/semester "))
             years = df.loc[program].keys()
     fig = go.Figure(data=data)
@@ -123,13 +128,56 @@ def get_program_stats(program, year):
     if program in program_category_mappings:
         program = program_category_mappings[program]
     program_stats = get_program_data_as_dict()[program][str(year)]
-    program_stats = {data_labels[key+".csv"]: program_stats[key] for key in program_stats}
+    program_stats = {data_labels[key + ".csv"]: int(program_stats[key]) for key in
+                     program_stats}
 
     ## CODE TO GENERATE CARD HERE
     # return html.Div()
 
-    # Placeholder Table
-    return html.Div([dcc.Markdown(f"{label}: ${value}") for label, value in program_stats.items()])
+    # Total (In State): $9530.5
+    # Other Misc. Fees: $92.0
+    # Total (Out of State): $17081.5
+    # Student Services Fee: $564.0
+    # Campus Fee: $700.5
+    # Base Tuition: $5721.0
+    # Non-Resident Supplemental Tuition: $7551.0
+    # Transit Fee: $80.0
+    # Health Insurance Fee: $2373.0
+
+    callback_container_mapping = {
+        "Total (In State)": "total-in-state",
+        "Other Misc. Fees": "other-misc-fees",
+        "Total (Out of State)": "total-out-state",
+        "Student Services Fee": "student-services-fee",
+        "Campus Fee": "campus-fee",
+        "Base Tuition": "base-tuition",
+        "Non-Resident Supplemental Tuition": "nrst",
+        "Transit Fee": "transit-fee",
+        "Health Insurance Fee": "health-insurance-fee"
+    }
+
+    common_classname = "is-size-3-desktop has-text-bold has-text-centered"
+
+    divs = []
+    for stat, value in program_stats.items():
+        label = html.Div(stat, className="is-size-5 has-text-centered")
+        animated_id = f"degree-{callback_container_mapping[stat]}-cs"
+        animated_container = html.Div(
+            children="${:,}".format(value),
+            id=animated_id,
+            className=common_classname
+        )
+        hidden_id = f"degree-{callback_container_mapping[stat]}-hidden-ref-cs"
+        hidden_ref = html.Div(
+            children=int(value),
+            id=hidden_id,
+            className="is-hidden"
+        )
+        print(f"ids are {animated_id}, {hidden_id}")
+        this_stat_div = html.Div([label, animated_container, hidden_ref])
+        divs.append(this_stat_div)
+    container = html.Div(divs)
+    return common_info_box_wide_html(container)
 
 
 def make_degree_info_card(program):
@@ -150,7 +198,8 @@ def make_degree_info_card(program):
         max=min(max(years), 2018),
         value=min(max(years), 2018),
         step=1,
-        marks={k: str(k) for k in range(max(min(years), 1998), min(max(years), 2018) + 1)},
+        marks={k: str(k) for k in
+               range(max(min(years), 1998), min(max(years), 2018) + 1)},
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )

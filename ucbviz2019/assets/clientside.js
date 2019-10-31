@@ -2,7 +2,7 @@
 // This is the top level file for all custom js functions.
 
 
-var countTime = 750;  // the time needed to count up to all numbers in the app animations
+var countTime = 5000;  // the time needed to count up to all numbers in the app animations
 
 
 if(!window.dash_clientside) {window.dash_clientside = {};}
@@ -23,6 +23,13 @@ window.dash_clientside.clientside = {
     animateBurgerOnClickClientsideFunction: function (activateId, triggerNClicks) {
         animateBurgerOnClick(activateId, triggerNClicks);
         return ""
-    }
+    },
+
+
+    countPerDegreeStatsClientsideFunction: function (pathname, id1, hiddenId1) {
+        if (pathname == "/by_degree"){
+            animatedCount(id1, hiddenId1, countTime)
+        }
+    },
 
 }
