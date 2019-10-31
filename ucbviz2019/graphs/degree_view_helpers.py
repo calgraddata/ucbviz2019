@@ -6,6 +6,7 @@ from ucbviz2019.data import get_program_data_as_dict, get_program_categories
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
+import pandas as pd
 
 
 fees = ['registration_student_services_fee.csv',
@@ -303,6 +304,28 @@ def make_degree_info_card(program):
     return common_info_box_html(elements=container)
 
 
+def plot_projection_by_program_html(program="Other Programs", limit=10):
+    """
+    Fit and plot a projection of a program's total cost of attendance.
+
+    Args:
+        program: str
+        limit: the number of years to limit the projection for.
+
+    Returns:
+        html
+
+    """
+    if program in program_category_mappings:
+        program = program_category_mappings[program]
+
+    program_data = get_program_data_as_dict()[program]
+
+    df = pd.DataFrame(program_data)
+    print(df)
+
+
 if __name__ == '__main__':
-    fig = generate_fee_stack_plot('Other Programs')
-    fig.show()
+    # fig = generate_fee_stack_plot('Other Programs')
+    # fig.show()
+    plot_projection_by_program_html()

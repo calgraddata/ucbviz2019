@@ -6,8 +6,14 @@ from ucbviz2019.view_common import wrap_in_loader_html
 def app_view_html():
     # degree_card_wrapper = wrap_in_loader_html(html.Div(id="degree-card-container"))
     degree_card_wrapper = html.Div(id="degree-card-container")
-    tuition_plot_wrapper = wrap_in_loader_html(html.Div(id="degree-tuition-plot", children=[]))
-    fees_plot_wrapper = wrap_in_loader_html(html.Div(id="degree-fees-plot", children=[]))
+
+    plots = html.Div(
+        [
+            html.Div(id="degree-tuition-plot", children=[]),
+            html.Div(id="degree-fees-plot", children=[])
+        ]
+    )
+
     return [html.Div([
         html.P("Explore Cost of Attendance by Program",
                className="is-size-3"),
@@ -18,9 +24,7 @@ def app_view_html():
                      value="Law (J.D., LL.M., J.S.D.)",
                      placeholder='Start typing program name or degree type (e.g. Ph.D, M.Eng., ...)'),
         degree_card_wrapper,
-        # html.Div(style={'padding': 10}),
-        tuition_plot_wrapper,
-        fees_plot_wrapper
+        wrap_in_loader_html(plots)
     ])]
 
 
