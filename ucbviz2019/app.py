@@ -249,7 +249,7 @@ def update_degree_card_year_from_slider(year):
 @app.callback(
     Output("degree-fees-projection", "children"),
     [
-        Input("degree-program-dropdown", "value")
+        Input("degree-program-dropdown", "value"),
     ]
 )
 def update_predictions_plot(program):

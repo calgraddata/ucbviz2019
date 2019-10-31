@@ -124,3 +124,5 @@ def wrap_in_loader_html(element):
     )
 
 common_plotly_graph_font_style = dict(family="Condo")
+common_header_style = "is-size-4 has-margin-10 has-text-weight-semibold"
+common_explanation_style = "is-size-6 has-margin-10"

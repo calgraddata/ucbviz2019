@@ -290,7 +290,7 @@ def make_degree_info_card(program):
         value=initial_value,
         step=1,
         marks={k: str(k) for k in range(minimum_year, maximum_year + 1, 5)},
-        className="has-margin-10"
+        className="has-margin-10 has-margin-top-50"
     )
     container = html.Div([
         card_title,
@@ -304,8 +304,7 @@ def make_degree_info_card(program):
     return common_info_box_html(elements=container)
 
 
-def plot_projection_by_program_html(program="Other Programs", mode="in-state",
-                                    n_years_to_predict=15):
+def plot_projection_by_program_html(program="Other Programs", n_years_to_predict=10):
     """
     Fit and plot a projection of a program's total cost of attendance.
 
@@ -322,14 +321,6 @@ def plot_projection_by_program_html(program="Other Programs", mode="in-state",
                      "other_misc_fees"]
     out_state_fees = in_state_fees + ["nrst"]
 
-    if mode == "in-state":
-        fee_set = in_state_fees
-        truth = "total_in_state"
-    elif mode == "out-state":
-        fee_set = out_state_fees
-        truth = "total_out_state"
-
-
     if program in program_category_mappings:
         program = program_category_mappings[program]
 
@@ -338,58 +329,94 @@ def plot_projection_by_program_html(program="Other Programs", mode="in-state",
     df = pd.DataFrame(program_data)
     df = df.apply(pd.to_numeric, errors='coerce')
 
-    fee_set = [f for f in fee_set if f in df.index]
+    colormap = {
+        "in-state": "red",
+        "out-state": "blue"
+    }
 
-
-    this_year_2019 = int(this_year)
-    years_to_predict = list(
-        range(this_year_2019, this_year_2019 + n_years_to_predict))
-
-    # fit
-    models = {}
-    for feature in fee_set:
-        y = df.loc[feature]
-        y_relevant = y[~y.isna()].astype(float)
-        x_relevant = y_relevant.index.astype(int)
-        popt, pcov = curve_fit(f, x_relevant, y_relevant)
-        models[feature] = popt
-
-    # Known future data is not accounted for by lookup
-    # But is implicitly known in the fitting parameters, so probably not a
-    # big deal
-
-    # Sum up the predictions from each fee model
-    prediction_sums = np.zeros(len(years_to_predict))
-    years_to_predict_floats = np.asarray(years_to_predict).astype(float)
-    for feature in fee_set:
-        model_params = models[feature]
-        prediction = f(years_to_predict_floats, *model_params)
-        prediction_sums += prediction
+    deactivated_colormap = {
+        "in-state": "grey",
+        "out-state": "black"
+    }
 
     # Plot the known data
     fig = go.Figure()
 
-    # plot the known data
-    x = df.loc[truth].index
-    y = df.loc[truth]
-    fig.add_trace(
-        go.Scatter(
-            x=x,
-            y=y,
-            name="True value",
-            marker_color="grey",
-            mode="markers",
-        )
-    )
+    for mode in ["in-state", "out-state"]:
 
-    # plot the predictions
-    fig.add_trace(
-        go.Scatter(
-            x=years_to_predict,
-            y=prediction_sums,
-            name="Projection",
-            mode="lines+markers",
-            marker_color="red"
+        if mode == "in-state":
+            fee_set = in_state_fees
+            truth = "total_in_state"
+            label = "In State Cost"
+        elif mode == "out-state":
+            fee_set = out_state_fees
+            truth = "total_out_state"
+            label = "Out of State Cost"
+
+        fee_set = [f for f in fee_set if f in df.index]
+
+        this_year_2019 = int(this_year)
+        years_to_predict = list(
+            range(this_year_2019, this_year_2019 + n_years_to_predict))
+
+        # fit
+        models = {}
+        for feature in fee_set:
+            y = df.loc[feature]
+            y_relevant = y[~y.isna()].astype(float)
+            x_relevant = y_relevant.index.astype(int)
+            popt, pcov = curve_fit(f, x_relevant, y_relevant)
+            models[feature] = popt
+
+        # Known future data is not accounted for by lookup
+        # But is implicitly known in the fitting parameters, so probably not a
+        # big deal
+
+        # Sum up the predictions from each fee model
+        prediction_sums = np.zeros(len(years_to_predict))
+        years_to_predict_floats = np.asarray(years_to_predict).astype(float)
+        for feature in fee_set:
+            model_params = models[feature]
+            prediction = f(years_to_predict_floats, *model_params)
+            prediction_sums += prediction
+
+        # plot the known data
+        x = df.loc[truth].index
+        y = df.loc[truth]
+        fig.add_trace(
+            go.Scatter(
+                x=x,
+                y=y,
+                name=f"{label} (historical)",
+                marker_color=deactivated_colormap[mode],
+                mode="markers",
+            )
+        )
+
+        # plot the predictions
+        fig.add_trace(
+            go.Scatter(
+                x=years_to_predict,
+                y=prediction_sums,
+                name=f"{label} (projection)",
+                mode="lines+markers",
+                marker_color=colormap[mode]
+            )
+        )
+
+    fig.update_layout(
+        font=common_plotly_graph_font_style,
+        title=go.layout.Title(
+            text=f"Total Cost of Attendance Projections",
+            x=0.5,
+            y=0.9
+        )
+        ,
+        xaxis=dict(
+            title=go.layout.xaxis.Title(text="Academic Year (Starting In)"),
+        ),
+        yaxis=dict(
+            title=go.layout.yaxis.Title(text="Total ($)"),
         )
     )
 
@@ -413,6 +440,7 @@ def f(x, m, b):
 
     """
     return np.multiply(m, x) + b
+
 
 if __name__ == '__main__':
     # fig = generate_fee_stack_plot('Other Programs')

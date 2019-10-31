@@ -2,19 +2,27 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 from ucbviz2019 import all_provided_data
-from ucbviz2019.view_common import common_info_box_html
 from ucbviz2019.graphs.analysis import all_programs_linegraph
+from ucbviz2019.view_common import wrap_in_loader_html, common_info_box_html, common_header_style, common_explanation_style
 
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
 ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
 
 
 def app_view_html():
-    common_header_style = "is-size-3 has-text-weight-bold"
+    title = html.P("The Broader View - Trends in Graduate Fees",
+           className="is-size-1 has-text-weight-bold")
+    explanation = html.P(
+        "What can we learn from looking at the Graduate Financial data from a "
+        "broader view? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+           className="is-size-6"
+    )
 
     # total attendance cost violin
     stats_header = html.Div("Attendance Cost Extremes by Year",
                             className=common_header_style)
+    stats_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+
     stats_year_slider = dcc.Slider(
         id="analysis-stats-year-slider",
         min=1998,
@@ -27,10 +35,11 @@ def app_view_html():
     )
     stats_container = html.Div(id="analysis-stats-container")
     stats = common_info_box_html(
-        elements=[stats_header, stats_container, stats_year_slider])
+        elements=[stats_header, stats_explanation, stats_container, stats_year_slider])
 
     # comparison of ucb finances with total cost of attendance
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses", className=common_header_style)
+    ucb_finances_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
     ucb_finances = html.Div(id="analysis-ucb-finances-container", children=dcc.Graph())
     ucb_finances_dropdown = dcc.Dropdown(
         id="analysis-ucb-finances-dropdown",
@@ -41,10 +50,12 @@ def app_view_html():
         value="out-state",
         className="has-margin-10"
     )
-    ucbf = common_info_box_html(elements=[ucb_finances_header, ucb_finances_dropdown, ucb_finances])
+    ucbf = common_info_box_html(elements=[ucb_finances_header, ucb_finances_explanation, ucb_finances_dropdown, ucb_finances])
 
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
+    tacv_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+
     tacv_container = html.Div(id="analysis-tacv-container", children=dcc.Graph())
     tacv_dropdown = dcc.Dropdown(
         id="analysis-tacv-dropdown",
@@ -55,10 +66,12 @@ def app_view_html():
         value="out-state",
         className="has-margin-10"
     )
-    tacv = common_info_box_html(elements=[tacv_header, tacv_dropdown, tacv_container])
+    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container])
 
 
     amayhm_header = html.Div("Comparing Costs with the Consumer Price Index", className=common_header_style)
+    amayhm_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+
     amayhm_dropdown = dcc.Dropdown(
         id="analysis-amayhm-dropdown",
         options=[
@@ -76,11 +89,13 @@ def app_view_html():
         className="has-margin-10"
     )
     amayhm_container = html.Div(id="analysis-amayhm-container", children=dcc.Graph())
-    amayhm = common_info_box_html(elements=[amayhm_header, amayhm_dropdown, amayhm_container])
+    amayhm = common_info_box_html(elements=[amayhm_header, amayhm_explanation, amayhm_dropdown, amayhm_container])
 
 
     layout = html.Div(
         [
+            title,
+            explanation,
             stats,
             ucbf,
             tacv,

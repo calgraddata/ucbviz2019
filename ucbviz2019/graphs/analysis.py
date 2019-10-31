@@ -5,6 +5,7 @@ from plotly.subplots import make_subplots
 from ucbviz2019.data import load_auxiliary_df
 
 from ucbviz2019 import all_provided_data
+from ucbviz2019.view_common import common_plotly_graph_font_style
 
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
 ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
@@ -43,7 +44,15 @@ def total_cost_of_attendance_violin(mode):
                 hoverinfo="text+y+name"
             )
         )
-    fig.update_layout(showlegend=False)
+    fig.update_layout(
+        showlegend=False,
+        font=common_plotly_graph_font_style,
+        title=go.layout.Title(
+            text=f"Attendance Cost Distributions",
+            x=0.5,
+            y=0.9
+        )
+    )
     plot = dcc.Graph(figure=fig)
     return html.Div([plot])
 
@@ -103,7 +112,8 @@ def ucb_finances_vs_tuitions_html(mode):
             name=f"Max {caption} State Expenses",
             mode="lines+markers",
             hovertext=hover_high,
-            marker_color="orange",
+            marker_color="black",
+            opacity=0.3
         ),
         secondary_y=False
     )
@@ -115,7 +125,10 @@ def ucb_finances_vs_tuitions_html(mode):
             mode="lines+markers",
             hovertext=hover_low,
             fill="tonexty",
-            fillcolor='rgba(226, 151, 0, 0.15)'
+            # fillcolor='rgba(226, 151, 0, 0.15)',
+            fillcolor='rgba(105, 105, 105, 0.15)',
+            opacity=0.5,
+            marker_color="grey"
         ),
         secondary_y=False
     )
@@ -136,14 +149,14 @@ def ucb_finances_vs_tuitions_html(mode):
     fig.add_trace(
         go.Scatter(x=exp_years, y=expenses_billions,
                    name="UC Berkeley Expenses (Grand Total)",
-                   marker_color="green"),
+                   marker_color="green", marker_size=10),
         secondary_y=True,
     )
 
     fig.add_trace(
         go.Scatter(x=rev_years, y=revenues_billions,
                    name="UC Berkeley Revenue (Grand Total)",
-                   marker_color="blue"),
+                   marker_color="blue", marker_size=10),
         secondary_y=True,
     )
 
@@ -156,7 +169,15 @@ def ucb_finances_vs_tuitions_html(mode):
     fig.update_yaxes(title_text="UC Expenses/Revenue <b>(billion $)</b>",
                      secondary_y=True)
 
-    fig.update_layout(legend=dict(x=-.1, y=1.5))
+    fig.update_layout(
+        legend=dict(x=-.1, y=1.5),
+        font=common_plotly_graph_font_style,
+        title=go.layout.Title(
+            text=f"Comparison of UC Gross Revenue/Expenses with Attendance Cost",
+            x=0.5,
+            y=0.9
+        )
+    )
 
     plot = dcc.Graph(
         figure=fig
@@ -234,6 +255,15 @@ def all_programs_linegraph(mode):
                      secondary_y=False)
     fig.update_yaxes(title_text="<b>Consumer Price Index (CPI)</b>",
                      secondary_y=True)
+
+    fig.update_layout(
+        font=common_plotly_graph_font_style,
+        title=go.layout.Title(
+            text=f"Comparison of {description_map[mode]} with Consumer Price Index",
+            x=0.5,
+            y=0.9
+        )
+    )
 
     plot = dcc.Graph(
         figure=fig
