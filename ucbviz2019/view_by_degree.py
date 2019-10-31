@@ -6,7 +6,7 @@ from ucbviz2019.view_common import wrap_in_loader_html, common_info_box_html, co
 
 def app_view_html():
     # degree_card_wrapper = wrap_in_loader_html(html.Div(id="degree-card-container"))
-    degree_card_wrapper = html.Div(id="degree-card-container")
+    degree_card_wrapper = html.Div(id="degree-card-container", className="ucbvc-fade-in")
 
     tuition_plot_header = html.Div("UC Tuition Costs", className=common_header_style)
     tuition_plot_explanation = html.Div(
@@ -50,7 +50,8 @@ def app_view_html():
             projection_plot_header,
             projection_plot_explanation,
             projection_plot
-        ]
+        ],
+        className="ucbvc-fade-in"
     )
     all_plots_container = common_info_box_html(all_plots)
 
@@ -72,4 +73,5 @@ def app_view_html():
                      placeholder='Start typing program name or degree type (e.g. Ph.D, M.Eng., ...)'),
         degree_card_wrapper,
         wrap_in_loader_html(all_plots_container),
-    ])]
+    ],
+    className="ucbvc-fade-in")]

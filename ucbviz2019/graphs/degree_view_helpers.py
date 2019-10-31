@@ -275,7 +275,7 @@ def make_degree_info_card(program):
 
     card_title = html.Div(f"Overview of attendance costs",
                           className=common_header_style)
-    card_sublabel = html.Div(program_label, className="is-size-3")
+    card_sublabel = html.Div(program_label, className="is-size-4")
     card_year = html.Div(children="", id="degree-info-card-year",
                          className="is-size-4")
     program_stats_for_year = html.Div(id='degree-card-stats')

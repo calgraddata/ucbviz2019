@@ -100,7 +100,8 @@ def app_view_html():
             ucbf,
             tacv,
             amayhm
-        ]
+        ],
+        className="ucbvc-fade-in"
     )
 
     return layout
