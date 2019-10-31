@@ -39,11 +39,13 @@ external_stylesheets = html.Link(
     className="is-hidden",
 )
 
+nav_container = html.Div(id="core-nav-container")
+
 app.layout = html.Div(
     [
         external_stylesheets,
         location,
-        vc.nav_html(),
+        nav_container,
         app_container_margined
     ],
     className="container"
@@ -70,6 +72,13 @@ def display_app_html(path):
         return vbt.app_view_html()
     else:
         return vc.common_404_html()
+
+
+@app.callback(
+    Output("core-nav-container", "children"), [Input("core-url", "pathname")]
+)
+def update_nav_bar_highlight(path):
+    return vc.nav_html(path)
 
 
 # Animates the burger menu expansion on contraction of page

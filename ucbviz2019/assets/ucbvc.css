@@ -48,3 +48,16 @@ body {
 .ucbvc-clicker-blue:hover {
     color: #130ceb;
 }
+
+.ucbvc-background-dark-blue {
+    background-color: #163675;
+}
+
+.ucbvc-background-dark-blue .navbar-item{
+    color: #ffffff;
+}
+
+.ucbvc-background-dark-blue .navbar-item:hover {
+    color: #ffffff;
+    background-color: #3c64b5;
+}

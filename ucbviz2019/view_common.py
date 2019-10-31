@@ -2,15 +2,32 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 
-def nav_html():
+def nav_html(page="/"):
+    common_nav_item_style = "navbar-item"
+
+
+    by_degree_style = common_nav_item_style
+    by_analysis_style = common_nav_item_style
+    about_style = common_nav_item_style
+
+    highlighted_style = " has-text-weight-semibold"
+    if page in ["/", "/by_degree"]:
+        by_degree_style += highlighted_style
+    elif page=="/by_analysis":
+        by_analysis_style += highlighted_style
+    elif page == "/by_about":
+        about_style += highlighted_style
+
+    print(f"page is {page}, styles are {by_degree_style}, {by_analysis_style}, {about_style}")
+
     by_degree = dcc.Link(
-        "Explore by Degree Program", href="/by_degree", className="navbar-item"
+        "Explore by Degree Program", href="/by_degree", className=by_degree_style
     )
     by_analysis = dcc.Link(
-        "Explore Trends", href="/by_analysis", className="navbar-item"
+        "Explore Trends", href="/by_analysis", className=by_analysis_style
     )
     about = dcc.Link(
-        "About", href="/by_about", className="navbar-item"
+        "About", href="/by_about", className=about_style
     )
     navbar_start = html.Div(
         [by_degree, by_analysis, about], className="navbar-start"
@@ -53,7 +70,7 @@ def nav_html():
 
     nav_menu = html.Div(
         [navbar_brand, navbar_menu],
-        className="navbar is-link is-fixed-top",
+        className="navbar ucbvc-background-dark-blue is-fixed-top",
         role="navigation",
         **{"aria-label": "main navigation"}
     )

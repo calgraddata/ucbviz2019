@@ -328,4 +328,4 @@ def plot_projection_by_program_html(program="Other Programs", limit=10):
 if __name__ == '__main__':
     # fig = generate_fee_stack_plot('Other Programs')
     # fig.show()
-    plot_projection_by_program_html()
+    plot_projection_by_program_html("Business Administration, Full-time MBA Program (M.B.A.)")

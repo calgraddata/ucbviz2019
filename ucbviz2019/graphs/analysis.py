@@ -220,7 +220,8 @@ def all_programs_linegraph(mode):
             y=cpi_df.loc["CPI"],
             marker_color="red",
             marker_size=10,
-            line_width=3
+            line_width=3,
+            name="CPI"
         ),
         secondary_y=True
     )
@@ -231,7 +232,7 @@ def all_programs_linegraph(mode):
     # Set y-axes titles
     fig.update_yaxes(title_text=f"{description_map[mode]} <b>($)</b>",
                      secondary_y=False)
-    fig.update_yaxes(title_text="<b>Consumer Price Index</b>",
+    fig.update_yaxes(title_text="<b>Consumer Price Index (CPI)</b>",
                      secondary_y=True)
 
     plot = dcc.Graph(
