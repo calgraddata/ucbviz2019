@@ -71,7 +71,7 @@ def generate_fee_stack_plot(program="Other Programs"):
         yaxis=dict(
             title=go.layout.yaxis.Title(text="Total ($)")
         ))
-    fig.update_layout(barmode='stack')
+    fig.update_layout(barmode='stack', font=dict(family="Condo"))
     return fig
 
 
@@ -144,10 +144,6 @@ def get_program_stats(program, year):
     }
 
     common_classname = "is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-blue"
-
-    # Placeholder Table
-
-    print(program_stats)
 
     divs = {}
     divs_is_empty = {}
