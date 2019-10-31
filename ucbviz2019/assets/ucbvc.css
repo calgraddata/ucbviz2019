@@ -61,3 +61,18 @@ body {
     color: #ffffff;
     background-color: #3c64b5;
 }
+
+
+/*.navbar-menu .ucbvc-background-grey .is-active{
+    background-color: #383838;
+}*/
+
+#core-navbar-menu {
+     background-color: #163675;
+
+}
+
+
+#core-burger-trigger-cs {
+    color: white;
+}

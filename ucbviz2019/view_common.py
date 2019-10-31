@@ -36,12 +36,12 @@ def nav_html(page="/"):
         className="button is-dark is-small is-hidden",
     )
     buttons = html.Div(log_in, className="buttons")
-    buttons_item = html.Div(buttons, className="navbar-item")
+    buttons_item = html.Div(buttons, className="navbar-item is-hidden")
     navbar_end = html.Div(buttons_item, className="navbar-end")
 
     navbar_menu_id = "core-navbar-menu"
     navbar_menu = html.Div(
-        [navbar_start, navbar_end], id=navbar_menu_id, className="navbar-menu"
+        [navbar_start, navbar_end], id=navbar_menu_id, className="navbar-menu ucbvc-background-grey"
     )
 
     nav_image = html.Img(src="/assets/logo.png", height=300)
