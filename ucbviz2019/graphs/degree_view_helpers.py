@@ -144,6 +144,8 @@ def get_program_stats(program, year):
 
     common_classname = "is-size-6-desktop has-text-bold has-text-centered"
 
+    # Placeholder Table
+
     divs = []
     for stat, value in program_stats.items():
         label = html.Div(stat, className="is-size-5 has-text-centered")

@@ -9,3 +9,5 @@ plotly
 pandas
 flask
 gunicorn
+flask_caching
+pylibmc

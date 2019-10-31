@@ -203,7 +203,7 @@ def get_program_data_as_dict():
             for year in df.loc[program].index:
                 val = df.loc[program].loc[year]
                 if np.isnan(val):
-                    val = 0.0
+                    val = "Data not available."
                 if program not in full_data:
                     full_data[program] = {year: {key: val}}
                 elif year not in full_data[program]:
