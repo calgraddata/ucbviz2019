@@ -47,7 +47,6 @@ def generate_fee_stack_plot(program="Other Programs"):
     program_label = program
     if program in program_category_mappings:
         program = program_category_mappings[program]
-    data = []
     all_data = {}
     bars = []
     for fee in fees:
@@ -119,17 +118,50 @@ def generate_tuition_stack_plot(program="Other Programs"):
     program_label = program
     if program in program_category_mappings:
         program = program_category_mappings[program]
-    data = []
+
+    all_data = {}
+    bars = []
+
     for fee in tuition:
+        print(fee)
         df, dsc = load_df_and_info(fee)
         df = df.loc[:,
              ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
         if program in df.index:
-            data.append(go.Bar(name=data_labels[fee], x=df.loc[program].keys(),
-                               y=df.loc[program],
+            x = df.loc[program].keys()
+            y = df.loc[program]
+
+            print("x", x)
+            print("y", y)
+            bars.append(go.Bar(name=data_labels[fee], x=x,
+                               y=y,
                                hovertemplate="%{x}: $%{y}/semester "))
             years = df.loc[program].keys()
-    fig = go.Figure(data=data)
+
+            if not all_data.keys():
+                for year in x:
+                    d = y[year]
+                    all_data[year] = float(d) if not np.isnan(d) else 0.0
+            else:
+                for year in x:
+                    d = y[year]
+                    all_data[year] += float(d) if not np.isnan(d) else 0.0
+
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=list(all_data.keys()),
+            y=list(all_data.values()),
+            mode="lines+markers",
+            hoverinfo="skip",
+            name="Total Tuition Cost"
+        )
+    )
+
+    for bar in bars:
+        fig.add_trace(bar)
+
     fig.update_layout(
         barmode='stack',
         legend_orientation="h",
