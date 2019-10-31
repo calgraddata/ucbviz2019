@@ -29,7 +29,7 @@ def app_view_html():
 
     # comparison of ucb finances with total cost of attendance
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses", className=common_header_style)
-    ucb_finances = html.Div(id="analysis-ucb-finances-container")
+    ucb_finances = html.Div(id="analysis-ucb-finances-container", children=dcc.Graph())
     ucb_finances_dropdown = dcc.Dropdown(
         id="analysis-ucb-finances-dropdown",
         options=[
@@ -43,7 +43,7 @@ def app_view_html():
 
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
-    tacv_container = html.Div(id="analysis-tacv-container")
+    tacv_container = html.Div(id="analysis-tacv-container", children=dcc.Graph())
     tacv_dropdown = dcc.Dropdown(
         id="analysis-tacv-dropdown",
         options=[
