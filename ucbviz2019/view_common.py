@@ -47,6 +47,7 @@ def nav_html(page="/"):
     nav_image = html.Img(src="/assets/logo.png", height=300)
     nav_image_container = html.A(
         nav_image,
+        href="/by_about",
         className="navbar-item",
     )
 

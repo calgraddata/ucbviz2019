@@ -275,9 +275,10 @@ def make_degree_info_card(program):
 
     card_title = html.Div(f"Overview of attendance costs",
                           className=common_header_style)
-    card_sublabel = html.Div(program_label, className="is-size-4")
-    card_year = html.Div(children="", id="degree-info-card-year",
+    card_sublabel = html.Span(program_label + ", ", className="is-size-4")
+    card_year = html.Span(children="", id="degree-info-card-year",
                          className="is-size-4")
+    card_sublabel_container = html.Div([card_sublabel, card_year])
     program_stats_for_year = html.Div(id='degree-card-stats')
 
     minimum_year = max(min(years), 1998)
@@ -294,8 +295,7 @@ def make_degree_info_card(program):
     )
     container = html.Div([
         card_title,
-        card_sublabel,
-        card_year,
+        card_sublabel_container,
         program_stats_for_year,
         program_year_slider
     ],

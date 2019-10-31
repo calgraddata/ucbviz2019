@@ -160,6 +160,7 @@ def ucb_finances_vs_tuitions_html(mode):
         secondary_y=True,
     )
 
+
     # Set x-axis title
     fig.update_xaxes(title_text="Year")
 

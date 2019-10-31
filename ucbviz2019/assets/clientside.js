@@ -3,6 +3,7 @@
 
 
 var countTime = 750;  // the time needed to count up to all numbers in the app animations
+var countTimeSlow=3000;
 
 
 if(!window.dash_clientside) {window.dash_clientside = {};}
@@ -52,15 +53,16 @@ window.dash_clientside.clientside = {
 
     ) {
         if (pathname == "/by_degree"){
-            animatedCount(id1, hiddenId1, countTime)
-            animatedCount(id2, hiddenId2, countTime)
-            animatedCount(id3, hiddenId3, countTime)
-            animatedCount(id4, hiddenId4, countTime)
-            animatedCount(id5, hiddenId5, countTime)
-            animatedCount(id6, hiddenId6, countTime)
-            animatedCount(id7, hiddenId7, countTime)
-            animatedCount(id8, hiddenId8, countTime)
-            animatedCount(id9, hiddenId9, countTime)
+            animatedCount(id1, hiddenId1, countTimeSlow)
+            animatedCount(id2, hiddenId2, countTimeSlow)
+            animatedCount(id3, hiddenId3, countTimeSlow)
+            animatedCount(id4, hiddenId4, countTimeSlow)
+            animatedCount(id5, hiddenId5, countTimeSlow)
+            animatedCount(id6, hiddenId6, countTimeSlow)
+            animatedCount(id7, hiddenId7, countTimeSlow)
+            animatedCount(id8, hiddenId8, countTimeSlow)
+            animatedCount(id9, hiddenId9, countTimeSlow)
+            animatedCount(id10, hiddenId10, countTimeSlow)
         }
     },
 

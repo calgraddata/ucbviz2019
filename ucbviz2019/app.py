@@ -222,6 +222,7 @@ app.clientside_callback(
         Input("degree-transit-fee-cs", "id"),
         Input("degree-pdst-cs", "id"),
         Input("degree-health-insurance-fee-cs", "id"),
+
         Input("degree-total-in-state-hidden-ref-cs", "id"),
         Input("degree-other-misc-fees-hidden-ref-cs", "id"),
         Input("degree-total-out-state-hidden-ref-cs", "id"),
@@ -230,8 +231,8 @@ app.clientside_callback(
         Input("degree-base-tuition-hidden-ref-cs", "id"),
         Input("degree-nrst-hidden-ref-cs", "id"),
         Input("degree-transit-fee-hidden-ref-cs", "id"),
-        Input("degree-health-insurance-fee-hidden-ref-cs", "id"),
         Input("degree-pdst-hidden-ref-cs", "id"),
+        Input("degree-health-insurance-fee-hidden-ref-cs", "id"),
     ],
 )
 

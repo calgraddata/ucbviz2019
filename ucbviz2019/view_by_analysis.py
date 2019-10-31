@@ -33,7 +33,7 @@ def app_view_html():
         # tooltip="Generate stats by year"
         className="has-margin-10"
     )
-    stats_container = html.Div(id="analysis-stats-container")
+    stats_container = html.Div(id="analysis-stats-container", className="ucbvc-fade-in")
     stats = common_info_box_html(
         elements=[stats_header, stats_explanation, stats_container, stats_year_slider])
 
