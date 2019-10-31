@@ -147,13 +147,13 @@ def get_program_stats(program, year):
 
     divs = {}
     divs_is_empty = {}
-    for stat, value in program_stats.items():
+    for stat in callback_container_mapping.keys():
         animated_id = f"degree-{callback_container_mapping[stat]}-cs"
         hidden_id = f"degree-{callback_container_mapping[stat]}-hidden-ref-cs"
 
         try:
-            value = int(value)
-        except:
+            value = int(program_stats[stat])
+        except (ValueError, KeyError):
             # make an invisible placeholder to make sure nothing breaks!
             animated_container = html.Div(id=animated_id, children="99999", className="is-hidden")
             hidden_ref = html.Div(id=hidden_id, children="99999", className="is-hidden")
