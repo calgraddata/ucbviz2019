@@ -1,13 +1,12 @@
 from ucbviz2019.data import load_df_and_info
 import plotly.graph_objects as go
 from ucbviz2019.view_common import common_info_box_html, \
-    common_info_box_wide_html
+    common_info_box_html, common_plotly_graph_font_style
 from ucbviz2019.data import get_program_data_as_dict, get_program_categories
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_table
-import pandas as pd
 import numpy as np
+
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -100,7 +99,7 @@ def generate_fee_stack_plot(program="Other Programs"):
         yaxis=dict(
             title=go.layout.yaxis.Title(text="Total ($)")
         ))
-    fig.update_layout(barmode='stack', font=dict(family="Condo"))
+    fig.update_layout(barmode='stack', font=common_plotly_graph_font_style)
     return fig
 
 
@@ -123,7 +122,6 @@ def generate_tuition_stack_plot(program="Other Programs"):
     bars = []
 
     for fee in tuition:
-        print(fee)
         df, dsc = load_df_and_info(fee)
         df = df.loc[:,
              ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
@@ -131,8 +129,6 @@ def generate_tuition_stack_plot(program="Other Programs"):
             x = df.loc[program].keys()
             y = df.loc[program]
 
-            print("x", x)
-            print("y", y)
             bars.append(go.Bar(name=data_labels[fee], x=x,
                                y=y,
                                hovertemplate="%{x}: $%{y}/semester "))
@@ -177,8 +173,10 @@ def generate_tuition_stack_plot(program="Other Programs"):
             # ticktext=["{}-{}".format(year, str(int(year) + 1)) for year in years]
         ),
         yaxis=dict(
-            title=go.layout.yaxis.Title(text="Total ($)")
-        ))
+            title=go.layout.yaxis.Title(text="Total ($)"),
+        ),
+        font=common_plotly_graph_font_style
+    )
     return fig
 
 
@@ -205,7 +203,7 @@ def get_program_stats(program, year):
         "Professional Degree Supplemental Tuition": "pdst"
     }
 
-    common_classname = "is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-blue"
+    common_classname = "is-size-5-desktop has-text-weight-bold has-text-centered ucbvc-clicker-blue"
 
     divs = {}
     divs_is_empty = {}
@@ -253,7 +251,7 @@ def get_program_stats(program, year):
     for column_set in [first_column, second_column, third_column]:
         if all([divs_is_empty[k] for k in column_set]):
             no_data_text = html.Div("No data available.",
-                                    className="is-size-5-desktop has-text-bold has-text-centered ucbvc-clicker-red")
+                                    className="is-size-5-desktop has-text-weight-bold has-text-centered ucbvc-clicker-red")
             column = html.Div(no_data_text, className=common_subcard_style)
         else:
             column = html.Div([divs[k] for k in column_set],
@@ -302,7 +300,7 @@ def make_degree_info_card(program):
     ],
         className="has-margin-right-20 has-margin-bottom-50"
     )
-    return common_info_box_wide_html(elements=container)
+    return common_info_box_html(elements=container)
 
 
 if __name__ == '__main__':

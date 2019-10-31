@@ -81,33 +81,7 @@ def common_info_box_html(elements, id=None):
             box encapsulating your elements.
 
     """
-    element_container = html.Div(elements, className="has-margin-30")
-    box = html.Div(element_container, className="box")
-    column = html.Div(box, className="column is-two-thirds")
-    columns = html.Div(
-        column, className="columns is-centered has-margin-top-50"
-    )
-    container = html.Div(columns, className="container", id=id)
-    return container
-
-
-def common_info_box_wide_html(elements, id=None):
-    """
-    Get an outlined box for displaying information, such as references, about
-    page stuff, etc. Can be used in any app.
-
-    Args:
-        elements ([dash_html_components.Div], dash_html_components.Div): Either
-            a single dash html component or multiple in a list. These will
-            be encapsulated by the box.
-        id (str, None): The id you want to assign to the container of the box.
-
-    Returns:
-        container (dash_html_components.Div): an html block container for the
-            box encapsulating your elements.
-
-    """
-    element_container = html.Div(elements, className="has-margin-10")
+    element_container = html.Div(elements, className="has-margin-20")
     box = html.Div(element_container, className="box")
     column = html.Div(box, className="column is-three-fourths")
     columns = html.Div(
@@ -133,3 +107,5 @@ def wrap_in_loader_html(element):
         children=element,
         className="ucbvc-fade-in has-margin-top-50 has-margin-bottom-50"
     )
+
+common_plotly_graph_font_style = dict(family="Condo")
