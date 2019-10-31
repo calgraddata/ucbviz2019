@@ -214,5 +214,6 @@ def get_program_data_as_dict():
                     full_data[program][year][key] = val
     return full_data
 
+
 if __name__ == "__main__":
     print(load_auxiliary_df("revenues_inflation_adjusted_dollars_in_thousands_by_fiscal_year.csv"))

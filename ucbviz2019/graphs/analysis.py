@@ -240,3 +240,5 @@ def all_programs_linegraph(mode):
     )
 
     return html.Div([plot])
+
+

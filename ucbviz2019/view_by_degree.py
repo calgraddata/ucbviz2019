@@ -10,7 +10,8 @@ def app_view_html():
     plots = html.Div(
         [
             html.Div(id="degree-tuition-plot", children=[]),
-            html.Div(id="degree-fees-plot", children=[])
+            html.Div(id="degree-fees-plot", children=[]),
+            html.Div(id="degree-fees-projection", children=[])
         ]
     )
 

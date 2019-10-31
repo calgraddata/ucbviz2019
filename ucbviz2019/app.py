@@ -12,7 +12,7 @@ import ucbviz2019.view_by_analysis as vba
 import ucbviz2019.view_by_about as vbabout
 import ucbviz2019.view_by_graph_type as vbt
 from ucbviz2019.graphs.degree_view_helpers import generate_fee_stack_plot, \
-    generate_tuition_stack_plot
+    generate_tuition_stack_plot, plot_projection_by_program_html
 from ucbviz2019.graphs.analysis import ucb_finances_vs_tuitions_html, \
     total_cost_of_attendance_violin, all_programs_linegraph
 from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, \
@@ -244,3 +244,13 @@ app.clientside_callback(
 )
 def update_degree_card_year_from_slider(year):
     return year
+
+
+@app.callback(
+    Output("degree-fees-projection", "children"),
+    [
+        Input("degree-program-dropdown", "value")
+    ]
+)
+def update_predictions_plot(program):
+    return plot_projection_by_program_html(program)

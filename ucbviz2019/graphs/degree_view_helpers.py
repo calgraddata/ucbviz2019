@@ -3,11 +3,12 @@ import plotly.graph_objects as go
 from ucbviz2019.view_common import common_info_box_html, \
     common_info_box_html, common_plotly_graph_font_style
 from ucbviz2019.data import get_program_data_as_dict, get_program_categories
+from ucbviz2019.constants import this_year
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
 import pandas as pd
-
+from scipy.optimize import curve_fit
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -58,7 +59,6 @@ def generate_fee_stack_plot(program="Other Programs"):
         bars.append(go.Bar(name=data_labels[fee], x=x,
                            y=y,
                            hovertemplate="%{x}: $%{y}/semester "))
-
 
         if not all_data.keys():
             for year in x:
@@ -304,7 +304,8 @@ def make_degree_info_card(program):
     return common_info_box_html(elements=container)
 
 
-def plot_projection_by_program_html(program="Other Programs", limit=10):
+def plot_projection_by_program_html(program="Other Programs", mode="in-state",
+                                    n_years_to_predict=15):
     """
     Fit and plot a projection of a program's total cost of attendance.
 
@@ -316,16 +317,105 @@ def plot_projection_by_program_html(program="Other Programs", limit=10):
         html
 
     """
+    in_state_fees = ["pdst", "campus_fee", "tuition", "health_insurance_fee",
+                     "registration_student_services_fee", "transit_fee",
+                     "other_misc_fees"]
+    out_state_fees = in_state_fees + ["nrst"]
+
+    if mode == "in-state":
+        fee_set = in_state_fees
+        truth = "total_in_state"
+    elif mode == "out-state":
+        fee_set = out_state_fees
+        truth = "total_out_state"
+
+
     if program in program_category_mappings:
         program = program_category_mappings[program]
 
     program_data = get_program_data_as_dict()[program]
 
     df = pd.DataFrame(program_data)
-    print(df)
+    df = df.apply(pd.to_numeric, errors='coerce')
 
+    fee_set = [f for f in fee_set if f in df.index]
+
+
+    this_year_2019 = int(this_year)
+    years_to_predict = list(
+        range(this_year_2019, this_year_2019 + n_years_to_predict))
+
+    # fit
+    models = {}
+    for feature in fee_set:
+        y = df.loc[feature]
+        y_relevant = y[~y.isna()].astype(float)
+        x_relevant = y_relevant.index.astype(int)
+        popt, pcov = curve_fit(f, x_relevant, y_relevant)
+        models[feature] = popt
+
+    # Known future data is not accounted for by lookup
+    # But is implicitly known in the fitting parameters, so probably not a
+    # big deal
+
+    # Sum up the predictions from each fee model
+    prediction_sums = np.zeros(len(years_to_predict))
+    years_to_predict_floats = np.asarray(years_to_predict).astype(float)
+    for feature in fee_set:
+        model_params = models[feature]
+        prediction = f(years_to_predict_floats, *model_params)
+        prediction_sums += prediction
+
+    # Plot the known data
+    fig = go.Figure()
+
+    # plot the known data
+    x = df.loc[truth].index
+    y = df.loc[truth]
+    fig.add_trace(
+        go.Scatter(
+            x=x,
+            y=y,
+            name="True value",
+            marker_color="grey",
+            mode="markers",
+        )
+    )
+
+    # plot the predictions
+    fig.add_trace(
+        go.Scatter(
+            x=years_to_predict,
+            y=prediction_sums,
+            name="Projection",
+            mode="lines+markers",
+            marker_color="red"
+        )
+    )
+
+    plot = dcc.Graph(
+        figure=fig
+    )
+    return html.Div(plot)
+
+
+# The function for fitting
+def f(x, m, b):
+    """
+    A linear regression
+
+    Args:
+        x:
+        m:
+        b:
+
+    Returns:
+
+    """
+    return np.multiply(m, x) + b
 
 if __name__ == '__main__':
     # fig = generate_fee_stack_plot('Other Programs')
     # fig.show()
-    plot_projection_by_program_html("Business Administration, Full-time MBA Program (M.B.A.)")
+    plot_projection_by_program_html(
+        "Business Administration, Full-time MBA Program (M.B.A.)")
