@@ -7,6 +7,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
 import pandas as pd
+import numpy as np
 
 fees = ['registration_student_services_fee.csv',
         'health_insurance_fee.csv',
@@ -47,14 +48,43 @@ def generate_fee_stack_plot(program="Other Programs"):
     if program in program_category_mappings:
         program = program_category_mappings[program]
     data = []
+    all_data = {}
+    bars = []
     for fee in fees:
         df, dsc = load_df_and_info(fee)
         df = df.loc[:,
              ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
-        data.append(go.Bar(name=data_labels[fee], x=df.loc[program].keys(),
-                           y=df.loc[program],
+        x = df.loc[program].keys()
+        y = df.loc[program]
+        bars.append(go.Bar(name=data_labels[fee], x=x,
+                           y=y,
                            hovertemplate="%{x}: $%{y}/semester "))
-    fig = go.Figure(data=data)
+
+
+        if not all_data.keys():
+            for year in x:
+                d = y[year]
+                all_data[year] = float(d) if not np.isnan(d) else 0.0
+        else:
+            for year in x:
+                d = y[year]
+                all_data[year] += float(d) if not np.isnan(d) else 0.0
+
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=list(all_data.keys()),
+            y=list(all_data.values()),
+            mode="lines+markers",
+            hoverinfo="skip",
+            name="Total Fees"
+        )
+    )
+
+    for bar in bars:
+        fig.add_trace(bar)
+
     fig.update_layout(
         legend_orientation="h",
         legend=dict(x=0, y=1.11),
