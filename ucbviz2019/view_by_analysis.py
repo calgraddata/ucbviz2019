@@ -128,7 +128,7 @@ def app_view_html():
     ucb_finances_explanation = dcc.Markdown(
         "Below we compare the range in these costs of attendance to the revenues "
         "and expenses of UC Berkeley itself. The shaded area represents the range "
-        "of COA for the graduate programs at UC Berkeley and the red and green lines"
+        "of COA for the graduate programs at UC Berkeley and the red and green lines "
         "are UC Berkeley's total expenses and revenue, respectively. "
         "Note that UC Berkeley's revenue comes from more than just tuition and fees. "
         "The additional revenue and expense data for the University was obtained "

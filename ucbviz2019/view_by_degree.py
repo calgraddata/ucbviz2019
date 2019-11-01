@@ -12,7 +12,7 @@ def app_view_html():
     coa_header = html.Div("Total Cost of Attendance", className=common_header_style)
     coa_explanation = html.Div(
         "The total cost of attending a graduate program is made up of both "
-        "tuition and fees paid to the University. The costs of grad"
+        "tuition and fees paid to the University. The costs of grad "
         "programs at UC Berkeley have steadily risen - on average - since 1998.",
         className=common_explanation_style
     )
