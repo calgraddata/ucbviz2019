@@ -11,7 +11,7 @@ ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
 
 def app_view_html():
     title = html.P("The Broader View - Trends in Graduate Fees",
-           className="is-size-1 has-text-weight-bold")
+           className="is-size-2 has-text-weight-bold")
     explanation = html.P(
         "What can we learn from looking at the Graduate Financial data from a "
         "broader view? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -69,9 +69,10 @@ def app_view_html():
         id="analysis-tacv-dropdown",
         options=[
             {"value": "in-state", "label": "In state cost of attendance"},
-            {"value": "out-state", "label": "Out of state cost of attendance"}
+            {"value": "out-state", "label": "Out of state cost of attendance"},
+            {"value": "both",  "label": "In state and Out of state (side by side)"}
         ],
-        value="out-state",
+        value="both",
         className="has-margin-10"
     )
     tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container])
@@ -104,9 +105,9 @@ def app_view_html():
         [
             title,
             explanation,
+            tacv,
             stats,
             ucbf,
-            tacv,
             cpi
         ],
         className="ucbvc-fade-in"

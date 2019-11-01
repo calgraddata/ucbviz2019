@@ -22,36 +22,105 @@ def total_cost_of_attendance_violin(mode):
         plot
 
     """
+    fig = go.Figure()
+
     if mode == "in-state":
-        df = ist
+        label = "In state"
+        for year in ist.columns:
+            fig.add_trace(
+                go.Violin(
+                    x=[year] * ist.shape[0],
+                    y=ist[year],
+                    box_visible=True,
+                    meanline_visible=True,
+                    points="all",
+                    name=year,
+                    text=ist.index,
+                    hoverinfo="text+y+name",
+                    line_color="blue",
+                )
+            )
     elif mode == "out-state":
-        df = ost
+        label = "Out of State"
+        for year in ost.columns:
+            fig.add_trace(
+                go.Violin(
+                    x=[year] * ost.shape[0],
+                    y=ost[year],
+                    box_visible=True,
+                    meanline_visible=True,
+                    points="all",
+                    name=year,
+                    text=ost.index,
+                    hoverinfo="text+y+name",
+                    line_color="orange",
+                )
+            )
+    elif mode=="both":
+        label = "(In and Out of State comparison)"
+        for year in ist.columns:
+
+            if year == ist.columns[-1]:
+                ist_name = "In state"
+                ost_name = "Out of state"
+                showlegend = True
+            else:
+                ist_name = year
+                ost_name = year
+                showlegend = False
+
+            fig.add_trace(
+                go.Violin(
+                    x=[year] * ist.shape[0],
+                    y=ist[year],
+                    box_visible=False,
+                    meanline_visible=True,
+                    points="all",
+                    text=ist.index,
+                    hoverinfo="text+y",
+                    line_color="blue",
+                    side="negative",
+                    legendgroup='in-state',
+                    name=ist_name,
+                    showlegend=showlegend
+                )
+            )
+
+            fig.add_trace(
+                go.Violin(
+                    x=[year] * ost.shape[0],
+                    y=ost[year],
+                    box_visible=False,
+                    meanline_visible=True,
+                    points="all",
+                    text=ost.index,
+                    hoverinfo="text+y+name",
+                    line_color="orange",
+                    side="positive",
+                    legendgroup='out-state',
+                    name=ost_name,
+                    showlegend=showlegend
+                )
+            )
+        #
+
     else:
         raise ValueError(
             f"Invalid mode: {mode} for total cost of attendance violin!")
 
-    fig = go.Figure()
-    for year in df.columns:
-        fig.add_trace(
-            go.Violin(
-                x=[year] * df.shape[0],
-                y=df[year],
-                box_visible=True,
-                meanline_visible=True,
-                points="all",
-                name=year,
-                text=df.index,
-                hoverinfo="text+y+name"
-            )
-        )
+
+    fig.update_traces(meanline_visible=True, scalemode="count")
+    # fig.update_layout(violingap=0, violinmode='overlay')
+
     fig.update_layout(
-        showlegend=False,
+        showlegend=True if mode=="both" else False,
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
-            text=f"Attendance Cost Distributions",
+            text=f"Attendance Cost Distributions " + label,
             x=0.5,
             y=0.9
-        )
+        ),
+        height=500
     )
     plot = dcc.Graph(figure=fig)
     return html.Div([plot])
