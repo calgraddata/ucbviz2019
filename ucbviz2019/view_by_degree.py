@@ -46,7 +46,8 @@ def app_view_html():
         "the total costs of attendance (such as registration fee, base tuition, "
         "non-resident tuition supplement,etc) where future cost information is not "
         "available. We use linear regressions for newer degrees (<10 years of data) and "
-        "quadratic regressions otherwise.",
+        "quadratic regressions otherwise. We also and clip negative fee projections "
+        "to $0.",
         className=common_explanation_style
     )
     projection_plot = html.Div(

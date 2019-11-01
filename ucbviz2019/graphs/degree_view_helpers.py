@@ -380,6 +380,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             if is_meng:
                 y_relevant = y_relevant[2:]
                 x_relevant = x_relevant[2:]
+
             popt, pcov = curve_fit(f, x_relevant, y_relevant)
             models[feature] = popt
 
@@ -395,7 +396,6 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             prediction = f(years_to_predict_floats, *model_params)
             prediction = prediction.clip(0)
             prediction_sums += prediction
-            print(feature, prediction)
 
         # plot the known data
         x = df.loc[truth].index
@@ -419,7 +419,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                 name=f"{label} (projection)",
                 mode="lines+markers",
                 marker_color=colormap[mode],
-                hovertemplate = "%{x}: $%{y}/semester "
+                hovertemplate="%{x}: $%{y}/semester "
             )
         )
 
