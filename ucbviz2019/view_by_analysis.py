@@ -75,20 +75,30 @@ def app_view_html():
         value="both",
         className="has-margin-10"
     )
-    tacv_explanation3 = html.Div("Select a total cost of attendance with the dropdown:",
+    tacv_explanation3 = html.Div("Select in-state/out-of state or both:",
                                  className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
     tacv = common_info_box_html(
         elements=[tacv_header, tacv_explanation, tacv_explanation3, tacv_dropdown, tacv_container, tacv_explanation2])
 
-    combined_header = html.Div("Comparing with External Sources", className=common_header_style)
+    combined_header = html.Div("Comparison with General Economic Trends", className=common_header_style)
     combined_explanation = html.Div(
-        "We've seen how the price of going to graduate or professional school at UC Berkeley has changed over the years, but how does this measure up with external factors? More importantly, we will see how the relative cost of UC Berkeley graduate school is changing for both students (via the consumer price index) and the school as a whole (via the school's gross revenues and expenses).",
+        "Below is a plot comparing the rise in overall cost of attendance of "
+        "Berkeley graudate programs with the increase in the Consumer Price "
+        "Index (CPI) over the same time period. If COA consistently tracked "
+        "CPI between 2000 and the present day, the full-time MBA program at HAAS "
+        "would cost approximately $8,300/semester for CA residents. The actual "
+        "cost today is $32,958/semester.",
         className=common_explanation_style)
 
     common_subheader_style = "is-size-5 has-margin-10 has-text-weight-bold has-margin-top-30"
     cpi_header = html.Div("The Consumer Price Index", className=common_subheader_style)
     cpi_explanation = dcc.Markdown(
-        "The [Consumer Price Index](https://www.bls.gov/cpi/) is a measure of how expensive common goods and services are for the 'average' buyer. This is a plot of all program's total costs of attendance vs. the increase in consumer price index. While the CPI experienced a ~50% increase since 2000, higher cost programs at UC Berkeley have increased the total cost of attendance by 100-200%. For smaller fees like the Campus Fee, the fee increase is much larger, near 500%. Thus the 'buying power' of the UC Berkeley Graduate or Professional student has drastically fallen since the mid 2000s.",
+        "The [Consumer Price Index](https://www.bls.gov/cpi/) is a measure of "
+        "how expensive common goods and services are for the 'average' buyer. "
+        "The plot below shows the ratio of total cost of attendance to the CPI "
+        "for that year. If the cost of attending a graduate degree program follows"
+        "the overall trend in the prices of goods and services to US consumers, "
+        "this ratio should stay constant and not increase over time.",
         className=common_explanation_style)
 
     cpi_dropdown = dcc.Dropdown(
