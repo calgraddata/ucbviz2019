@@ -138,7 +138,7 @@ def app_view_html():
         className="ucbvc-fade-in"
     )
 
-    return layout
+    return wrap_in_loader_html(layout)
 
 
 def stats_html(slider_value):

@@ -10,7 +10,7 @@ def app_view_html():
            className="is-size-2 has-text-weight-bold")
 
     explanation = dcc.Markdown(
-        "This website is an entry to the 2019 UC Berkeley Graduate Assembly Data Visualization Contest. Our goal for CalGradData is to provide clear and engaging content for visualizing graduate and professional school financial data. Thanks again for visiting!",
+        "This website is an entry to the **2019 UC Berkeley Graduate Assembly Data Visualization Contest.** Our goal for CalGradData is to provide clear and engaging content for visualizing graduate and professional school financial data. Thanks again for visiting!",
         className=common_txt_style
     )
 
