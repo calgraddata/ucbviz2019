@@ -34,7 +34,8 @@ app_container_margined = html.Div(app_container, className="has-margin-20")
 location = dcc.Location(id="core-url", refresh=True)
 
 external_stylesheets = html.Link(
-    href="https://fonts.googleapis.com/css?family=Cardo&display=swap",
+    # href="https://fonts.googleapis.com/css?family=Cardo&display=swap",
+    href="https://fonts.googleapis.com/css?family=Merriweather&display=swap",
     rel="stylesheet",
     className="is-hidden",
 )

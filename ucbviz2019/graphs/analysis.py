@@ -218,14 +218,14 @@ def ucb_finances_vs_tuitions_html(mode):
     fig.add_trace(
         go.Scatter(x=exp_years, y=expenses_billions,
                    name="UC Berkeley Expenses (Grand Total)",
-                   marker_color="red", marker_size=10),
+                   marker=dict(color="red", size=10, symbol="square-dot")),
         secondary_y=True,
     )
 
     fig.add_trace(
         go.Scatter(x=rev_years, y=revenues_billions,
                    name="UC Berkeley Revenue (Grand Total)",
-                   marker_color="blue", marker_size=10),
+                   marker_color="#42e83c", marker_size=10),
         secondary_y=True,
     )
 

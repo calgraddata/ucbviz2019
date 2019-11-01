@@ -2,7 +2,6 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 from ucbviz2019 import all_provided_data
-from ucbviz2019.graphs.analysis import all_programs_linegraph
 from ucbviz2019.view_common import wrap_in_loader_html, common_info_box_html, common_header_style, common_explanation_style
 
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
