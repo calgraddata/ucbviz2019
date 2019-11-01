@@ -6,11 +6,11 @@ def app_view_html():
     common_header_style = "is-size-3 has-margin-10 has-margin-top-30"
     common_txt_style = "is-size-5 has-margin-10"
 
-    title = html.P("About CalGradData",
+    title = html.P("About this website (CalGradData)",
            className="is-size-2 has-text-weight-bold")
 
     explanation = dcc.Markdown(
-        "This website is an entry to the **2019 UC Berkeley Graduate Assembly Data Visualization Contest.** Our goal for CalGradData is to provide clear and engaging content for visualizing graduate and professional school financial data. Thanks again for visiting!",
+        "This website is an entry to the **2019 UC Berkeley Graduate Assembly Data Visualization Contest**, an event sponsored by the [Graduate Assembly](http://ga.berkeley.edu). Our goal for CalGradData is to provide clear and engaging content for visualizing UC Berkeley graduate and professional school financial data. Thanks again for visiting!",
         className=common_txt_style
     )
 
@@ -23,7 +23,7 @@ def app_view_html():
 
     data = html.Div("Data", className=common_header_style)
     data_txt = dcc.Markdown(
-        "All data except where explicitly noted is adapted from the Graduate Assembly graduate financial dataset released October 7, 2019.",
+        "All data except where explicitly noted is adapted from the Graduate Assembly graduate financial dataset (based on Registrar fee data) released October 7, 2019.",
         className=common_txt_style
     )
 
