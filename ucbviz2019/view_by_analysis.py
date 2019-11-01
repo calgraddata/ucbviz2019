@@ -12,8 +12,10 @@ def app_view_html():
     title = html.P("The Broader View - Trends in Graduate Fees",
            className="is-size-2 has-text-weight-bold")
     explanation = html.P(
+        "Looking at individual programs tells us about the minutia of fees and "
+        "tuitions, but fails to show overall trends on an institutional level. "
         "What can we learn from looking at the Graduate Financial data from a "
-        "broader view? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "broader view? Let's take a deeper look into the data as a whole.",
            className="is-size-6"
     )
 
@@ -38,7 +40,11 @@ def app_view_html():
 
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
-    tacv_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+    tacv_explanation = html.Div("Here we graph the distributions of Total Cost of Attendance (COA) for years 1998-2018. These distributions show us how the cost spread of graduate school at UC Berkeley has changed over 20 years! The split view (orange and blue) shows comparisons of the in and out of state COA. While it's apparent the mean COAs increase yearly, it is remarkable that the spread of costs is growing yearly as well. ",
+                                className=common_explanation_style)
+
+    tacv_explanation2 = html.Div("These are known as 'split' violin plots. Hover over them to reveal their data points and distributional data, or narrow the data selection with the selection bar above. ",
+                                className="is-size-7 has-text-weight-bold")
 
     tacv_container = html.Div(id="analysis-tacv-container", children=dcc.Graph())
     tacv_dropdown = dcc.Dropdown(
@@ -51,7 +57,7 @@ def app_view_html():
         value="both",
         className="has-margin-10"
     )
-    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container])
+    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container, tacv_explanation2])
 
 
     cpi_header = html.Div("Comparing Costs with the Consumer Price Index", className=common_header_style)
