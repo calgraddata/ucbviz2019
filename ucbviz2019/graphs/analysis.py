@@ -218,14 +218,14 @@ def ucb_finances_vs_tuitions_html(mode):
     fig.add_trace(
         go.Scatter(x=exp_years, y=expenses_billions,
                    name="UC Berkeley Expenses (Grand Total)",
-                   marker_color="#ff7700", marker_size=10),
+                   marker_color="red", marker_size=10),
         secondary_y=True,
     )
 
     fig.add_trace(
         go.Scatter(x=rev_years, y=revenues_billions,
                    name="UC Berkeley Revenue (Grand Total)",
-                   marker_color="#00ff48", marker_size=10),
+                   marker_color="blue", marker_size=10),
         secondary_y=True,
     )
 
@@ -235,9 +235,9 @@ def ucb_finances_vs_tuitions_html(mode):
 
     # Set y-axes titles
     fig.update_yaxes(title_text="Cost of Attendance <b>($)</b>",
-                     secondary_y=False)
+                     secondary_y=False, rangemode="tozero")
     fig.update_yaxes(title_text="UC Expenses/Revenue <b>(billion $)</b>",
-                     secondary_y=True)
+                     secondary_y=True, range=[0, 4])
 
     fig.update_layout(
         legend=dict(x=-.1, y=1.5),
@@ -246,7 +246,10 @@ def ucb_finances_vs_tuitions_html(mode):
             text=f"Comparison of UC Gross Revenue/Expenses with Attendance Cost",
             x=0.5,
             y=0.9
-        )
+        ),
+        height=500
+
+        # yaxis=dict(rangemode="tozero")
     )
 
     plot = dcc.Graph(
@@ -300,7 +303,8 @@ def all_programs_linegraph(mode):
                 opacity=0.2,
                 marker_color="grey",
                 showlegend=False,
-                hoverinfo="text"
+                hoverinfo="text",
+                marker_symbol="diamond-open"
             ),
             secondary_y=False
         )
@@ -322,9 +326,9 @@ def all_programs_linegraph(mode):
 
     # Set y-axes titles
     fig.update_yaxes(title_text=f"{description_map[mode]} <b>($)</b>",
-                     secondary_y=False)
+                     secondary_y=False, rangemode="tozero")
     fig.update_yaxes(title_text="<b>Consumer Price Index (CPI)</b>",
-                     secondary_y=True)
+                     secondary_y=True, rangemode="tozero")
 
     fig.update_layout(
         font=common_plotly_graph_font_style,
@@ -332,7 +336,8 @@ def all_programs_linegraph(mode):
             text=f"Comparison of {description_map[mode]} with Consumer Price Index",
             x=0.5,
             y=0.9
-        )
+        ),
+        height=500
     )
 
     plot = dcc.Graph(

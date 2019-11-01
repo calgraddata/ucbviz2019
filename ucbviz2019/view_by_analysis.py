@@ -37,29 +37,6 @@ def app_view_html():
     stats = common_info_box_html(
         elements=[stats_header, stats_explanation, stats_container, stats_year_slider])
 
-    # comparison of ucb finances with total cost of attendance
-    ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses", className=common_header_style)
-    ucb_finances_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
-    ucb_finances = html.Div(id="analysis-ucb-finances-container", children=[])
-    ucb_finances_dropdown = dcc.Dropdown(
-        id="analysis-ucb-finances-dropdown",
-        options=[
-            {"value": "in-state", "label": "In state cost of attendance"},
-            {"value": "out-state", "label": "Out of state cost of attendance"}
-        ],
-        value="out-state",
-        className="has-margin-10"
-    )
-
-    ucbf = common_info_box_html(
-        elements=[
-            ucb_finances_header,
-            ucb_finances_explanation,
-            ucb_finances_dropdown,
-            ucb_finances
-        ]
-    )
-
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
     tacv_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
@@ -98,7 +75,34 @@ def app_view_html():
         className="has-margin-10"
     )
     cpi_container = html.Div(id="analysis-cpi-container", children=dcc.Graph())
-    cpi = common_info_box_html(elements=[cpi_header, cpi_explanation, cpi_dropdown, cpi_container])
+    cpi = html.Div([cpi_header, cpi_explanation, cpi_dropdown, cpi_container])
+
+    # comparison of ucb finances with total cost of attendance
+    ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses",
+                                   className=common_header_style)
+    ucb_finances_explanation = html.Div(
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        className=common_explanation_style)
+    ucb_finances = html.Div(id="analysis-ucb-finances-container", children=[])
+    ucb_finances_dropdown = dcc.Dropdown(
+        id="analysis-ucb-finances-dropdown",
+        options=[
+            {"value": "in-state", "label": "In state cost of attendance"},
+            {"value": "out-state", "label": "Out of state cost of attendance"}
+        ],
+        value="out-state",
+        className="has-margin-10"
+    )
+
+    ucbf = html.Div([
+            ucb_finances_header,
+            ucb_finances_explanation,
+            ucb_finances_dropdown,
+            ucb_finances
+        ]
+    )
+
+    external_comparisons = common_info_box_html(elements=[cpi, ucbf])
 
 
     layout = html.Div(
@@ -107,8 +111,7 @@ def app_view_html():
             explanation,
             tacv,
             stats,
-            ucbf,
-            cpi
+            external_comparisons
         ],
         className="ucbvc-fade-in"
     )
