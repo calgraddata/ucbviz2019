@@ -14,7 +14,7 @@ def app_view_html():
                    className="is-size-2 has-text-weight-bold")
     explanation = html.P(
         "On this page we present a number of visualizations that give insight into "
-        "general trends in graduate programs' cost of attendence (COA) at UC Berkeley "
+        "general trends in graduate programs' cost of attendance (COA) at UC Berkeley "
         "over the time period between 1998 and 2018.",
         className="is-size-5"
     )
@@ -23,15 +23,15 @@ def app_view_html():
     stats_header = html.Div("Most and Least Expensive Programs",
                             className=common_header_style)
     stats_explanation = html.Div(
-        "While the overall cost of attendance has risen steadily over the last 20 "
-        "years across all programs, the price gap between the most expensive "
-        "and most affordable programs has widened significantly. Professional "
-        "degree programs (MBA's, JD's, etc) have increased in prices more "
-        "significantly than academic programs (MS, PhD) over this time period. "
-        "Programs in Haas Business School and Berkeley Law are consistently "
-        "the most expensive at the University.",
+        "You can use this tool to see the most and least expensive programs for "
+        "each year since 1998. The full-time MBA program in Haas Business School "
+        "of Business and Berkeley Law's JD program are consistently the most "
+        "expensive at the University. The cost of these professional programs is "
+        "typically paid out of pocket by their students while the cost of "
+        "academic programs are often covered in exchange for research/teaching "
+        "positions or by fellowships.",
         className=common_explanation_style)
-    stats_explanation2 = html.Div("Slide the slider to change the year!",
+    stats_explanation2 = html.Div("Use this slider to see data from other years.",
                                   className="is-size-7 has-text-weight-bold has-margin-top-30")
 
     stats_year_slider = dcc.Slider(
@@ -51,11 +51,17 @@ def app_view_html():
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
     tacv_explanation = html.Div(
-        "Here we graph the distributions of Total Cost of Attendance (COA) for years 1998-2018. These distributions show us how the cost spread of graduate school at UC Berkeley has changed over 20 years! The split view (orange and blue) shows comparisons of the in and out of state COA. While it's apparent the mean COAs increase yearly, it is remarkable that the spread of costs is growing yearly as well. ",
+        "While the overall cost of attendance has risen steadily over the last 20 "
+        "years across all programs, the price gap between the most expensive "
+        "and most affordable programs has widened significantly. Professional "
+        "degree programs (MBA's, JD's, etc) have increased in prices more "
+        "significantly than academic programs (MS, PhD) over this time period. ",
         className=common_explanation_style)
 
     tacv_explanation2 = html.Div(
-        "These are known as 'split' violin plots. Hover over them to reveal their data points and distributional data, or narrow the data selection with the selection bar above. ",
+        "These are known as 'split' violin plots. Hover over them to examine "
+        "individual data points and distributional data. You can narrow the "
+        "data selection with the selection bar above or with a click/touch + drag.",
         className="is-size-7 has-text-weight-bold")
 
     tacv_container = wrap_in_loader_html(html.Div(id="analysis-tacv-container", children=dcc.Graph()), margin=0)
