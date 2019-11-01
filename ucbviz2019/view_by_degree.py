@@ -82,7 +82,7 @@ def app_view_html():
                      id='degree-program-dropdown',
                      value="Mechanical Engineering (M.S., Ph.D.)",
                      placeholder='Start typing program name or degree type (e.g. Ph.D, M.Eng., ...)',
-                     clearable=True,
+                     clearable=False,
                      optionHeight=25,
                      className="has-text-size-3"
                      ),

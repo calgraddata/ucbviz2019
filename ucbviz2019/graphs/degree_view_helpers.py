@@ -311,7 +311,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
 
     Args:
         program: str
-        limit: the number of years to limit the projection for.
+        n_years_to_predict: the number of years to limit the projection for.
 
     Returns:
         html
@@ -405,6 +405,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                 name=f"{label} (historical)",
                 marker_color=deactivated_colormap[mode],
                 mode="markers",
+                hovertemplate="%{x}: $%{y}/semester "
             )
         )
 
@@ -415,12 +416,14 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                 y=prediction_sums,
                 name=f"{label} (projection)",
                 mode="lines+markers",
-                marker_color=colormap[mode]
+                marker_color=colormap[mode],
+                hovertemplate = "%{x}: $%{y}/semester "
             )
         )
 
     fig.update_layout(
-        legend=dict(x=-.0, y=1.3),
+        legend_orientation="h",
+        legend=dict(x=0, y=1.06),
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
             text=f"Total Cost of Attendance Projections",
@@ -436,6 +439,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         ),
         height=600,
     )
+    fig.update_yaxes(range=[0, max(y)*1.3])
 
     plot = dcc.Graph(
         figure=fig,
