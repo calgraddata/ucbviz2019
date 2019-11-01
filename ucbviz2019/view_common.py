@@ -106,7 +106,7 @@ def common_info_box_html(elements):
     return container
 
 
-def wrap_in_loader_html(element):
+def wrap_in_loader_html(element, margin=50):
     """
     Wrap the elements in a common loading element.
 
@@ -120,7 +120,7 @@ def wrap_in_loader_html(element):
         # 'graph', 'cube', 'circle', 'dot', 'default'
         # type="cube",
         children=element,
-        className="ucbvc-fade-in has-margin-top-50 has-margin-bottom-50"
+        className=f"ucbvc-fade-in has-margin-top-{margin} has-margin-bottom-{margin}"
     )
 
 common_plotly_graph_font_style = dict(family="Merriweather")

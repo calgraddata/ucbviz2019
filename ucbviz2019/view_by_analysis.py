@@ -49,7 +49,7 @@ def app_view_html():
     tacv_explanation2 = html.Div("These are known as 'split' violin plots. Hover over them to reveal their data points and distributional data, or narrow the data selection with the selection bar above. ",
                                 className="is-size-7 has-text-weight-bold")
 
-    tacv_container = html.Div(id="analysis-tacv-container", children=dcc.Graph())
+    tacv_container = wrap_in_loader_html(html.Div(id="analysis-tacv-container", children=dcc.Graph()), margin=0)
     tacv_dropdown = dcc.Dropdown(
         id="analysis-tacv-dropdown",
         options=[
@@ -138,7 +138,7 @@ def app_view_html():
         className="ucbvc-fade-in"
     )
 
-    return wrap_in_loader_html(layout)
+    return layout
 
 
 def stats_html(slider_value):
