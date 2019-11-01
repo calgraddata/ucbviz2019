@@ -2,7 +2,8 @@ import dash_html_components as html
 import dash_core_components as dcc
 
 from ucbviz2019 import all_provided_data
-from ucbviz2019.view_common import wrap_in_loader_html, common_info_box_html, common_header_style, common_explanation_style
+from ucbviz2019.view_common import wrap_in_loader_html, common_info_box_html, common_header_style, \
+    common_explanation_style
 
 ist = all_provided_data["total_in_state"]["df"]  # total in state tuition
 ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
@@ -10,22 +11,26 @@ ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
 
 def app_view_html():
     title = html.P("The Broader View - Trends in Graduate Fees",
-           className="is-size-2 has-text-weight-bold")
+                   className="is-size-2 has-text-weight-bold")
     explanation = html.P(
-        "Looking at individual programs tells us about the minutia of fees and "
-        "tuitions, but fails to show overall trends on an institutional level. "
-        "What can we learn from looking at the Graduate Financial data from a "
-        "broader view? Let's take a deeper look into the data as a whole.",
-           className="is-size-5"
+        "On this page we present a number of visualizations that give insight into "
+        "general trends in graduate programs' cost of attendence (COA) at UC Berkeley "
+        "over the time period between 1998 and 2018.",
+        className="is-size-5"
     )
 
     # total attendance cost violin
     stats_header = html.Div("Most and Least Expensive Programs",
                             className=common_header_style)
-    stats_explanation = html.Div("Whether you've just won the lottery or are shopping for education on a budget, looking at the most and least expensive graduate programs at UC Berkeley is interesting. The Haas Business School and Berkeley Law are almost always the most expensive, while Academic programs (Ph.D., etc.) are the cheapest.",
-                                 className=common_explanation_style)
+    stats_explanation = html.Div(
+        "Whether you've just won the lottery or are shopping for education on a "
+        "budget, looking at the most and least expensive graduate programs at UC "
+        "Berkeley is interesting. The Haas Business School and Berkeley Law are "
+        "almost always the most expensive, while Academic programs (Ph.D., etc.) "
+        "are the cheapest.",
+        className=common_explanation_style)
     stats_explanation2 = html.Div("Slide the slider to change the year!",
-                                className="is-size-7 has-text-weight-bold has-margin-top-30")
+                                  className="is-size-7 has-text-weight-bold has-margin-top-30")
 
     stats_year_slider = dcc.Slider(
         id="analysis-stats-year-slider",
@@ -43,11 +48,13 @@ def app_view_html():
 
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
-    tacv_explanation = html.Div("Here we graph the distributions of Total Cost of Attendance (COA) for years 1998-2018. These distributions show us how the cost spread of graduate school at UC Berkeley has changed over 20 years! The split view (orange and blue) shows comparisons of the in and out of state COA. While it's apparent the mean COAs increase yearly, it is remarkable that the spread of costs is growing yearly as well. ",
-                                className=common_explanation_style)
+    tacv_explanation = html.Div(
+        "Here we graph the distributions of Total Cost of Attendance (COA) for years 1998-2018. These distributions show us how the cost spread of graduate school at UC Berkeley has changed over 20 years! The split view (orange and blue) shows comparisons of the in and out of state COA. While it's apparent the mean COAs increase yearly, it is remarkable that the spread of costs is growing yearly as well. ",
+        className=common_explanation_style)
 
-    tacv_explanation2 = html.Div("These are known as 'split' violin plots. Hover over them to reveal their data points and distributional data, or narrow the data selection with the selection bar above. ",
-                                className="is-size-7 has-text-weight-bold")
+    tacv_explanation2 = html.Div(
+        "These are known as 'split' violin plots. Hover over them to reveal their data points and distributional data, or narrow the data selection with the selection bar above. ",
+        className="is-size-7 has-text-weight-bold")
 
     tacv_container = wrap_in_loader_html(html.Div(id="analysis-tacv-container", children=dcc.Graph()), margin=0)
     tacv_dropdown = dcc.Dropdown(
@@ -55,24 +62,26 @@ def app_view_html():
         options=[
             {"value": "in-state", "label": "In state cost of attendance"},
             {"value": "out-state", "label": "Out of state cost of attendance"},
-            {"value": "both",  "label": "In state and Out of state (side by side)"}
+            {"value": "both", "label": "In state and Out of state (side by side)"}
         ],
         value="both",
         className="has-margin-10"
     )
     tacv_explanation3 = html.Div("Select a total cost of attendance with the dropdown:",
-                                className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
-    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_explanation3, tacv_dropdown, tacv_container, tacv_explanation2])
-
+                                 className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
+    tacv = common_info_box_html(
+        elements=[tacv_header, tacv_explanation, tacv_explanation3, tacv_dropdown, tacv_container, tacv_explanation2])
 
     combined_header = html.Div("Comparing with External Sources", className=common_header_style)
-    combined_explanation = html.Div("We've seen how the price of going to graduate or professional school at UC Berkeley has changed over the years, but how does this measure up with external factors? More importantly, we will see how the relative cost of UC Berkeley graduate school is changing for both students (via the consumer price index) and the school as a whole (via the school's gross revenues and expenses).", className=common_explanation_style)
-
+    combined_explanation = html.Div(
+        "We've seen how the price of going to graduate or professional school at UC Berkeley has changed over the years, but how does this measure up with external factors? More importantly, we will see how the relative cost of UC Berkeley graduate school is changing for both students (via the consumer price index) and the school as a whole (via the school's gross revenues and expenses).",
+        className=common_explanation_style)
 
     common_subheader_style = "is-size-5 has-margin-10 has-text-weight-bold has-margin-top-30"
     cpi_header = html.Div("The Consumer Price Index", className=common_subheader_style)
-    cpi_explanation = dcc.Markdown("The [Consumer Price Index](https://www.bls.gov/cpi/) is a measure of how expensive common goods and services are for the 'average' buyer. This is a plot of all program's total costs of attendance vs. the increase in consumer price index. While the CPI experienced a ~50% increase since 2000, higher cost programs at UC Berkeley have increased the total cost of attendance by 100-200%. For smaller fees like the Campus Fee, the fee increase is much larger, near 500%. Thus the 'buying power' of the UC Berkeley Graduate or Professional student has drastically fallen since the mid 2000s.",
-                                   className=common_explanation_style)
+    cpi_explanation = dcc.Markdown(
+        "The [Consumer Price Index](https://www.bls.gov/cpi/) is a measure of how expensive common goods and services are for the 'average' buyer. This is a plot of all program's total costs of attendance vs. the increase in consumer price index. While the CPI experienced a ~50% increase since 2000, higher cost programs at UC Berkeley have increased the total cost of attendance by 100-200%. For smaller fees like the Campus Fee, the fee increase is much larger, near 500%. Thus the 'buying power' of the UC Berkeley Graduate or Professional student has drastically fallen since the mid 2000s.",
+        className=common_explanation_style)
 
     cpi_dropdown = dcc.Dropdown(
         id="analysis-cpi-dropdown",
@@ -116,16 +125,15 @@ def app_view_html():
                                 className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
 
     ucbf = html.Div([
-            ucb_finances_header,
-            ucb_finances_explanation,
+        ucb_finances_header,
+        ucb_finances_explanation,
         ucb_explanation2,
         ucb_finances_dropdown,
-            ucb_finances
-        ]
+        ucb_finances
+    ]
     )
 
     external_comparisons = common_info_box_html(elements=[combined_header, combined_explanation, cpi, ucbf])
-
 
     layout = html.Div(
         [
