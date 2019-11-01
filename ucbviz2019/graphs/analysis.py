@@ -217,14 +217,14 @@ def ucb_finances_vs_tuitions_html(mode):
 
     fig.add_trace(
         go.Scatter(x=exp_years, y=expenses_billions,
-                   name="UC Berkeley Expenses (Grand Total)",
+                   name="UCB Expenses (Total)",
                    marker=dict(color="red", size=10, symbol="square-dot")),
         secondary_y=True,
     )
 
     fig.add_trace(
         go.Scatter(x=rev_years, y=revenues_billions,
-                   name="UC Berkeley Revenue (Grand Total)",
+                   name="UCB Revenue (Total)",
                    marker_color="#42e83c", marker_size=10),
         secondary_y=True,
     )
@@ -240,7 +240,8 @@ def ucb_finances_vs_tuitions_html(mode):
                      secondary_y=True, range=[0, 4])
 
     fig.update_layout(
-        legend=dict(x=-.0, y=1.3),
+        legend=dict(x=-.0, y=0.1),
+        legend_orientation="h",
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
             text=f"Comparison of UC Gross Revenue/Expenses with Attendance Cost",

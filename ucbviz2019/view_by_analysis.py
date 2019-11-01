@@ -14,8 +14,8 @@ def app_view_html():
                    className="is-size-2 has-text-weight-bold")
     explanation = html.P(
         "On this page we present a number of visualizations that give insight into "
-        "general trends in graduate programs' cost of attendance (COA) at UC Berkeley "
-        "over the time period between 1998 and 2018.",
+        "general trends in the total cost of attendance (COA) for graduate programs "
+        "at UC Berkeley between 1998 and 2018.",
         className="is-size-5"
     )
 
@@ -55,7 +55,7 @@ def app_view_html():
         "years across all programs, the price gap between the most expensive "
         "and most affordable programs has widened significantly. Professional "
         "degree programs (MBA's, JD's, etc) have increased in prices more "
-        "significantly than academic programs (MS, PhD) over this time period. ",
+        "than academic programs (MS, PhD) over this time period. ",
         className=common_explanation_style)
 
     tacv_explanation2 = html.Div(
@@ -96,7 +96,7 @@ def app_view_html():
         "The [Consumer Price Index](https://www.bls.gov/cpi/) is a measure of "
         "how expensive common goods and services are for the 'average' buyer. "
         "The plot below shows the ratio of total cost of attendance to the CPI "
-        "for that year. If the cost of attending a graduate degree program follows"
+        "for that year. If the cost of attending a graduate degree program followed "
         "the overall trend in the prices of goods and services to US consumers, "
         "this ratio should stay constant and not increase over time.",
         className=common_explanation_style)
@@ -126,7 +126,14 @@ def app_view_html():
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses",
                                    className=common_subheader_style)
     ucb_finances_explanation = dcc.Markdown(
-        "It can also be interesting to compare the student costs to the costs and revenues of UC Berkeley itself. This plot shows the range - the maximum and minimum total costs of attendance - for all graduate and professional programs compared with UC Berkeley's gross cash flows. Note that UC Berkeley's cash flows contain much more than Graduate Student tuitions and fees, such as undergraduate fees and expenses. All UC Berkeley Revenue and Expense Data was downloaded from the official [University of California Infocenter.](https://www.universityofcalifornia.edu/infocenter/revenue-and-expense-data)",
+        "Below we compare the range in these costs of attendance to the revenues "
+        "and expenses of UC Berkeley itself. The shaded area represents the range "
+        "of COA for the graduate programs at UC Berkeley and the red and green lines"
+        "are UC Berkeley's total expenses and revenue, respectively. "
+        "Note that UC Berkeley's revenue comes from more than just tuition and fees. "
+        "The additional revenue and expense data for the University was obtained "
+        "from the [University of California Infocenter.]"
+        "(https://www.universityofcalifornia.edu/infocenter/revenue-and-expense-data)",
         className=common_explanation_style)
     ucb_finances = html.Div(id="analysis-ucb-finances-container", children=[])
     ucb_finances_dropdown = dcc.Dropdown(
