@@ -273,8 +273,8 @@ def all_programs_linegraph(mode):
     }
 
     description_map = {
-        "in-state": "Cost of attendance (in state)",
-        "out-state": "Cost of attendance (out of state)",
+        "in-state": "Cost of Attendance (in state)",
+        "out-state": "Cost of Attendance (out of state)",
         "registration-student-services-fee": 'Registration Services Fee',
         'pdst': 'Professional Degree Supplement',
         'campus-fee': 'Campus Fee',
@@ -285,56 +285,68 @@ def all_programs_linegraph(mode):
     }
 
     df = all_provided_data[mode_map[mode]]["df"]
-    info = all_provided_data[mode_map[mode]]["df"]
 
     cpi_df = all_provided_data["pdst_cpi"]["df"]
 
     df = df.T
-    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig = go.Figure()
 
     for program in df.columns:
         program_data = df[program]
+
+        x = program_data.index
+        y = program_data.values
+        cpi_x = list(cpi_df.columns)
+        cpi_y = list(cpi_df.loc["CPI"])
+        x_scaled = []
+        y_scaled = []
+        for i, x in enumerate(x):
+            if x in cpi_x:
+                x_scaled.append(x)
+                y_scaled.append(y[i]/cpi_y[cpi_x.index(x)])
+
         fig.add_trace(
             go.Scatter(
-                x=program_data.index,
-                y=program_data.values,
+                x=x_scaled,
+                y=y_scaled,
                 name=program,
                 text=program,
                 mode="lines+markers",
-                opacity=0.2,
-                marker_color="grey",
-                showlegend=False,
-                hoverinfo="text",
+                opacity=1,
+                # marker_color="grey",
+                showlegend=True,
+                hoverinfo="x+text+y",
                 marker_symbol="diamond-open"
             ),
-            secondary_y=False
+            # secondary_y=False
         )
 
-    fig.add_trace(
-        go.Scatter(
-            x=cpi_df.columns,
-            y=cpi_df.loc["CPI"],
-            marker_color="red",
-            marker_size=10,
-            line_width=3,
-            name="CPI"
-        ),
-        secondary_y=True
-    )
+    # fig.add_trace(
+    #     go.Scatter(
+    #         x=cpi_df.columns,
+    #         y=cpi_df.loc["CPI"],
+    #         marker_color="red",
+    #         marker_size=10,
+    #         line_width=3,
+    #         name="CPI"
+    #     ),
+    #     secondary_y=True
+    # )
 
     # Set x-axis title
     fig.update_xaxes(title_text="Year")
 
     # Set y-axes titles
-    fig.update_yaxes(title_text=f"{description_map[mode]} <b>($)</b>",
-                     secondary_y=False, rangemode="tozero")
-    fig.update_yaxes(title_text="<b>Consumer Price Index (CPI)</b>",
-                     secondary_y=True, rangemode="tozero")
+    # fig.update_yaxes(title_text=f"{description_map[mode]} <b>($)</b>",
+    #                  secondary_y=False, rangemode="tozero")
+    fig.update_yaxes(title_text=f"Ratio of {description_map[mode]} to CPI <b>($)</b>")
+                     # fig.update_yaxes(title_text="<b>Consumer Price Index (CPI)</b>",
+    #                  secondary_y=True, rangemode="tozero")
 
     fig.update_layout(
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
-            text=f"Comparison of {description_map[mode]} with Consumer Price Index",
+            text=f"Ratio of {description_map[mode]} and Consumer Price Index",
             x=0.5,
             y=0.9
         ),

@@ -59,7 +59,7 @@ def app_view_html():
         className=common_explanation_style)
 
     tacv_explanation2 = html.Div(
-        "These are known as 'split' violin plots. Hover over them to examine "
+        "These are known as 'split' violin plots. Hover over/tap them to examine "
         "individual data points and distributional data. You can narrow the "
         "data selection with the selection bar above or with a click/touch + drag.",
         className="is-size-7 has-text-weight-bold")
@@ -118,7 +118,7 @@ def app_view_html():
         className="has-margin-10"
     )
     cpi_container = html.Div(id="analysis-cpi-container", children=dcc.Graph())
-    cpi_explanation2 = html.Div("Select a fee to compare to the CPI; hover over points to highlight program:",
+    cpi_explanation2 = html.Div("Select a fee to compare to the CPI:",
                                 className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
     cpi = html.Div([cpi_header, cpi_explanation, cpi_explanation2, cpi_dropdown, cpi_container, ])
 
@@ -146,7 +146,7 @@ def app_view_html():
         className="has-margin-10"
     )
 
-    ucb_explanation2 = html.Div("Select a range to compare with Cal's gross cash flows; hover over points for numbers:",
+    ucb_explanation2 = html.Div("Select a range by click + drag or touch + drag; Hover over/tap points for numbers.",
                                 className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
 
     ucbf = html.Div([
