@@ -16,7 +16,7 @@ def app_view_html():
         "tuitions, but fails to show overall trends on an institutional level. "
         "What can we learn from looking at the Graduate Financial data from a "
         "broader view? Let's take a deeper look into the data as a whole.",
-           className="is-size-6"
+           className="is-size-5"
     )
 
     # total attendance cost violin

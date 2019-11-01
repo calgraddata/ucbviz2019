@@ -15,6 +15,8 @@ def app_view_html():
         className=common_explanation_style
     )
     tuition_plot = html.Div(id="degree-tuition-plot", children=[])
+    tuition_explanation2 = html.Div("Hover over the points on the plot for more info!",
+                                className="is-size-7 has-text-weight-bold has-margin-10")
 
 
     fees_plot_header = html.Div("Assorted UC Fees", className=common_header_style)
@@ -25,6 +27,8 @@ def app_view_html():
         className=common_explanation_style
     )
     fees_plot = html.Div(id="degree-fees-plot", children=[])
+    fees_explanation2 = html.Div("Hover over the bars on the plot for more info!",
+                                className="is-size-7 has-text-weight-bold has-margin-10")
 
     projection_plot_header = html.Div("Projection of Total Attendance Cost", className=common_header_style)
     projection_plot_explanation = html.Div(
@@ -43,12 +47,15 @@ def app_view_html():
         [
             tuition_plot_header,
             tuition_plot_explanation,
+            fees_explanation2,
             tuition_plot,
             fees_plot_header,
             fees_plot_explanation,
+            fees_explanation2,
             fees_plot,
             projection_plot_header,
             projection_plot_explanation,
+            tuition_explanation2,
             projection_plot
         ],
         className="ucbvc-fade-in"
@@ -61,10 +68,14 @@ def app_view_html():
     return [html.Div([
         html.P("Explore Cost of Attendance by Program",
                className="is-size-2 has-text-weight-bold"),
-        html.P(
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        className="is-size-6"
+        dcc.Markdown(
+        "Welcome to CalGradData, an **interactive visualization** of UC Berkeley Graduate Cost of Attendance data! This is the By Degree page, where you can visualize individual fees and tuition for most Cal graduate and professional degree programs for years 1998-2018. So simply enter your program of interest and start visualizing!",
+        className="is-size-5"
     ),
+        dcc.Markdown(
+            "If you are interested in visualizing data outside of a single major, check out the [trends](/by_analysis) page.",
+            className="is-size-6 has-margin-top-20"
+        ),
         # html.Div(style={'padding': 10}),
         find_your_degree_container,
         dcc.Dropdown(options=program_options,

@@ -289,13 +289,16 @@ def make_degree_info_card(program):
         value=initial_value,
         step=1,
         marks={k: str(k) for k in range(minimum_year, maximum_year + 1, 5)},
-        className="has-margin-10 has-margin-top-50"
+        className="has-margin-10 has-margin-top-20"
     )
+    explanation2 = html.Div("Slide the slider to change the year!",
+                                className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
     container = html.Div([
         card_title,
         card_sublabel_container,
         program_stats_for_year,
-        program_year_slider
+        explanation2,
+        program_year_slider,
     ],
         className="has-margin-right-20 has-margin-bottom-50"
     )
@@ -417,6 +420,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         )
 
     fig.update_layout(
+        legend=dict(x=-.0, y=1.3),
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
             text=f"Total Cost of Attendance Projections",
