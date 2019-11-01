@@ -77,3 +77,21 @@ body {
 #core-burger-trigger-cs {
     color: white;
 }
+
+.rc-slider-handle {
+    width: 25px;
+    height: 25px;
+    margin-top: -10px;
+    margin-left: -12px;
+}
+
+.rc-slider-track {
+    height: 6px;
+}
+
+.rc-slider-dot {
+    width: 20px;
+    height: 20px;
+    bottom: -9px;
+    margin-left:-9px;
+}

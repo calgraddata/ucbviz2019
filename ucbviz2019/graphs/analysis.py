@@ -113,6 +113,8 @@ def total_cost_of_attendance_violin(mode):
     # fig.update_layout(violingap=0, violinmode='overlay')
 
     fig.update_layout(
+        legend_orientation="h",
+        legend=dict(x=0.0, y=1.11),
         showlegend=True if mode=="both" else False,
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
