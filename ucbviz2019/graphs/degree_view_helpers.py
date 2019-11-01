@@ -393,7 +393,9 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         for feature in fee_set:
             model_params = models[feature]
             prediction = f(years_to_predict_floats, *model_params)
+            prediction = prediction.clip(0)
             prediction_sums += prediction
+            print(feature, prediction)
 
         # plot the known data
         x = df.loc[truth].index
@@ -439,7 +441,6 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         ),
         height=600,
     )
-    fig.update_yaxes(range=[0, max(y)*1.3])
 
     plot = dcc.Graph(
         figure=fig,
