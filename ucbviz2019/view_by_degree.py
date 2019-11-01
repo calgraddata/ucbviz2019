@@ -32,9 +32,9 @@ def app_view_html():
 
     projection_plot_header = html.Div("Projection of Total Attendance Cost", className=common_header_style)
     projection_plot_explanation = html.Div(
-        "The total cost of attendance can be predicted using regressions on "
-        "each contributing fee. View the projections for total cost of in-state "
-        "and out-of-state attendance costs below.",
+        "The total cost of attendance can be predicted using basic regressions on "
+        "each contributing fee. These projections are made using simple quadratic and linear regressions on the fees contributing to the total costs of attendance (such as registration fee, base tuition, non-resident tuition, and professional supplemental tuition)."
+        " View the projections below.",
         className=common_explanation_style
     )
     projection_plot = html.Div(
@@ -62,18 +62,18 @@ def app_view_html():
     )
     all_plots_container = common_info_box_html(all_plots)
 
-    find_your_degree = html.Div("Find your degree program:", className="is-size-4 has-text-weight-bold")
+    find_your_degree = html.Div("Find your degree program:", className="is-size-3 has-text-weight-bold")
     find_your_degree_container = html.Div(find_your_degree, className="has-margin-top-20")
 
     return [html.Div([
         html.P("Explore Cost of Attendance by Program",
                className="is-size-2 has-text-weight-bold"),
         dcc.Markdown(
-        "Welcome to CalGradData, an **interactive visualization** of UC Berkeley Graduate Cost of Attendance data! This is the By Degree page, where you can visualize individual fees and tuition for most Cal graduate and professional degree programs for years 1998-2018. So simply enter your program of interest and start visualizing!",
+        "Welcome to CalGradData, an **interactive visualization** of UC Berkeley Graduate Cost of Attendance data (as part of the [Graduate Assembly](http://ga.berkeley.edu) data visualization contest)! This is the By Degree page, where you can **visualize individual fees and tuition** for most Cal graduate and professional degree programs for years 1998-2018. So simply enter your program of interest and start visualizing!",
         className="is-size-5"
     ),
         dcc.Markdown(
-            "If you are interested in visualizing data outside of a single major, check out the [trends](/by_analysis) page.",
+            "If you are interested in visualizing data *outside* of a single major, **check out the [trends](/by_analysis) page.**",
             className="is-size-6 has-margin-top-20"
         ),
         # html.Div(style={'padding': 10}),

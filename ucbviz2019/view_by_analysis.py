@@ -98,8 +98,8 @@ def app_view_html():
     # comparison of ucb finances with total cost of attendance
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses",
                                    className=common_subheader_style)
-    ucb_finances_explanation = html.Div(
-        "It can also be interesting to compare the student costs to the costs and revenues of UC Berkeley itself. This plot shows the range - the maximum and minimum total costs of attendance - for all graduate and professional programs compared with UC Berkeley's gross cash flows. Note that UC Berkeley's cash flows contain much more than Graduate Student tuitions and fees, such as undergraduate fees and expenses.",
+    ucb_finances_explanation = dcc.Markdown(
+        "It can also be interesting to compare the student costs to the costs and revenues of UC Berkeley itself. This plot shows the range - the maximum and minimum total costs of attendance - for all graduate and professional programs compared with UC Berkeley's gross cash flows. Note that UC Berkeley's cash flows contain much more than Graduate Student tuitions and fees, such as undergraduate fees and expenses. All UC Berkeley Revenue and Expense Data was downloaded from the official [University of California Infocenter.](https://www.universityofcalifornia.edu/infocenter/revenue-and-expense-data)",
         className=common_explanation_style)
     ucb_finances = html.Div(id="analysis-ucb-finances-container", children=[])
     ucb_finances_dropdown = dcc.Dropdown(
@@ -112,7 +112,7 @@ def app_view_html():
         className="has-margin-10"
     )
 
-    ucb_explanation2 = html.Div("Select a range to compare with Cal's gross cash flows; hover over points for explanations:",
+    ucb_explanation2 = html.Div("Select a range to compare with Cal's gross cash flows; hover over points for numbers:",
                                 className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
 
     ucbf = html.Div([
