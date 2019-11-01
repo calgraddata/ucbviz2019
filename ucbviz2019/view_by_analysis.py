@@ -20,9 +20,12 @@ def app_view_html():
     )
 
     # total attendance cost violin
-    stats_header = html.Div("Attendance Cost Extremes by Year",
+    stats_header = html.Div("Most and Least Expensive Programs",
                             className=common_header_style)
-    stats_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+    stats_explanation = html.Div("Whether you've just won the lottery or are shopping for education on a budget, looking at the most and least expensive graduate programs at UC Berkeley is interesting. The Haas Business School and Berkeley Law are almost always the most expensive, while Academic programs (Ph.D., etc.) are the cheapest.",
+                                 className=common_explanation_style)
+    stats_explanation2 = html.Div("Slide the slider to change the year!",
+                                className="is-size-7 has-text-weight-bold has-margin-top-30")
 
     stats_year_slider = dcc.Slider(
         id="analysis-stats-year-slider",
@@ -36,7 +39,7 @@ def app_view_html():
     )
     stats_container = html.Div(id="analysis-stats-container", className="ucbvc-fade-in")
     stats = common_info_box_html(
-        elements=[stats_header, stats_explanation, stats_container, stats_year_slider])
+        elements=[stats_header, stats_explanation, stats_container, stats_year_slider, stats_explanation2])
 
     # total attendance cost violin
     tacv_header = html.Div("Total Attendance Cost Distribution", className=common_header_style)
@@ -57,11 +60,19 @@ def app_view_html():
         value="both",
         className="has-margin-10"
     )
-    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_dropdown, tacv_container, tacv_explanation2])
+    tacv_explanation3 = html.Div("Select a total cost of attendance with the dropdown:",
+                                className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
+    tacv = common_info_box_html(elements=[tacv_header, tacv_explanation, tacv_explanation3, tacv_dropdown, tacv_container, tacv_explanation2])
 
 
-    cpi_header = html.Div("Comparing Costs with the Consumer Price Index", className=common_header_style)
-    cpi_explanation = html.Div("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", className=common_explanation_style)
+    combined_header = html.Div("Comparing with External Sources", className=common_header_style)
+    combined_explanation = html.Div("We've seen how the price of going to graduate or professional school at UC Berkeley has changed over the years, but how does this measure up with external factors? More importantly, we will see how the relative cost of UC Berkeley graduate school is changing for both students (via the consumer price index) and the school as a whole (via the school's gross revenues and expenses).", className=common_explanation_style)
+
+
+    common_subheader_style = "is-size-5 has-margin-10 has-text-weight-bold has-margin-top-30"
+    cpi_header = html.Div("The Consumer Price Index", className=common_subheader_style)
+    cpi_explanation = dcc.Markdown("The [Consumer Price Index](https://www.bls.gov/cpi/) is a measure of how expensive common goods and services are for the 'average' buyer. This is a plot of all program's total costs of attendance vs. the increase in consumer price index. While the CPI experienced a ~50% increase since 2000, higher cost programs at UC Berkeley have increased the total cost of attendance by 100-200%. For smaller fees like the Campus Fee, the fee increase is much larger, near 500%. Thus the 'buying power' of the UC Berkeley Graduate or Professional student has drastically fallen since the mid 2000s.",
+                                   className=common_explanation_style)
 
     cpi_dropdown = dcc.Dropdown(
         id="analysis-cpi-dropdown",
@@ -80,13 +91,15 @@ def app_view_html():
         className="has-margin-10"
     )
     cpi_container = html.Div(id="analysis-cpi-container", children=dcc.Graph())
-    cpi = html.Div([cpi_header, cpi_explanation, cpi_dropdown, cpi_container])
+    cpi_explanation2 = html.Div("Select a fee to compare to the CPI; hover over points to highlight program:",
+                                className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
+    cpi = html.Div([cpi_header, cpi_explanation, cpi_explanation2, cpi_dropdown, cpi_container, ])
 
     # comparison of ucb finances with total cost of attendance
     ucb_finances_header = html.Div("Attendance Cost and UC Operating Expenses",
-                                   className=common_header_style)
+                                   className=common_subheader_style)
     ucb_finances_explanation = html.Div(
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        "It can also be interesting to compare the student costs to the costs and revenues of UC Berkeley itself. This plot shows the range - the maximum and minimum total costs of attendance - for all graduate and professional programs compared with UC Berkeley's gross cash flows. Note that UC Berkeley's cash flows contain much more than Graduate Student tuitions and fees, such as undergraduate fees and expenses.",
         className=common_explanation_style)
     ucb_finances = html.Div(id="analysis-ucb-finances-container", children=[])
     ucb_finances_dropdown = dcc.Dropdown(
@@ -99,15 +112,19 @@ def app_view_html():
         className="has-margin-10"
     )
 
+    ucb_explanation2 = html.Div("Select a range to compare with Cal's gross cash flows; hover over points for explanations:",
+                                className="is-size-7 has-text-weight-bold has-margin-10 has-margin-top-30")
+
     ucbf = html.Div([
             ucb_finances_header,
             ucb_finances_explanation,
-            ucb_finances_dropdown,
+        ucb_explanation2,
+        ucb_finances_dropdown,
             ucb_finances
         ]
     )
 
-    external_comparisons = common_info_box_html(elements=[cpi, ucbf])
+    external_comparisons = common_info_box_html(elements=[combined_header, combined_explanation, cpi, ucbf])
 
 
     layout = html.Div(
