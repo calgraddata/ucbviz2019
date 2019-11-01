@@ -340,6 +340,13 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
     # Plot the known data
     fig = go.Figure()
 
+    is_meng = "M.Eng" in program
+
+    if is_meng:
+        f = f_linear
+    else:
+        f = f_quadratic
+
     for mode in ["in-state", "out-state"]:
 
         if mode == "in-state":
@@ -361,8 +368,15 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         models = {}
         for feature in fee_set:
             y = df.loc[feature]
+
             y_relevant = y[~y.isna()].astype(float)
             x_relevant = y_relevant.index.astype(int)
+
+            # this is super janky
+            # remove the first two observations from the learning data
+            if is_meng:
+                y_relevant = y_relevant[2:]
+                x_relevant = x_relevant[2:]
             popt, pcov = curve_fit(f, x_relevant, y_relevant)
             models[feature] = popt
 
@@ -415,17 +429,19 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         ),
         yaxis=dict(
             title=go.layout.yaxis.Title(text="Total ($)"),
-        )
+        ),
+        height=600,
     )
 
     plot = dcc.Graph(
-        figure=fig
+        figure=fig,
+        # style={"height": "500"}
     )
     return html.Div([plot])
 
 
 # The function for fitting
-def f(x, m, b):
+def f_linear(x, m, b):
     """
     A linear regression
 
@@ -438,6 +454,21 @@ def f(x, m, b):
 
     """
     return np.multiply(m, x) + b
+
+
+def f_quadratic(x, a, b, c):
+    """
+    A quadratic regression
+
+    Args:
+        x:
+        m:
+        b:
+
+    Returns:
+
+    """
+    return np.polynomial.polynomial.polyval(x, [a, b, c])
 
 
 if __name__ == '__main__':

@@ -70,7 +70,11 @@ def app_view_html():
         dcc.Dropdown(options=program_options,
                      id='degree-program-dropdown',
                      value="Mechanical Engineering (M.S., Ph.D.)",
-                     placeholder='Start typing program name or degree type (e.g. Ph.D, M.Eng., ...)'),
+                     placeholder='Start typing program name or degree type (e.g. Ph.D, M.Eng., ...)',
+                     clearable=True,
+                     optionHeight=25,
+                     className="has-text-size-3"
+                     ),
         degree_card_wrapper,
         wrap_in_loader_html(all_plots_container),
     ],

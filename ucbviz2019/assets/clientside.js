@@ -23,7 +23,6 @@ window.dash_clientside.clientside = {
     // see burger.js for more detials.
     animateBurgerOnClickClientsideFunction: function (activateId, triggerNClicks) {
         animateBurgerOnClick(activateId, triggerNClicks);
-        return ""
     },
 
 

@@ -106,7 +106,6 @@ def common_info_box_html(elements):
     return container
 
 
-
 def wrap_in_loader_html(element):
     """
     Wrap the elements in a common loading element.
