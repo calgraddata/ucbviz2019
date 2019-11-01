@@ -19,8 +19,6 @@ def get_all_data(data_dir=csvs_raw_dir):
                 key "info": value (str): The dataset's info.
                 key "df": value (pd.DataFrame): The dataset as a dataframe.
     """
-    print("loading all data")
-
     fnames = get_all_filenames(data_dir, include_cpi=True)
     fnames_no_dotcsv = [f.replace(".csv", "") for f in fnames]
     data = {k: None for k in fnames_no_dotcsv}
@@ -196,7 +194,6 @@ def get_program_options(program_category_mappings):
 
 
 def get_program_data_as_dict():
-    print("loading all program data as dict")
     data = get_all_data()
     full_data = {}
     for key in data:
