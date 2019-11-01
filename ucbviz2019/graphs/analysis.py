@@ -240,8 +240,7 @@ def ucb_finances_vs_tuitions_html(mode):
                      secondary_y=True, range=[0, 4])
 
     fig.update_layout(
-        legend=dict(x=-.0, y=0.1),
-        legend_orientation="h",
+        legend=dict(x=-.0, y=-0.3),
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
             text=f"Comparison of UC Gross Revenue/Expenses with Attendance Cost",
