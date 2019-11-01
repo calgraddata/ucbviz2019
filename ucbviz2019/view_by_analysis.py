@@ -23,11 +23,13 @@ def app_view_html():
     stats_header = html.Div("Most and Least Expensive Programs",
                             className=common_header_style)
     stats_explanation = html.Div(
-        "Whether you've just won the lottery or are shopping for education on a "
-        "budget, looking at the most and least expensive graduate programs at UC "
-        "Berkeley is interesting. The Haas Business School and Berkeley Law are "
-        "almost always the most expensive, while Academic programs (Ph.D., etc.) "
-        "are the cheapest.",
+        "While the overall cost of attendance has risen steadily over the last 20 "
+        "years across all programs, the price gap between the most expensive "
+        "and most affordable programs has widened significantly. Professional "
+        "degree programs (MBA's, JD's, etc) have increased in prices more "
+        "significantly than academic programs (MS, PhD) over this time period. "
+        "Programs in Haas Business School and Berkeley Law are consistently "
+        "the most expensive at the University.",
         className=common_explanation_style)
     stats_explanation2 = html.Div("Slide the slider to change the year!",
                                   className="is-size-7 has-text-weight-bold has-margin-top-30")
