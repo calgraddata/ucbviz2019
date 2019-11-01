@@ -420,7 +420,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         )
 
     fig.update_layout(
-        legend=dict(x=-.0, y=1.3),
+        legend=dict(x=-.0, y=-0.3),
         font=common_plotly_graph_font_style,
         title=go.layout.Title(
             text=f"Total Cost of Attendance Projections",
