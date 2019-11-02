@@ -343,13 +343,6 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
     # Plot the known data
     fig = go.Figure()
 
-    is_meng = "M.Eng" in program
-
-    if is_meng:
-        f = f_linear
-    else:
-        f = f_quadratic
-
     for mode in ["in-state", "out-state"]:
 
         if mode == "in-state":
@@ -361,7 +354,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             truth = "total_out_state"
             label = "Out of State Cost"
 
-        fee_set = [f for f in fee_set if f in df.index]
+        fee_set = [fee for fee in fee_set if fee in df.index]
 
         this_year_2019 = int(this_year)
         years_to_predict = list(
@@ -369,19 +362,32 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
 
         # fit
         models = {}
+        functions = []
         for feature in fee_set:
             y = df.loc[feature]
 
             y_relevant = y[~y.isna()].astype(float)
             x_relevant = y_relevant.index.astype(int)
 
+            f = f_quadratic
+
             # this is super janky
             # remove the first two observations from the learning data
-            if is_meng:
+            if "M.Eng" in program:
                 y_relevant = y_relevant[2:]
                 x_relevant = x_relevant[2:]
+                f = f_linear
+
+            if "Law" in program and mode=="out-state":
+                y_relevant = y_relevant[5:]
+                x_relevant = x_relevant[5:]
+
+            if len(x_relevant) < 5:
+                f = f_linear
+
 
             popt, pcov = curve_fit(f, x_relevant, y_relevant)
+            functions.append(f)
             models[feature] = popt
 
         # Known future data is not accounted for by lookup
@@ -391,11 +397,26 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
         # Sum up the predictions from each fee model
         prediction_sums = np.zeros(len(years_to_predict))
         years_to_predict_floats = np.asarray(years_to_predict).astype(float)
-        for feature in fee_set:
+        for i, feature in enumerate(fee_set):
+            f = functions[i]
             model_params = models[feature]
             prediction = f(years_to_predict_floats, *model_params)
-            prediction = prediction.clip(0)
-            prediction_sums += prediction
+            prediction_clipped = prediction.clip(0)
+
+            if feature == "nrst":
+                print(program, feature)
+
+            if "Law" in program and mode=="out-state":
+                print(f.__name__)
+                print(program)
+                print(feature)
+                print("LAW TIME")
+                print(prediction)
+                print(prediction_clipped)
+            prediction_sums += prediction_clipped
+
+        if "Law" in program and mode == "in-state":
+            print("prediction sums are", prediction_sums)
 
         # plot the known data
         x = df.loc[truth].index
