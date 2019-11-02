@@ -375,6 +375,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             x_relevant = y_relevant.index.astype(int)
 
             f = f_quadratic
+            # f = f_linear
 
             # this is super janky
             # remove the first two observations from the learning data
@@ -382,14 +383,20 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                 y_relevant = y_relevant[2:]
                 x_relevant = x_relevant[2:]
                 f = f_linear
-
-            if "Law" in program and mode=="out-state":
-                y_relevant = y_relevant[5:]
-                x_relevant = x_relevant[5:]
-
-            if "Business (MBA FT)"==program:
+            elif "Law" in program:
+                y_relevant = y_relevant[-5:]
+                x_relevant = x_relevant[-5:]
+            elif "Business (MBA FT)"==program:
+                y_relevant = y_relevant[-8:]
+                x_relevant = x_relevant[-8:]
+            elif program=="UCB-UCSF Medical (MS/MD)":
                 y_relevant = y_relevant[-10:]
                 x_relevant = x_relevant[-10:]
+                f = f_linear
+            else:
+                y_relevant = y_relevant[-15:]
+                x_relevant = x_relevant[-15:]
+
 
             if len(x_relevant) < 5:
                 f = f_linear
