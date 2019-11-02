@@ -49,7 +49,9 @@ def app_view_html():
         "quadratic and linear regressions on the individual fees contributing to "
         "the total costs of attendance (such as registration fee, base tuition, "
         "non-resident tuition supplement, etc.) where future cost information is not "
-        "available. We use linear regressions for newer degrees (<10 years of data) and "
+        "available; this is generally more robust to changes in individual fee increases "
+        "than simply fitting on total costs of attendance. We use linear regressions "
+        "for newer degrees (<10 years of data) and degrees with considerable discontinuities and "
         "quadratic regressions otherwise. We clip negative fee projections "
         "to $0.",
         className=common_explanation_style
