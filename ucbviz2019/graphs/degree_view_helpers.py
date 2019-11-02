@@ -389,13 +389,15 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             elif "Business (MBA FT)"==program:
                 y_relevant = y_relevant[-8:]
                 x_relevant = x_relevant[-8:]
+                f = f_linear
             elif program=="UCB-UCSF Medical (MS/MD)":
                 y_relevant = y_relevant[-10:]
                 x_relevant = x_relevant[-10:]
                 f = f_linear
             else:
-                y_relevant = y_relevant[-15:]
-                x_relevant = x_relevant[-15:]
+                # y_relevant = y_relevant[-15:]
+                # x_relevant = x_relevant[-15:]
+                pass
 
 
             if len(x_relevant) < 5:
