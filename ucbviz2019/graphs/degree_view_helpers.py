@@ -48,8 +48,10 @@ def generate_fee_stack_plot(program="Other Programs"):
         program = program_categories[program]
     all_data = {}
     bars = []
+
     for fee in fees:
         df, dsc = load_df_and_info(fee)
+
         df = df.loc[:,
              ("2019" > df.columns.values) & ("1998" <= df.columns.values)]
         x = df.loc[program].keys()
@@ -66,6 +68,7 @@ def generate_fee_stack_plot(program="Other Programs"):
             for year in x:
                 d = y[year]
                 all_data[year] += float(d) if not np.isnan(d) else 0.0
+
 
     fig = go.Figure()
 
@@ -269,6 +272,8 @@ def make_degree_info_card(program):
     if program in program_categories:
         program = program_categories[program]
     program_data = program_data_as_dict[program]
+
+
     years = [int(year) for year in program_data.keys()]
 
     card_title = html.Div(f"Overview of attendance costs",
@@ -370,6 +375,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             x_relevant = y_relevant.index.astype(int)
 
             f = f_quadratic
+            # f = f_linear
 
             # this is super janky
             # remove the first two observations from the learning data
@@ -377,10 +383,20 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                 y_relevant = y_relevant[2:]
                 x_relevant = x_relevant[2:]
                 f = f_linear
+            elif "Law" in program:
+                y_relevant = y_relevant[-5:]
+                x_relevant = x_relevant[-5:]
+            elif "Business (MBA FT)"==program:
+                y_relevant = y_relevant[-8:]
+                x_relevant = x_relevant[-8:]
+            elif program=="UCB-UCSF Medical (MS/MD)":
+                y_relevant = y_relevant[-10:]
+                x_relevant = x_relevant[-10:]
+                f = f_linear
+            else:
+                y_relevant = y_relevant[-15:]
+                x_relevant = x_relevant[-15:]
 
-            if "Law" in program and mode=="out-state":
-                y_relevant = y_relevant[5:]
-                x_relevant = x_relevant[5:]
 
             if len(x_relevant) < 5:
                 f = f_linear
@@ -403,20 +419,7 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
             prediction = f(years_to_predict_floats, *model_params)
             prediction_clipped = prediction.clip(0)
 
-            if feature == "nrst":
-                print(program, feature)
-
-            if "Law" in program and mode=="out-state":
-                print(f.__name__)
-                print(program)
-                print(feature)
-                print("LAW TIME")
-                print(prediction)
-                print(prediction_clipped)
             prediction_sums += prediction_clipped
-
-        if "Law" in program and mode == "in-state":
-            print("prediction sums are", prediction_sums)
 
         # plot the known data
         x = df.loc[truth].index

@@ -18,6 +18,10 @@ def app_view_html():
     )
     tuition_plot_header = html.Div("UC Tuition Costs", className=common_header_style)
     tuition_plot = html.Div(id="degree-tuition-plot", children=[])
+    tuition_explanation = html.Div(
+        "UC Berkely's tuition is comprised of the Base Tuition, Non-resident supplemental tuition (for out of state students), and the Professional Supplement (for professional programs only). Some years' tuition data is not available.",
+        className=common_explanation_style
+    )
     tuition_explanation2 = html.Div(
         "Hover over the points on the plot for more info or select/deselect "
         "series by touching/tapping on their label in the legend!",
@@ -44,7 +48,7 @@ def app_view_html():
         "These projections are made using scheduled tuition/fee data and/or simple "
         "quadratic and linear regressions on the individual fees contributing to "
         "the total costs of attendance (such as registration fee, base tuition, "
-        "non-resident tuition supplement,etc) where future cost information is not "
+        "non-resident tuition supplement, etc.) where future cost information is not "
         "available. We use linear regressions for newer degrees (<10 years of data) and "
         "quadratic regressions otherwise. We clip negative fee projections "
         "to $0.",
@@ -65,6 +69,7 @@ def app_view_html():
             tuition_explanation2,
             projection_plot,
             tuition_plot_header,
+            tuition_explanation,
             fees_explanation2,
             tuition_plot,
             fees_plot_header,
