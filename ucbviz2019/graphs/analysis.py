@@ -305,7 +305,8 @@ def all_programs_linegraph(mode):
             if x in cpi_x:
                 x_scaled.append(x)
                 y_scaled.append(y[i]/cpi_y[cpi_x.index(x)])
-
+        if "Education" in program:
+            program = "Education (Prof. Degrees)"
         fig.add_trace(
             go.Scatter(
                 x=x_scaled,
