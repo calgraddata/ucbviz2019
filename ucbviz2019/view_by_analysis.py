@@ -12,12 +12,14 @@ ost = all_provided_data["total_out_state"]["df"]  # total out state tuition
 def app_view_html():
     title = html.P("The Broader View - Trends in Graduate Fees",
                    className="is-size-2 has-text-weight-bold")
-    explanation = html.P(
-        "On this page we present a number of visualizations that give insight into "
-        "general trends in the total cost of attendance (COA) for graduate programs "
+    explanation = dcc.Markdown(
+        "On this page we present visualizations that give insight into "
+        "general trends in the total cost of attendance (COA)* for graduate programs "
         "at UC Berkeley between 1998 and 2018.",
         className="is-size-5"
     )
+
+    exp2 = dcc.Markdown("*All costs are **per semester**. See about for info on [data sourcing](/by_about).", className="is-size-6")
 
     # total attendance cost violin
     stats_header = html.Div("Most and Least Expensive Programs",
@@ -164,6 +166,7 @@ def app_view_html():
         [
             title,
             explanation,
+            exp2,
             tacv,
             stats,
             external_comparisons

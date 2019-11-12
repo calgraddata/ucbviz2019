@@ -399,10 +399,8 @@ def plot_projection_by_program_html(program="Other Programs", n_years_to_predict
                 # x_relevant = x_relevant[-15:]
                 pass
 
-
             if len(x_relevant) < 5:
                 f = f_linear
-
 
             popt, pcov = curve_fit(f, x_relevant, y_relevant)
             functions.append(f)
