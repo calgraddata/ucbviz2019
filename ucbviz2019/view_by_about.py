@@ -14,6 +14,11 @@ def app_view_html():
         className=common_txt_style
     )
 
+    update = dcc.Markdown(
+        "*An update (December 2, 2019)*: We have been chosen by the Graduate Assembly as **the overall winners** for the 2019 UCB Graduate Financial Data Contest! You can read more about it in the [first december edition of the Graduate Delegates Digest](http://ga.berkeley.edu/news/delegates-digest/).",
+        className="is-size-4 has-text-weight-semibold has-margin-10"
+    )
+
 
     about_the_entrants = html.Div("About the entrants", className=common_header_style)
     about_the_entrants_txt = dcc.Markdown(
@@ -46,6 +51,7 @@ def app_view_html():
         [
             title,
             explanation,
+            update,
             about_the_entrants,
             about_the_entrants_txt,
             data,
