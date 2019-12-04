@@ -22,7 +22,7 @@ def app_view_html():
 
     about_the_entrants = html.Div("About the entrants", className=common_header_style)
     about_the_entrants_txt = dcc.Markdown(
-        "Hi there! We are [Alex Dunn](https://alexdunn.io) and [John Dagdelen](https://www.linkedin.com/in/johndagdelen/), both 3rd Year Materials Science and Engineering Ph.D. Students at UC Berkeley. We hope you enjoy this website's visualizations. If you have any questions or concerns (especially about usage), please contact us through a [Github issue](https://github.com/calgraddata/ucbviz2019).",
+        "Hi there! We are [Alex Dunn](https://alexdunn.io) and [John Dagdelen](https://jdagdelen.github.io/), both 3rd Year Materials Science and Engineering Ph.D. Students at UC Berkeley. We hope you enjoy this website's visualizations. If you have any questions or concerns (especially about usage), please contact us through a [Github issue](https://github.com/calgraddata/ucbviz2019).",
         className=common_txt_style
     )
 
