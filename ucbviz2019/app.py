@@ -19,7 +19,8 @@ from ucbviz2019.graphs.degree_view_helpers import make_degree_info_card, \
     get_program_stats
 
 external_scripts = [
-    "https://code.jquery.com/jquery-3.4.1.min.js"
+    "https://code.jquery.com/jquery-3.4.1.min.js",
+    "https://www.googletagmanager.com/gtag/js?id=UA-149443072-4"
 ]
 
 app = dash.Dash(__name__, external_scripts=external_scripts)
